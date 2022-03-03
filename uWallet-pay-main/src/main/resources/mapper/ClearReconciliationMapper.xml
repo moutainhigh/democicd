@@ -1,0 +1,846 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.ClearReconciliationDAO">
+
+  <resultMap id="clearReconciliationMap" type="com.uwallet.pay.main.model.entity.ClearReconciliation">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="financeDate" jdbcType="BIGINT" column="finance_date"/>
+    <result property="clearingAmount" jdbcType="DECIMAL" column="clearing_amount"/>
+    <result property="clearingNumber" jdbcType="VARCHAR" column="clearing_number"/>
+    <result property="payCount" jdbcType="INTEGER" column="pay_count"/>
+    <result property="payAmount" jdbcType="DECIMAL" column="pay_amount"/>
+    <result property="refundCount" jdbcType="INTEGER" column="refund_count"/>
+    <result property="refundAmount" jdbcType="DECIMAL" column="refund_amount"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+    <result property="checkState" jdbcType="TINYINT" column="check_state"/>
+    <result property="checkTime" jdbcType="BIGINT" column="check_time"/>
+    <result property="gatewayId" jdbcType="INTEGER" column="gateway_id"/>
+  </resultMap>
+
+  <resultMap id="clearReconciliationDTOMap" type="com.uwallet.pay.main.model.dto.ClearReconciliationDTO">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="financeDate" jdbcType="BIGINT" column="finance_date"/>
+        <result property="clearingAmount" jdbcType="DECIMAL" column="clearing_amount"/>
+        <result property="clearingNumber" jdbcType="VARCHAR" column="clearing_number"/>
+        <result property="payCount" jdbcType="INTEGER" column="pay_count"/>
+        <result property="payAmount" jdbcType="DECIMAL" column="pay_amount"/>
+        <result property="refundCount" jdbcType="INTEGER" column="refund_count"/>
+        <result property="refundAmount" jdbcType="DECIMAL" column="refund_amount"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+        <result property="checkState" jdbcType="TINYINT" column="check_state"/>
+        <result property="checkTime" jdbcType="BIGINT" column="check_time"/>
+        <result property="gatewayId" jdbcType="INTEGER" column="gateway_id"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.ClearReconciliation">
+    INSERT INTO u_clear_reconciliation (
+        <if test="id != null">
+            `id` 
+        </if>
+        <if test="financeDate != null">
+            ,`finance_date` 
+        </if>
+        <if test="clearingAmount != null">
+            ,`clearing_amount` 
+        </if>
+        <if test="clearingNumber != null">
+            ,`clearing_number` 
+        </if>
+        <if test="payCount != null">
+            ,`pay_count` 
+        </if>
+        <if test="payAmount != null">
+            ,`pay_amount` 
+        </if>
+        <if test="refundCount != null">
+            ,`refund_count` 
+        </if>
+        <if test="refundAmount != null">
+            ,`refund_amount` 
+        </if>
+        <if test="createdBy != null">
+            ,`created_by` 
+        </if>
+        <if test="createdDate != null">
+            ,`created_date` 
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by` 
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date` 
+        </if>
+        <if test="status != null">
+            ,`status` 
+        </if>
+        <if test="ip != null">
+            ,`ip` 
+        </if>
+        <if test="checkState != null">
+            ,`check_state` 
+        </if>
+        <if test="checkTime != null">
+            ,`check_time`
+        </if>
+      <if test="gatewayId != null">
+          ,`gateway_id`
+      </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="financeDate != null">
+              ,#{financeDate}
+        </if>
+        <if test="clearingAmount != null">
+              ,#{clearingAmount}
+        </if>
+        <if test="clearingNumber != null">
+              ,#{clearingNumber}
+        </if>
+        <if test="payCount != null">
+              ,#{payCount}
+        </if>
+        <if test="payAmount != null">
+              ,#{payAmount}
+        </if>
+        <if test="refundCount != null">
+              ,#{refundCount}
+        </if>
+        <if test="refundAmount != null">
+              ,#{refundAmount}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+              ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+              ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+        <if test="checkState != null">
+              ,#{checkState}
+        </if>
+        <if test="checkTime != null">
+              ,#{checkTime}
+        </if>
+      <if test="gatewayId != null">
+          ,#{gatewayId}
+      </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_clear_reconciliation (
+        `id`,
+        `finance_date`,
+        `clearing_amount`,
+        `clearing_number`,
+        `pay_count`,
+        `pay_amount`,
+        `refund_count`,
+        `refund_amount`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`,
+        `check_state`,
+        `check_time`,
+      `gateway_id`,
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.financeDate},
+        #{data.clearingAmount},
+        #{data.clearingNumber},
+        #{data.payCount},
+        #{data.payAmount},
+        #{data.refundCount},
+        #{data.refundAmount},
+        #{data.createdBy},
+        #{data.createdDate},
+        #{data.modifiedBy},
+        #{data.modifiedDate},
+        #{data.status},
+        #{data.ip},
+        #{data.checkState},
+        #{data.checkTime},
+        #{data.gatewayId}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.ClearReconciliation">
+    UPDATE u_clear_reconciliation
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="financeDate != null">
+          `finance_date`=#{financeDate},
+        </if>
+        <if test="clearingAmount != null">
+          `clearing_amount`=#{clearingAmount},
+        </if>
+        <if test="clearingNumber != null">
+          `clearing_number`=#{clearingNumber},
+        </if>
+        <if test="payCount != null">
+          `pay_count`=#{payCount},
+        </if>
+        <if test="payAmount != null">
+          `pay_amount`=#{payAmount},
+        </if>
+        <if test="refundCount != null">
+          `refund_count`=#{refundCount},
+        </if>
+        <if test="refundAmount != null">
+          `refund_amount`=#{refundAmount},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="modifiedBy != null">
+          `modified_by`=#{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+          `modified_date`=#{modifiedDate},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+        <if test="checkState != null">
+          `check_state`=#{checkState},
+        </if>
+        <if test="checkTime != null">
+          `check_time`=#{checkTime},
+        </if>
+        <if test="gatewayId != null">
+            `gateway_id`=#{gatewayId},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_clear_reconciliation
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+  <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_clear_reconciliation
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_clear_reconciliation
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="financeDate != null">
+            AND `finance_date`=#{financeDate}
+          </if>
+          <if test="clearingAmount != null">
+            AND `clearing_amount`=#{clearingAmount}
+          </if>
+          <if test="clearingNumber != null">
+            AND `clearing_number`=#{clearingNumber}
+          </if>
+          <if test="payCount != null">
+            AND `pay_count`=#{payCount}
+          </if>
+          <if test="payAmount != null">
+            AND `pay_amount`=#{payAmount}
+          </if>
+          <if test="refundCount != null">
+            AND `refund_count`=#{refundCount}
+          </if>
+          <if test="refundAmount != null">
+            AND `refund_amount`=#{refundAmount}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">And status = #{status}</when>
+            <otherwise><![CDATA[And status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+          <if test="checkState != null">
+            AND `check_state`=#{checkState}
+          </if>
+          <if test="checkTime != null">
+            AND `check_time`=#{checkTime}
+          </if>
+        <if test="gatewayId != null">
+            AND `gateway_id`=#{gatewayId}
+        </if>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="clearReconciliationMap">
+    <![CDATA[
+            SELECT * FROM u_clear_reconciliation
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="financeDate != null">
+            AND `finance_date`=#{financeDate}
+          </if>
+          <if test="clearingAmount != null">
+            AND `clearing_amount`=#{clearingAmount}
+          </if>
+          <if test="clearingNumber != null">
+            AND `clearing_number`=#{clearingNumber}
+          </if>
+          <if test="payCount != null">
+            AND `pay_count`=#{payCount}
+          </if>
+          <if test="payAmount != null">
+            AND `pay_amount`=#{payAmount}
+          </if>
+          <if test="refundCount != null">
+            AND `refund_count`=#{refundCount}
+          </if>
+          <if test="refundAmount != null">
+            AND `refund_amount`=#{refundAmount}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+          <if test="checkState != null">
+            AND `check_state`=#{checkState}
+          </if>
+          <if test="checkTime != null">
+            AND `check_time`=#{checkTime}
+          </if>
+        <if test="gatewayId != null">
+            AND `gateway_id`=#{gatewayId}
+        </if>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="clearReconciliationDTOMap">
+    <![CDATA[
+            SELECT * FROM u_clear_reconciliation
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="financeDate != null">
+            AND `finance_date`=#{financeDate}
+          </if>
+          <if test="clearingAmount != null">
+            AND `clearing_amount`=#{clearingAmount}
+          </if>
+          <if test="clearingNumber != null">
+            AND `clearing_number`=#{clearingNumber}
+          </if>
+          <if test="payCount != null">
+            AND `pay_count`=#{payCount}
+          </if>
+          <if test="payAmount != null">
+            AND `pay_amount`=#{payAmount}
+          </if>
+          <if test="refundCount != null">
+            AND `refund_count`=#{refundCount}
+          </if>
+          <if test="refundAmount != null">
+            AND `refund_amount`=#{refundAmount}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+          <if test="checkState != null">
+            AND `check_state`=#{checkState}
+          </if>
+          <if test="checkTime != null">
+            AND `check_time`=#{checkTime}
+          </if>
+        <if test="gatewayId != null">
+            AND `gateway_id`=#{gatewayId}
+        </if>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="clearReconciliationMap">
+    <![CDATA[
+            SELECT * FROM u_clear_reconciliation
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="financeDate != null">
+            AND `finance_date`=#{financeDate}
+          </if>
+          <if test="clearingAmount != null">
+            AND `clearing_amount`=#{clearingAmount}
+          </if>
+          <if test="clearingNumber != null">
+            AND `clearing_number`=#{clearingNumber}
+          </if>
+          <if test="payCount != null">
+            AND `pay_count`=#{payCount}
+          </if>
+          <if test="payAmount != null">
+            AND `pay_amount`=#{payAmount}
+          </if>
+          <if test="refundCount != null">
+            AND `refund_count`=#{refundCount}
+          </if>
+          <if test="refundAmount != null">
+            AND `refund_amount`=#{refundAmount}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+          <if test="checkState != null">
+            AND `check_state`=#{checkState}
+          </if>
+          <if test="checkTime != null">
+            AND `check_time`=#{checkTime}
+          </if>
+        <if test="gatewayId != null">
+            AND `gateway_id`=#{gatewayId}
+        </if>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="clearReconciliationDTOMap">
+    <![CDATA[
+            SELECT * FROM u_clear_reconciliation
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="financeDate != null">
+            AND `finance_date`=#{financeDate}
+          </if>
+          <if test="clearingAmount != null">
+            AND `clearing_amount`=#{clearingAmount}
+          </if>
+          <if test="clearingNumber != null">
+            AND `clearing_number`=#{clearingNumber}
+          </if>
+          <if test="payCount != null">
+            AND `pay_count`=#{payCount}
+          </if>
+          <if test="payAmount != null">
+            AND `pay_amount`=#{payAmount}
+          </if>
+          <if test="refundCount != null">
+            AND `refund_count`=#{refundCount}
+          </if>
+          <if test="refundAmount != null">
+            AND `refund_amount`=#{refundAmount}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+          <if test="checkState != null">
+            AND `check_state`=#{checkState}
+          </if>
+          <if test="checkTime != null">
+            AND `check_time`=#{checkTime}
+          </if>
+        <if test="gatewayId != null">
+            AND `gateway_id`=#{gatewayId}
+        </if>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_clear_reconciliation
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="financeDate != null">
+            AND `finance_date`=#{financeDate}
+          </if>
+          <if test="clearingAmount != null">
+            AND `clearing_amount`=#{clearingAmount}
+          </if>
+          <if test="clearingNumber != null">
+            AND `clearing_number`=#{clearingNumber}
+          </if>
+          <if test="payCount != null">
+            AND `pay_count`=#{payCount}
+          </if>
+          <if test="payAmount != null">
+            AND `pay_amount`=#{payAmount}
+          </if>
+          <if test="refundCount != null">
+            AND `refund_count`=#{refundCount}
+          </if>
+          <if test="refundAmount != null">
+            AND `refund_amount`=#{refundAmount}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+          <if test="checkState != null">
+            AND `check_state`=#{checkState}
+          </if>
+          <if test="checkTime != null">
+            AND `check_time`=#{checkTime}
+          </if>
+        <if test="gatewayId != null">
+            AND `gateway_id`=#{gatewayId}
+        </if>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_clear_reconciliation
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="financeDate != null">
+            AND `finance_date`=#{financeDate}
+          </if>
+          <if test="clearingAmount != null">
+            AND `clearing_amount`=#{clearingAmount}
+          </if>
+          <if test="clearingNumber != null">
+            AND `clearing_number`=#{clearingNumber}
+          </if>
+          <if test="payCount != null">
+            AND `pay_count`=#{payCount}
+          </if>
+          <if test="payAmount != null">
+            AND `pay_amount`=#{payAmount}
+          </if>
+          <if test="refundCount != null">
+            AND `refund_count`=#{refundCount}
+          </if>
+          <if test="refundAmount != null">
+            AND `refund_amount`=#{refundAmount}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+          <if test="checkState != null">
+            AND `check_state`=#{checkState}
+          </if>
+          <if test="checkTime != null">
+            AND `check_time`=#{checkTime}
+          </if>
+        <if test="gatewayId != null">
+            AND `gateway_id`=#{gatewayId}
+        </if>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_clear_reconciliation
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="financeDate != null">
+            AND `finance_date`=#{financeDate}
+          </if>
+          <if test="clearingAmount != null">
+            AND `clearing_amount`=#{clearingAmount}
+          </if>
+          <if test="clearingNumber != null">
+            AND `clearing_number`=#{clearingNumber}
+          </if>
+          <if test="payCount != null">
+            AND `pay_count`=#{payCount}
+          </if>
+          <if test="payAmount != null">
+            AND `pay_amount`=#{payAmount}
+          </if>
+          <if test="refundCount != null">
+            AND `refund_count`=#{refundCount}
+          </if>
+          <if test="refundAmount != null">
+            AND `refund_amount`=#{refundAmount}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+          <if test="checkState != null">
+            AND `check_state`=#{checkState}
+          </if>
+          <if test="checkTime != null">
+            AND `check_time`=#{checkTime}
+          </if>
+        <if test="gatewayId != null">
+            AND `gateway_id`=#{gatewayId}
+        </if>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_clear_reconciliation
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="financeDate != null">
+            AND `finance_date`=#{financeDate}
+          </if>
+          <if test="clearingAmount != null">
+            AND `clearing_amount`=#{clearingAmount}
+          </if>
+          <if test="clearingNumber != null">
+            AND `clearing_number`=#{clearingNumber}
+          </if>
+          <if test="payCount != null">
+            AND `pay_count`=#{payCount}
+          </if>
+          <if test="payAmount != null">
+            AND `pay_amount`=#{payAmount}
+          </if>
+          <if test="refundCount != null">
+            AND `refund_count`=#{refundCount}
+          </if>
+          <if test="refundAmount != null">
+            AND `refund_amount`=#{refundAmount}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+          <if test="checkState != null">
+            AND `check_state`=#{checkState}
+          </if>
+          <if test="checkTime != null">
+            AND `check_time`=#{checkTime}
+          </if>
+        <if test="gatewayId != null">
+            AND `gateway_id`=#{gatewayId}
+        </if>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+</mapper>

@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.AccessMerchantDAO">
+
+  <resultMap id="accessMerchantMap" type="com.uwallet.pay.main.model.entity.AccessMerchant">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="name" jdbcType="VARCHAR" column="name"/>
+    <result property="merchantIdNo" jdbcType="VARCHAR" column="merchant_id_no"/>
+    <result property="platformId" jdbcType="VARCHAR" column="platform_id"/>
+    <result property="bsb" jdbcType="VARCHAR" column="bsb"/>
+    <result property="accountName" jdbcType="VARCHAR" column="account_name"/>
+    <result property="accountNo" jdbcType="VARCHAR" column="account_no"/>
+    <result property="platformOwn" jdbcType="INTEGER" column="platform_own"/>
+    <result property="state" jdbcType="TINYINT" column="state"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+  </resultMap>
+
+  <resultMap id="accessMerchantDTOMap" type="com.uwallet.pay.main.model.dto.AccessMerchantDTO" extends="accessMerchantMap"></resultMap>
+
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="name != null">
+          AND `name`=#{name}
+        </if>
+        <if test="merchantIdNo != null">
+          AND `merchant_id_no`=#{merchantIdNo}
+        </if>
+        <if test="platformId != null">
+          AND `platform_id`=#{platformId}
+        </if>
+        <if test="bsb != null">
+          AND `bsb`=#{bsb}
+        </if>
+        <if test="accountName != null">
+          AND `account_name`=#{accountName}
+        </if>
+        <if test="accountNo != null">
+          AND `account_no`=#{accountNo}
+        </if>
+        <if test="platformOwn != null">
+          AND `platform_own`=#{platformOwn}
+        </if>
+        <if test="state != null">
+          AND `state`=#{state}
+        </if>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="modifiedBy != null">
+          AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+          AND `modified_date`=#{modifiedDate}
+        </if>
+        <choose>
+          <when test="status != null">AND status = #{status}</when>
+          <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+  </sql>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.AccessMerchant">
+    INSERT INTO u_access_merchant (
+        <if test="id != null">
+            `id` 
+        </if>
+        <if test="name != null">
+            ,`name` 
+        </if>
+        <if test="merchantIdNo != null">
+            ,`merchant_id_no` 
+        </if>
+        <if test="platformId != null">
+            ,`platform_id` 
+        </if>
+        <if test="bsb != null">
+            ,`bsb` 
+        </if>
+        <if test="accountName != null">
+            ,`account_name` 
+        </if>
+        <if test="accountNo != null">
+            ,`account_no` 
+        </if>
+        <if test="platformOwn != null">
+            ,`platform_own` 
+        </if>
+        <if test="state != null">
+            ,`state` 
+        </if>
+        <if test="createdBy != null">
+            ,`created_by` 
+        </if>
+        <if test="createdDate != null">
+            ,`created_date` 
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by` 
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date` 
+        </if>
+        <if test="status != null">
+            ,`status` 
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="name != null">
+              ,#{name}
+        </if>
+        <if test="merchantIdNo != null">
+              ,#{merchantIdNo}
+        </if>
+        <if test="platformId != null">
+              ,#{platformId}
+        </if>
+        <if test="bsb != null">
+              ,#{bsb}
+        </if>
+        <if test="accountName != null">
+              ,#{accountName}
+        </if>
+        <if test="accountNo != null">
+              ,#{accountNo}
+        </if>
+        <if test="platformOwn != null">
+              ,#{platformOwn}
+        </if>
+        <if test="state != null">
+              ,#{state}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+              ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+              ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_access_merchant (
+        `id`,
+        `name`,
+        `merchant_id_no`,
+        `platform_id`,
+        `bsb`,
+        `account_name`,
+        `account_no`,
+        `platform_own`,
+        `state`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.name},
+        #{data.merchantIdNo},
+        #{data.platformId},
+        #{data.bsb},
+        #{data.accountName},
+        #{data.accountNo},
+        #{data.platformOwn},
+        #{data.state},
+        #{data.createdBy},
+        #{data.createdDate},
+        #{data.modifiedBy},
+        #{data.modifiedDate},
+        #{data.status},
+        #{data.ip}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.AccessMerchant">
+    UPDATE u_access_merchant
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="name != null">
+          `name`=#{name},
+        </if>
+        <if test="merchantIdNo != null">
+          `merchant_id_no`=#{merchantIdNo},
+        </if>
+        <if test="platformId != null">
+          `platform_id`=#{platformId},
+        </if>
+        <if test="bsb != null">
+          `bsb`=#{bsb},
+        </if>
+        <if test="accountName != null">
+          `account_name`=#{accountName},
+        </if>
+        <if test="accountNo != null">
+          `account_no`=#{accountNo},
+        </if>
+        <if test="platformOwn != null">
+          `platform_own`=#{platformOwn},
+        </if>
+        <if test="state != null">
+          `state`=#{state},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="modifiedBy != null">
+          `modified_by`=#{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+          `modified_date`=#{modifiedDate},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_access_merchant
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+  <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_access_merchant
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_access_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="accessMerchantMap">
+    <![CDATA[
+            SELECT * FROM u_access_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="accessMerchantDTOMap">
+    <![CDATA[
+            SELECT * FROM u_access_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="accessMerchantMap">
+    <![CDATA[
+            SELECT * FROM u_access_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="accessMerchantDTOMap">
+    <![CDATA[
+            SELECT * FROM u_access_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_access_merchant
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_access_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_access_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_access_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+    <select id="getAccessMerchantList" parameterType="Map" resultType="com.uwallet.pay.main.model.dto.AccessPlatformInfoDTO">
+        SELECT
+        me.id AS merchantId,
+        pl.id AS platformId,
+        me.state,
+        pl.name,
+        pl.uuid,
+        pl.access_side_info,
+        pl.created_date,
+        pl.discount_rate,
+        pl.server_fee_rate,
+        me.bsb,
+        me.account_name,
+        me.account_no,
+        me.merchant_id_no
+        FROM
+        u_access_platform pl
+        LEFT JOIN u_access_merchant me ON pl.id = me.platform_id
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            pl.`status` = 1 AND me. STATUS = 1
+            <if test="name != null">
+                AND me.`name` like CONCAT('%',#{name},'%')
+            </if>
+            <if test="merchantIdNo != null">
+                AND me.`merchant_id_no`=#{merchantIdNo}
+            </if>
+            <if test="platformId != null">
+                AND pl.`id`=#{platformId}
+            </if>
+            <if test="state != null">
+                AND me.`state`=#{state}
+            </if>
+            <if test="start != null and end != null">
+                AND me.`created_date` BETWEEN #{start} AND #{ end}
+            </if>
+        </trim>
+            ORDER BY
+        me.`created_date` desc
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+
+    <select id="getAccessMerchantListCount" parameterType="Map" resultType="Integer">
+        SELECT
+        count(*)
+        FROM
+        u_access_platform pl
+        LEFT JOIN u_access_merchant me ON pl.id = me.platform_id
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            pl.`status` = 1 AND me. STATUS = 1
+            <if test="name != null">
+                AND me.`name` like CONCAT('%',#{name},'%')
+            </if>
+            <if test="merchantIdNo != null">
+                AND me.`merchant_id_no`=#{merchantIdNo}
+            </if>
+            <if test="platformId != null">
+                AND pl.`id`=#{platformId}
+            </if>
+            <if test="state != null">
+                AND me.`state`=#{state}
+            </if>
+            <if test="start != null and end != null">
+                AND me.`created_date` BETWEEN #{start} AND #{ end}
+            </if>
+        </trim>
+    </select>
+</mapper>

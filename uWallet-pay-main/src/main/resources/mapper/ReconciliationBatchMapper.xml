@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.ReconciliationBatchDAO">
+
+  <resultMap id="reconciliationBatchMap" type="com.uwallet.pay.main.model.entity.ReconciliationBatch">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="thirdFileName" jdbcType="VARCHAR" column="third_file_name"/>
+    <result property="path" jdbcType="VARCHAR" column="path"/>
+    <result property="fileName" jdbcType="VARCHAR" column="file_name"/>
+    <result property="type" jdbcType="TINYINT" column="type"/>
+    <result property="transactionType" jdbcType="TINYINT" column="transaction_type"/>
+    <result property="totalNumber" jdbcType="INTEGER" column="total_number"/>
+    <result property="failNumber" jdbcType="INTEGER" column="fail_number"/>
+    <result property="state" jdbcType="TINYINT" column="state"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+  </resultMap>
+
+  <resultMap id="reconciliationBatchDTOMap" type="com.uwallet.pay.main.model.dto.ReconciliationBatchDTO" extends="reconciliationBatchMap"></resultMap>
+
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{end}
+        </if>
+        <if test="thirdFileName != null">
+          AND `third_file_name`=#{thirdFileName}
+        </if>
+        <if test="path != null">
+          AND `path`=#{path}
+        </if>
+        <if test="fileName != null">
+          AND `file_name`=#{fileName}
+        </if>
+        <if test="type != null">
+          AND `type`=#{type}
+        </if>
+        <if test="transactionType != null">
+          AND `transaction_type`=#{transactionType}
+        </if>
+        <if test="totalNumber != null">
+          AND `total_number`=#{totalNumber}
+        </if>
+        <if test="failNumber != null">
+          AND `fail_number`=#{failNumber}
+        </if>
+        <if test="state != null">
+          AND `state`=#{state}
+        </if>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="modifiedBy != null">
+          AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+          AND `modified_date`=#{modifiedDate}
+        </if>
+        <choose>
+          <when test="status != null">AND status = #{status}</when>
+          <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+  </sql>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.ReconciliationBatch">
+    INSERT INTO u_reconciliation_batch (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="thirdFileName != null">
+            ,`third_file_name`
+        </if>
+        <if test="path != null">
+            ,`path`
+        </if>
+        <if test="fileName != null">
+            ,`file_name`
+        </if>
+        <if test="type != null">
+            ,`type`
+        </if>
+        <if test="transactionType != null">
+            ,`transaction_type`
+        </if>
+        <if test="totalNumber != null">
+            ,`total_number`
+        </if>
+        <if test="failNumber != null">
+            ,`fail_number`
+        </if>
+        <if test="state != null">
+            ,`state`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="thirdFileName != null">
+              ,#{thirdFileName}
+        </if>
+        <if test="path != null">
+              ,#{path}
+        </if>
+        <if test="fileName != null">
+              ,#{fileName}
+        </if>
+        <if test="type != null">
+              ,#{type}
+        </if>
+        <if test="transactionType != null">
+              ,#{transactionType}
+        </if>
+        <if test="totalNumber != null">
+              ,#{totalNumber}
+        </if>
+        <if test="failNumber != null">
+              ,#{failNumber}
+        </if>
+        <if test="state != null">
+              ,#{state}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+              ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+              ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_reconciliation_batch (
+        `id`,
+        `third_file_name`,
+        `path`,
+        `file_name`,
+        `type`,
+        `transaction_type`,
+        `total_number`,
+        `fail_number`,
+        `state`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.thirdFileName},
+        #{data.path},
+        #{data.fileName},
+        #{data.type},
+        #{data.transactionType},
+        #{data.totalNumber},
+        #{data.failNumber},
+        #{data.state},
+        #{data.createdBy},
+        #{data.createdDate},
+        #{data.modifiedBy},
+        #{data.modifiedDate},
+        #{data.status},
+        #{data.ip}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.ReconciliationBatch">
+    UPDATE u_reconciliation_batch
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="thirdFileName != null">
+          `third_file_name`=#{thirdFileName},
+        </if>
+        <if test="path != null">
+          `path`=#{path},
+        </if>
+        <if test="fileName != null">
+          `file_name`=#{fileName},
+        </if>
+        <if test="type != null">
+          `type`=#{type},
+        </if>
+        <if test="transactionType != null">
+          `transaction_type`=#{transactionType},
+        </if>
+        <if test="totalNumber != null">
+          `total_number`=#{totalNumber},
+        </if>
+        <if test="failNumber != null">
+          `fail_number`=#{failNumber},
+        </if>
+        <if test="state != null">
+          `state`=#{state},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="modifiedBy != null">
+          `modified_by`=#{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+          `modified_date`=#{modifiedDate},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_reconciliation_batch
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+  <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_reconciliation_batch
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_reconciliation_batch
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="reconciliationBatchMap">
+    <![CDATA[
+            SELECT * FROM u_reconciliation_batch
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="reconciliationBatchDTOMap">
+    <![CDATA[
+            SELECT * FROM u_reconciliation_batch
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="reconciliationBatchMap">
+    <![CDATA[
+            SELECT * FROM u_reconciliation_batch
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="reconciliationBatchDTOMap">
+    <![CDATA[
+            SELECT * FROM u_reconciliation_batch
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_reconciliation_batch
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_reconciliation_batch
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_reconciliation_batch
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_reconciliation_batch
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+</mapper>

@@ -1,0 +1,955 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.WholeSalesFlowDAO">
+
+  <resultMap id="wholeSalesFlowMap" type="com.uwallet.pay.main.model.entity.WholeSalesFlow">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="userId" jdbcType="BIGINT" column="user_id"/>
+    <result property="merchantId" jdbcType="BIGINT" column="merchant_id"/>
+    <result property="merchantDiscount" jdbcType="DECIMAL" column="merchant_discount"/>
+    <result property="customerDiscount" jdbcType="DECIMAL" column="customer_discount"/>
+    <result property="amount" jdbcType="DECIMAL" column="amount"/>
+    <result property="settlementAmount" jdbcType="DECIMAL" column="settlement_amount"/>
+    <result property="transType" jdbcType="TINYINT" column="trans_type"/>
+    <result property="state" jdbcType="TINYINT" column="state"/>
+    <result property="returnMessage" jdbcType="VARCHAR" column="return_message"/>
+    <result property="returnCode" jdbcType="VARCHAR" column="return_code"/>
+    <result property="settlementTime" jdbcType="BIGINT" column="settlement_time"/>
+    <result property="settlementState" jdbcType="TINYINT" column="settlement_state"/>
+    <result property="settlementDelay" jdbcType="TINYINT" column="settlement_delay"/>
+    <result property="remark" jdbcType="VARCHAR" column="remark"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+    <result property="checkState" jdbcType="TINYINT" column="check_state"/>
+    <result property="checkTime" jdbcType="BIGINT" column="check_time"/>
+      <result property="approveState" jdbcType="TINYINT" column="approve_state"/>
+      <result property="orderType" jdbcType="TINYINT" column="order_type"/>
+      <result property="passTime" jdbcType="BIGINT" column="pass_time"/>
+      <result property="customerPayDiscount" jdbcType="DECIMAL" column="customer_pay_discount"/>
+      <result property="batchId" jdbcType="BIGINT" column="batch_id"/>
+  </resultMap>
+
+  <resultMap id="wholeSalesFlowDTOMap" type="com.uwallet.pay.main.model.dto.WholeSalesFlowDTO" extends="wholeSalesFlowMap"></resultMap>
+
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="userId != null">
+          AND `user_id`=#{userId}
+        </if>
+        <if test="merchantId != null">
+          AND `merchant_id`=#{merchantId}
+        </if>
+        <if test="merchantDiscount != null">
+          AND `merchant_discount`=#{merchantDiscount}
+        </if>
+      <if test="customerPayDiscount != null">
+          AND `customer_pay_discount`=#{customerPayDiscount}
+      </if>
+        <if test="customerDiscount != null">
+          AND `customer_discount`=#{customerDiscount}
+        </if>
+        <if test="amount != null">
+          AND `amount`=#{amount}
+        </if>
+        <if test="settlementAmount != null">
+          AND `settlement_amount`=#{settlementAmount}
+        </if>
+        <if test="transType != null">
+          AND `trans_type`=#{transType}
+        </if>
+        <if test="state != null">
+          AND `state`=#{state}
+        </if>
+        <if test="returnMessage != null">
+          AND `return_message`=#{returnMessage}
+        </if>
+        <if test="returnCode != null">
+          AND `return_code`=#{returnCode}
+        </if>
+        <if test="settlementTime != null">
+          AND `settlement_time`=#{settlementTime}
+        </if>
+        <if test="settlementState != null">
+          AND `settlement_state`=#{settlementState}
+        </if>
+        <if test="settlementDelay != null">
+          AND `settlement_delay`=#{settlementDelay}
+        </if>
+        <if test="remark != null">
+          AND `remark`=#{remark}
+        </if>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="modifiedBy != null">
+          AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+          AND `modified_date`=#{modifiedDate}
+        </if>
+      <if test="passTimeStart != null and passTimeEnd != null">
+          AND `pass_time` BETWEEN #{passTimeStart} AND #{ passTimeEnd}
+      </if>
+          <if test="approveState != null">
+              AND `approve_state`=#{approveState}
+          </if>
+      <if test="orderType != null">
+          AND `order_type`=#{orderType}
+      </if>
+      <if test="passTime != null">
+          AND `pass_time`=#{passTime}
+      </if>
+      <if test="double == 1">
+          AND TIMESTAMPDIFF(MINUTE,FROM_UNIXTIME(modified_date/1000,'%Y-%m-%d %H:%i'),DATE_FORMAT(NOW(),'%Y-%m-%d %H:%i')) &gt;= 5
+      </if>
+        <choose>
+          <when test="status != null">AND status = #{status}</when>
+          <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+        <if test="checkState != null">
+          AND `check_state`=#{checkState}
+        </if>
+        <if test="checkTime != null">
+          AND `check_time`=#{checkTime}
+        </if>
+      <if test="queryTransNo != null">
+          AND `id` like concat('%',#{queryTransNo},'%')
+      </if>
+      <if test="batchId != null">
+          AND `batch_id`=#{batchId}
+      </if>
+  </sql>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.WholeSalesFlow">
+    INSERT INTO u_whole_sales_flow (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="userId != null">
+            ,`user_id`
+        </if>
+        <if test="merchantId != null">
+            ,`merchant_id`
+        </if>
+        <if test="merchantDiscount != null">
+            ,`merchant_discount`
+        </if>
+        <if test="customerDiscount != null">
+            ,`customer_discount`
+        </if>
+        <if test="amount != null">
+            ,`amount`
+        </if>
+        <if test="settlementAmount != null">
+            ,`settlement_amount`
+        </if>
+        <if test="transType != null">
+            ,`trans_type`
+        </if>
+        <if test="state != null">
+            ,`state`
+        </if>
+        <if test="returnMessage != null">
+            ,`return_message`
+        </if>
+        <if test="returnCode != null">
+            ,`return_code`
+        </if>
+        <if test="settlementTime != null">
+            ,`settlement_time`
+        </if>
+        <if test="settlementState != null">
+            ,`settlement_state`
+        </if>
+        <if test="settlementDelay != null">
+            ,`settlement_delay`
+        </if>
+        <if test="remark != null">
+            ,`remark`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+        <if test="checkState != null">
+            ,`check_state`
+        </if>
+        <if test="checkTime != null">
+            ,`check_time`
+        </if>
+      <if test="approveState != null">
+          ,`approve_state`
+      </if>
+      <if test="orderType != null">
+          ,`order_type`
+      </if>
+      <if test="passTime != null">
+          ,`pass_time`
+      </if>
+      <if test="customerPayDiscount != null">
+          ,`customer_pay_discount`
+      </if>
+      <if test="batchId != null">
+          ,`batch_id`
+      </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="userId != null">
+              ,#{userId}
+        </if>
+        <if test="merchantId != null">
+              ,#{merchantId}
+        </if>
+        <if test="merchantDiscount != null">
+              ,#{merchantDiscount}
+        </if>
+        <if test="customerDiscount != null">
+              ,#{customerDiscount}
+        </if>
+        <if test="amount != null">
+              ,#{amount}
+        </if>
+        <if test="settlementAmount != null">
+              ,#{settlementAmount}
+        </if>
+        <if test="transType != null">
+              ,#{transType}
+        </if>
+        <if test="state != null">
+              ,#{state}
+        </if>
+        <if test="returnMessage != null">
+              ,#{returnMessage}
+        </if>
+        <if test="returnCode != null">
+              ,#{returnCode}
+        </if>
+        <if test="settlementTime != null">
+              ,#{settlementTime}
+        </if>
+        <if test="settlementState != null">
+              ,#{settlementState}
+        </if>
+        <if test="settlementDelay != null">
+              ,#{settlementDelay}
+        </if>
+        <if test="remark != null">
+              ,#{remark}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+              ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+              ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+        <if test="checkState != null">
+              ,#{checkState}
+        </if>
+        <if test="checkTime != null">
+              ,#{checkTime}
+        </if>
+      <if test="approveState != null">
+          ,#{approveState}
+      </if>
+      <if test="orderType != null">
+          ,#{orderType}
+      </if>
+      <if test="passTime != null">
+          ,#{passTime}
+      </if>
+      <if test="customerPayDiscount != null">
+          ,#{customerPayDiscount}
+      </if>
+      <if test="batchId != null">
+          ,#{batchId}
+      </if>
+    )
+  </insert>
+
+
+    <insert id="insertList" parameterType="List">
+        INSERT INTO u_whole_sales_flow (
+        `id`,
+        `user_id`,
+        `merchant_id`,
+        `merchant_discount`,
+        `customer_discount`,
+        `customer_pay_discount`,
+        `amount`,
+        `settlement_amount`,
+        `trans_type`,
+        `state`,
+        `return_message`,
+        `return_code`,
+        `settlement_time`,
+        `settlement_state`,
+        `settlement_delay`,
+        `remark`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`,
+        `check_state`,
+        `check_time`,
+        `approve_state`,
+        `order_type`,
+        `pass_time`,
+        `batch_id`
+        ) VALUES
+        <foreach collection="list" item="data" separator=",">
+            (
+            #{data.id},
+            #{data.userId},
+            #{data.merchantId},
+            #{data.merchantDiscount},
+            #{data.customerDiscount},
+            #{data.customerPayDiscount},
+            #{data.amount},
+            #{data.settlementAmount},
+            #{data.transType},
+            #{data.state},
+            #{data.returnMessage},
+            #{data.returnCode},
+            #{data.settlementTime},
+            #{data.settlementState},
+            #{data.settlementDelay},
+            #{data.remark},
+            #{data.createdBy},
+            #{data.createdDate},
+            #{data.modifiedBy},
+            #{data.modifiedDate},
+            #{data.status},
+            #{data.ip},
+            #{data.checkState},
+            #{data.checkTime},
+            #{data.approveState},
+            #{data.orderType},
+            #{data.passTime},
+            #{data.batchId}
+            )
+        </foreach>
+    </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.WholeSalesFlow">
+    UPDATE u_whole_sales_flow
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="userId != null">
+          `user_id`=#{userId},
+        </if>
+        <if test="merchantId != null">
+          `merchant_id`=#{merchantId},
+        </if>
+        <if test="merchantDiscount != null">
+          `merchant_discount`=#{merchantDiscount},
+        </if>
+        <if test="customerDiscount != null">
+          `customer_discount`=#{customerDiscount},
+        </if>
+        <if test="customerPayDiscount != null">
+            `customer_pay_discount`=#{customerPayDiscount},
+        </if>
+        <if test="amount != null">
+          `amount`=#{amount},
+        </if>
+        <if test="settlementAmount != null">
+          `settlement_amount`=#{settlementAmount},
+        </if>
+        <if test="transType != null">
+          `trans_type`=#{transType},
+        </if>
+        <if test="state != null">
+          `state`=#{state},
+        </if>
+        <if test="returnMessage != null">
+          `return_message`=#{returnMessage},
+        </if>
+        <if test="returnCode != null">
+          `return_code`=#{returnCode},
+        </if>
+        <if test="settlementTime != null">
+          `settlement_time`=#{settlementTime},
+        </if>
+        <if test="settlementState != null">
+          `settlement_state`=#{settlementState},
+        </if>
+        <if test="settlementDelay != null">
+          `settlement_delay`=#{settlementDelay},
+        </if>
+        <if test="remark != null">
+          `remark`=#{remark},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="modifiedBy != null">
+          `modified_by`=#{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+          `modified_date`=#{modifiedDate},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+        <if test="checkState != null">
+          `check_state`=#{checkState},
+        </if>
+        <if test="checkTime != null">
+          `check_time`=#{checkTime},
+        </if>
+        <if test="approveState != null">
+            `approve_state`=#{approveState},
+        </if>
+        <if test="orderType != null">
+            `order_type`=#{orderType},
+        </if>
+        <if test="passTime != null">
+            `pass_time`=#{passTime},
+        </if>
+        <if test="batchId != null">
+            `batch_id`=#{batchId},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_whole_sales_flow
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+  <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_whole_sales_flow
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_whole_sales_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="wholeSalesFlowMap">
+    <![CDATA[
+            SELECT * FROM u_whole_sales_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="wholeSalesFlowDTOMap">
+    <![CDATA[
+            SELECT * FROM u_whole_sales_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="wholeSalesFlowMap">
+    <![CDATA[
+            SELECT * FROM u_whole_sales_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="wholeSalesFlowDTOMap">
+    <![CDATA[
+            SELECT * FROM u_whole_sales_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_whole_sales_flow
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_whole_sales_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_whole_sales_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_whole_sales_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="wholeSalesInterestOrderCount" parameterType="java.util.Map" resultType="int">
+    SELECT
+        COUNT(DISTINCT sale_flow.id)
+    FROM
+        u_whole_sales_flow sale_flow
+    LEFT JOIN u_merchant merchant ON sale_flow.merchant_id = merchant.id
+    LEFT JOIN u_user user ON merchant.user_id = `user`.id
+    WHERE 1=1 AND sale_flow.status = 1 AND sale_flow.order_type = 0
+      <if test="email != null">
+          AND `user`.email LIKE CONCAT('%', #{email}, '%')
+      </if>
+      <if test="city != null">
+          AND merchant.`city`=${city}
+      </if>
+      <if test="practicalName != null">
+          AND merchant.practical_name LIKE CONCAT('%', #{practicalName}, '%')
+      </if>
+      <if test="approveState != null and approveState != -1">
+          AND sale_flow.approve_state=#{approveState}
+      </if>
+      <if test="accessState != null and accessState != -2">
+          AND merchant.state=#{accessState}
+      </if>
+  </select>
+
+  <select id="wholeSaleInterestOrderList" parameterType="java.util.Map" resultType="com.uwallet.pay.main.model.dto.WholeSalesFlowDTO">
+    SELECT
+        sale_flow.id,
+        sale_flow.merchant_id,
+        `user`.email,
+        merchant.practical_name,
+        merchant.state merchant_approve_state,
+        merchant.is_top,
+        sale_flow.approve_state,
+        sale_flow.amount,
+        sale_flow.settlement_amount,
+        sale_flow.merchant_discount,
+        merchant.whole_sale_user_discount customerDiscount,
+        merchant.whole_sale_user_pay_discount customerPayDiscount,
+        sale_flow.created_date,
+        merchant.city
+    FROM
+        u_whole_sales_flow sale_flow
+    LEFT JOIN u_merchant merchant ON sale_flow.merchant_id = merchant.id
+    LEFT JOIN u_user user ON merchant.user_id = `user`.id
+    WHERE 1=1 AND sale_flow.status = 1 AND sale_flow.order_type = 0
+      <if test="email != null">
+          AND `user`.email LIKE CONCAT('%', #{email}, '%')
+      </if>
+      <if test="city != null">
+          AND merchant.`city`=${city}
+      </if>
+      <if test="practicalName != null">
+          AND merchant.practical_name LIKE CONCAT('%', #{practicalName}, '%')
+      </if>
+      <if test="approveState != null and approveState != -1">
+          AND sale_flow.approve_state=#{approveState}
+      </if>
+      <if test="accessState != null and accessState != -2">
+          AND merchant.state=#{accessState}
+      </if>
+      ORDER BY
+      sale_flow.created_date DESC
+  </select>
+
+  <select id="wholeSaleOrderCount" parameterType="java.util.Map" resultType="int">
+    SELECT
+        COUNT(DISTINCT sale_flow.id)
+    FROM
+        u_whole_sales_flow sale_flow
+    LEFT JOIN u_merchant merchant ON sale_flow.merchant_id = merchant.id
+    LEFT JOIN u_user user ON merchant.user_id = `user`.id
+    WHERE 1=1 AND sale_flow.status = 1 AND sale_flow.order_type = 1
+      <if test="email != null">
+          AND `user`.email LIKE CONCAT('%', #{email}, '%')
+      </if>
+      <if test="practicalName != null">
+          AND merchant.practical_name LIKE CONCAT('%', #{practicalName}, '%')
+      </if>
+      <if test="merchantId != null">
+          AND sale_flow.merchant_id = #{merchantId}
+      </if>
+      <if test="city != null">
+          AND merchant.`city`=${city}
+      </if>
+      <if test="approveState != null and approveState != -1">
+          AND sale_flow.approve_state=#{approveState}
+      </if>
+      <if test="start != null and end != null">
+          AND sale_flow.created_date BETWEEN #{start} AND #{end}
+      </if>
+  </select>
+
+  <select id="wholeSaleOrderList" parameterType="java.util.Map" resultType="com.uwallet.pay.main.model.dto.WholeSalesFlowDTO">
+      SELECT
+          sale_flow.id,
+          sale_flow.merchant_id,
+          `user`.email,
+          merchant.practical_name,
+          merchant.state,
+          merchant.city,
+          merchant.is_top,
+          sale_flow.approve_state,
+          sale_flow.amount,
+          sale_flow.merchant_discount,
+          sale_flow.customer_discount,
+          sale_flow.customer_pay_discount,
+          sale_flow.created_date,
+          sale_flow.settlement_amount,
+          FROM_UNIXTIME(sale_flow.created_date/1000,'%b,%d %H:%i') app_format_created_date,
+          (SELECT COUNT(DISTINCT id) FROM u_whole_sales_flow WHERE merchant_id = sale_flow.merchant_id AND status = 1) order_count
+      FROM
+        u_whole_sales_flow sale_flow
+      LEFT JOIN u_merchant merchant ON sale_flow.merchant_id = merchant.id
+      LEFT JOIN u_user user ON merchant.user_id = `user`.id
+      WHERE 1=1 AND sale_flow.status = 1 AND sale_flow.order_type = 1
+      <if test="email != null">
+          AND `user`.email LIKE CONCAT('%', #{email}, '%')
+      </if>
+      <if test="practicalName != null">
+          AND merchant.practical_name LIKE CONCAT('%', #{practicalName}, '%')
+      </if>
+      <if test="merchantId != null">
+          AND sale_flow.merchant_id = #{merchantId}
+      </if>
+      <if test="approveState != null and approveState != -1">
+          AND sale_flow.approve_state=#{approveState}
+      </if>
+      <if test="city != null">
+          AND merchant.`city`=${city}
+      </if>
+      <if test="start != null and end != null">
+          AND sale_flow.created_date BETWEEN #{start} AND #{end}
+      </if>
+      <if test="createdDate != null">
+          AND FROM_UNIXTIME(sale_flow.created_date/1000,'%b.%Y') = #{createdDate}
+      </if>
+    ORDER BY
+        sale_flow.created_date DESC
+  </select>
+
+  <select id="merchantWholeSaleTotalAmount" parameterType="java.lang.Long" resultType="java.math.BigDecimal">
+      select SUM(amount) from u_whole_sales_flow where approve_state in (1, 3) and status = 1 and order_type = 1
+      <if test="merchantId != null">
+          AND merchant_id = #{merchantId}
+      </if>
+  </select>
+
+  <select id="appWholeSaleOrderCount" parameterType="java.util.Map" resultType="int">
+    SELECT COUNT(DISTINCT created_date) FROM (
+        SELECT DISTINCT FROM_UNIXTIME(created_date/1000,'%b.%Y') created_date FROM u_whole_sales_flow
+        WHERE status = 1 AND order_type = 1
+        GROUP BY FROM_UNIXTIME(created_date/1000,'%Y-%m')
+        ORDER BY FROM_UNIXTIME(created_date/1000,'%Y-%m') DESC
+    ) data
+  </select>
+
+  <select id="appWholeSaleOrder" parameterType="java.util.Map" resultType="string">
+    SELECT DISTINCT FROM_UNIXTIME(created_date/1000,'%b.%Y') FROM u_whole_sales_flow
+    WHERE status = 1 AND order_type = 1
+      <if test="merchantId != null">
+          AND merchant_id = #{merchantId}
+      </if>
+    GROUP BY FROM_UNIXTIME(created_date/1000,'%Y-%m')
+    ORDER BY FROM_UNIXTIME(created_date/1000,'%Y-%m') DESC
+      <if test="pc != null">
+          LIMIT ${pc.startIndex}, ${pc.pageSize}
+      </if>
+  </select>
+
+  <select id="findLatestWholeSaleFlowDTO" resultType="com.uwallet.pay.main.model.dto.WholeSalesFlowDTO" parameterType="java.util.Map">
+      SELECT * FROM  u_whole_sales_flow
+      WHERE  status = 1 AND order_type = 1
+      <if test="merchantId != null">
+          AND merchant_id = #{merchantId}
+      </if>
+      <if test="approveState != null">
+          AND approve_state = #{approveState}
+      </if>
+      <if test="approveState == null">
+          AND approve_state in (1, 3)
+      </if>
+      ORDER BY created_date DESC LIMIT 1
+  </select>
+
+    <select id="clearedDetailTransFlowList" parameterType="java.util.Map" resultType="com.uwallet.pay.main.model.dto.WholeSalesFlowDTO" >
+        select wh.* from u_clear_flow_detail fd
+        left join u_clear_detail d on fd.clear_batch_id = d.clear_batch_id and fd.rec_user_id = d.user_id
+        left join u_whole_sales_flow wh on wh.id = fd.flow_id
+        where d.id =  #{id}
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                fd.${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="clearedDetailTransFlowCount" resultType="Integer" >
+        select count(*) from u_clear_flow_detail fd
+        left join u_clear_detail d on fd.clear_batch_id = d.clear_batch_id and fd.rec_user_id = d.user_id
+        left join u_whole_sales_flow wh on wh.id = fd.flow_id
+        where d.id =  #{id} ;
+    </select>
+
+    <select id="countMerchantClearList" parameterType="Map" resultType="Integer">
+        SELECT
+        count(id)
+        FROM
+        u_whole_sales_flow
+        WHERE
+        STATUS = 1
+        AND state = 1
+        AND settlement_state = 0
+        AND settlement_delay = 0
+        AND approve_state = 1
+        <if test="start != null and end != null">
+            AND pass_time BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="merchantIdList != null">
+            AND merchant_id IN
+            <foreach collection="merchantIdList" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+
+    </select>
+    <update id="addClearBatchId" parameterType="Map">
+        UPDATE
+        u_whole_sales_flow
+        set settlement_state = 2 ,batch_id =  #{batchId}
+        WHERE
+        STATUS = 1
+        AND state = 1
+        AND settlement_state = 0
+        AND settlement_delay = 0
+        AND approve_state = 1
+        <if test="start != null and end != null">
+            AND pass_time BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="merchantIdList != null">
+            AND merchant_id IN
+            <foreach collection="merchantIdList" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+
+    </update>
+
+    <select id="getDataByBatchId" parameterType="Map" resultType="com.uwallet.pay.main.model.entity.ClearFlowDetail">
+        select
+            pay.batch_id as clear_batch_id ,
+            pay.user_id as rec_user_id,
+            pay.settlement_amount as trans_amount,
+            pay.trans_type as trans_type,
+            pay.id as flow_id,
+            pay.settlement_amount as clear_amount,
+            pay.amount as borrow_amount
+        from u_whole_sales_flow pay where pay.batch_id = #{id} and pay.settlement_state='2'
+    </select>
+    <update id="dealWholeSaleClear"  parameterType="Map">
+        update u_whole_sales_flow f left join  u_clear_detail d on d.clear_batch_id = f.batch_id and d.user_id  = f.user_id
+        set f.settlement_state = (case when d.state = 1 then 1 when d.state = 2 then 0 else 2 end) ,f.modified_date = #{time},
+        f.approve_state = (case when d.state = 1 then 3   else f.approve_state end)
+        where f.`status` = 1 and d.`status` = 1  and f.batch_id = #{id}
+    </update>
+    <select id="merchantClearMessageList" parameterType="Map" resultType="com.uwallet.pay.main.model.dto.WholeSalesFlowDTO">
+        SELECT
+        *
+        FROM
+        u_whole_sales_flow
+        WHERE
+        `status` = 1
+        AND state  = 1 and approve_state = 1
+        <if test="settlementState != null">
+            AND   settlement_state = #{settlementState}
+        </if>
+        <if test="settlementDelay != null">
+            AND   settlement_delay = #{settlementDelay}
+        </if>
+        <if test="start != null and end != null">
+            AND   pass_time BETWEEN #{start} AND #{end}
+        </if>
+        <if test="merchantId!= null">
+            AND   merchant_id  = #{merchantId}
+        </if>
+        <if test="merchantIdList != null">
+            AND merchant_id IN
+            <foreach collection="merchantIdList" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+
+    </select>
+
+    <update id="updateClearBatchToFail"  parameterType="Map">
+        update u_whole_sales_flow
+        set settlement_state = #{settlementState} ,
+        `modified_date`=#{modifiedDate},
+        approve_state = 1
+        where status = 1 and `user_id`=#{userId} and `batch_id`=#{batchId}
+    </update>
+    <select id="getMerchantClearMessageCount" parameterType="Map" resultType="Integer">
+        SELECT
+            count(*)
+        FROM
+            (
+                SELECT
+                    w.merchant_id
+                FROM
+                    u_whole_sales_flow w
+                LEFT JOIN u_merchant m ON w.merchant_id = m.id
+                WHERE
+                    m.id IS NOT NULL
+                AND w.`status` = 1
+                AND w.state = 1
+                <if test="practicalName != null">
+                    AND m.`practical_name` LIKE CONCAT('%', #{practicalName}, '%')
+                </if>
+                <if test="abn != null">
+                    AND m.ABN LIKE CONCAT('%', #{abn}, '%')
+                </if>
+                <if test="settlementState != null">
+                    AND   w.settlement_state = #{settlementState}
+                </if>
+                <if test="approveState != null">
+                    AND   w.approve_state = #{approveState}
+                </if>
+                <if test="settlementDelay != null">
+                    AND   w.settlement_delay = #{settlementDelay}
+                </if>
+                <if test="start != null and end != null">
+                    AND   w.pass_time BETWEEN #{start} AND #{end}
+                </if>
+                <if test="city != null">
+                    AND m.city=#{city}
+                </if>
+
+                GROUP BY
+                    w.merchant_id
+            ) m
+    </select>
+</mapper>

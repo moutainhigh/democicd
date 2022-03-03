@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.AppCustomCategoryDisplayStateDAO">
+
+    <resultMap id="appCustomCategoryDisplayStateMap" type="com.uwallet.pay.main.model.entity.AppCustomCategoryDisplayState">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="displayOrder" jdbcType="INTEGER" column="display_order"/>
+        <result property="stateName" jdbcType="VARCHAR" column="state_name"/>
+        <result property="categoryType" jdbcType="TINYINT" column="category_type"/>
+        <result property="categoryName" jdbcType="VARCHAR" column="category_name"/>
+        <result property="merchantDisplayType" jdbcType="TINYINT" column="merchant_display_type"/>
+        <result property="merchantShowType" jdbcType="TINYINT" column="merchant_show_type"/>
+        <result property="merchantSameStateName" jdbcType="VARCHAR" column="merchant_same_state_name"/>
+        <result property="imageTotal" jdbcType="TINYINT" column="image_total"/>
+        <result property="imagesJson" jdbcType="VARCHAR" column="images_json"/>
+        <result property="merchantIds" jdbcType="VARCHAR" column="merchant_ids"/>
+        <result property="remark" jdbcType="VARCHAR" column="remark"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+    </resultMap>
+
+    <resultMap id="appCustomCategoryDisplayStateDTOMap" type="com.uwallet.pay.main.model.dto.AppCustomCategoryDisplayStateDTO" extends="appCustomCategoryDisplayStateMap"></resultMap>
+
+    <!--通用查询条件-->
+    <sql id="basicParams">
+        <if test="id != null">
+            AND `id`=#{id}
+        </if>
+        <if test="displayOrder != null">
+            AND `display_order`=#{displayOrder}
+        </if>
+        <if test="stateName != null">
+            AND `state_name`=#{stateName}
+        </if>
+        <if test="categoryType != null">
+            AND `category_type`=#{categoryType}
+        </if>
+        <if test="categoryName != null">
+            AND `category_name`=#{categoryName}
+        </if>
+        <if test="merchantDisplayType != null">
+            AND `merchant_display_type`=#{merchantDisplayType}
+        </if>
+        <if test="merchantShowType != null">
+            AND `merchant_show_type`=#{merchantShowType}
+        </if>
+        <if test="merchantSameStateName != null">
+            AND `merchant_same_state_name`=#{merchantSameStateName}
+        </if>
+        <if test="imageTotal != null">
+            AND `image_total`=#{imageTotal}
+        </if>
+        <if test="imagesJson != null">
+            AND `images_json`=#{imagesJson}
+        </if>
+        <if test="merchantIds != null">
+            AND `merchant_ids`=#{merchantIds}
+        </if>
+        <if test="remark != null">
+            AND `remark`=#{remark}
+        </if>
+        <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+        </if>
+        <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+            AND `ip`=#{ip}
+        </if>
+    </sql>
+
+    <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.AppCustomCategoryDisplayState">
+        INSERT INTO u_app_custom_category_display_state (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="displayOrder != null">
+            ,`display_order`
+        </if>
+        <if test="stateName != null">
+            ,`state_name`
+        </if>
+        <if test="categoryType != null">
+            ,`category_type`
+        </if>
+        <if test="categoryName != null">
+            ,`category_name`
+        </if>
+        <if test="merchantDisplayType != null">
+            ,`merchant_display_type`
+        </if>
+        <if test="merchantShowType != null">
+            ,`merchant_show_type`
+        </if>
+        <if test="merchantSameStateName != null">
+            ,`merchant_same_state_name`
+        </if>
+        <if test="imageTotal != null">
+            ,`image_total`
+        </if>
+        <if test="imagesJson != null">
+            ,`images_json`
+        </if>
+        <if test="merchantIds != null">
+            ,`merchant_ids`
+        </if>
+        <if test="remark != null">
+            ,`remark`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+        ) VALUES (
+        <if test="id != null">
+            #{id}
+        </if>
+        <if test="displayOrder != null">
+            ,#{displayOrder}
+        </if>
+        <if test="stateName != null">
+            ,#{stateName}
+        </if>
+        <if test="categoryType != null">
+            ,#{categoryType}
+        </if>
+        <if test="categoryName != null">
+            ,#{categoryName}
+        </if>
+        <if test="merchantDisplayType != null">
+            ,#{merchantDisplayType}
+        </if>
+        <if test="merchantShowType != null">
+            ,#{merchantShowType}
+        </if>
+        <if test="merchantSameStateName != null">
+            ,#{merchantSameStateName}
+        </if>
+        <if test="imageTotal != null">
+            ,#{imageTotal}
+        </if>
+        <if test="imagesJson != null">
+            ,#{imagesJson}
+        </if>
+        <if test="merchantIds != null">
+            ,#{merchantIds}
+        </if>
+        <if test="remark != null">
+            ,#{remark}
+        </if>
+        <if test="createdBy != null">
+            ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+            ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+            ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+            ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+            ,#{status}
+        </if>
+        <if test="ip != null">
+            ,#{ip}
+        </if>
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="List">
+        INSERT INTO u_app_custom_category_display_state (
+        `id`,
+        `display_order`,
+        `state_name`,
+        `category_type`,
+        `category_name`,
+        `merchant_display_type`,
+        `merchant_show_type`,
+        `merchant_same_state_name`,
+        `image_total`,
+        `images_json`,
+        `merchant_ids`,
+        `remark`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`
+        ) VALUES
+        <foreach collection="list" item="data" separator=",">
+            (
+            #{data.id},
+            #{data.displayOrder},
+            #{data.stateName},
+            #{data.categoryType},
+            #{data.categoryName},
+            #{data.merchantDisplayType},
+            #{data.merchantShowType},
+            #{data.merchantSameStateName},
+            #{data.imageTotal},
+            #{data.imagesJson},
+            #{data.merchantIds},
+            #{data.remark},
+            #{data.createdBy},
+            #{data.createdDate},
+            #{data.modifiedBy},
+            #{data.modifiedDate},
+            #{data.status},
+            #{data.ip}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.uwallet.pay.main.model.entity.AppCustomCategoryDisplayState">
+        UPDATE u_app_custom_category_display_state
+        <set>
+            <if test="id != null">
+                `id`=#{id},
+            </if>
+            <if test="displayOrder != null">
+                `display_order`=#{displayOrder},
+            </if>
+            <if test="stateName != null">
+                `state_name`=#{stateName},
+            </if>
+            <if test="categoryType != null">
+                `category_type`=#{categoryType},
+            </if>
+            <if test="categoryName != null">
+                `category_name`=#{categoryName},
+            </if>
+            <if test="merchantDisplayType != null">
+                `merchant_display_type`=#{merchantDisplayType},
+            </if>
+            <if test="merchantShowType != null">
+                `merchant_show_type`=#{merchantShowType},
+            </if>
+            <if test="merchantSameStateName != null">
+                `merchant_same_state_name`=#{merchantSameStateName},
+            </if>
+            <if test="imageTotal != null">
+                `image_total`=#{imageTotal},
+            </if>
+            <if test="imagesJson != null">
+                `images_json`=#{imagesJson},
+            </if>
+            <if test="merchantIds != null">
+                `merchant_ids`=#{merchantIds},
+            </if>
+            <if test="remark != null">
+                `remark`=#{remark},
+            </if>
+            <if test="createdBy != null">
+                `created_by`=#{createdBy},
+            </if>
+            <if test="createdDate != null">
+                `created_date`=#{createdDate},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <choose>
+                <when test="status != null ">AND status = #{status.value}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            AND id = #{id}
+        </trim>
+    </update>
+
+    <update id="delete" parameterType="Map">
+      UPDATE u_app_custom_category_display_state
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+    <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_app_custom_category_display_state
+      WHERE id = #{id}
+  </delete>
+
+    <select id="count" parameterType="Map" resultType="Integer">
+        <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_app_custom_category_display_state
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultMap="appCustomCategoryDisplayStateMap">
+        <![CDATA[
+            SELECT * FROM u_app_custom_category_display_state
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="selectOneDTO" parameterType="Map" resultMap="appCustomCategoryDisplayStateDTOMap">
+        <![CDATA[
+            SELECT * FROM u_app_custom_category_display_state
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="select" parameterType="Map" resultMap="appCustomCategoryDisplayStateMap">
+        <![CDATA[
+            SELECT * FROM u_app_custom_category_display_state
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectDTO" parameterType="Map" resultMap="appCustomCategoryDisplayStateDTOMap">
+        <![CDATA[
+            SELECT * FROM u_app_custom_category_display_state
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectMap" parameterType="Map" resultType="Map">
+        SELECT
+        <foreach collection="columns" item="cname" separator="," open="`" close="`">
+            ${cname}
+        </foreach>
+        FROM u_app_custom_category_display_state
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <!--统计相关查询-->
+    <select id="groupCount" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_app_custom_category_display_state
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+    <select id="sum" parameterType="Map" resultType="Double">
+        <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_app_custom_category_display_state
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+    </select>
+
+    <select id="groupSum" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_app_custom_category_display_state
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+    <select id="listByMerchantId" resultMap="appCustomCategoryDisplayStateDTOMap">
+        SELECT
+            a.display_order,
+            a.category_type,
+            a.state_name,
+            merchant_ids
+        FROM
+            u_app_custom_category_display_state a
+        WHERE
+            a.status = 1
+            AND a.merchant_ids LIKE CONCAT('%', #{merchantId}, '%')
+    </select>
+
+
+    <update id="updateOrderByMoveUpOrDown" parameterType="com.uwallet.pay.main.model.entity.AppCustomCategoryDisplayState">
+        UPDATE u_app_custom_category_display_state
+        <set>
+            <if test="displayOrder != null">
+                `display_order`=#{displayOrder},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+        </set>
+        where  status = 1 and id in (${ids})
+    </update>
+
+    <update id="updateMerchantIdsBySameStateChange" parameterType="com.uwallet.pay.main.model.entity.AppCustomCategoryDisplayState">
+        UPDATE u_app_custom_category_display_state
+        <set>
+            <if test="merchantIds != null">
+                 `merchant_ids`=#{merchantIds},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+        </set>
+        where  status = 1 and id in (${ids})
+    </update>
+
+    <update id="updateCategoryByOrder" parameterType="com.uwallet.pay.main.model.entity.AppCustomCategoryDisplayState">
+        UPDATE u_app_custom_category_display_state
+        <set>
+            <if test="categoryType != null">
+                `category_type`=#{categoryType},
+            </if>
+            <if test="categoryName != null">
+                `category_name`=#{categoryName},
+            </if>
+            <if test="clearMerchatStr != null">
+                `merchant_ids`= '',
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+        </set>
+        where  status = 1 and display_order = #{displayOrder}
+    </update>
+
+
+    <update id="updateCategoryMerchantInfo" parameterType="com.uwallet.pay.main.model.entity.AppCustomCategoryDisplayState">
+        UPDATE u_app_custom_category_display_state
+        <set>
+            <if test="merchantIds != null">
+                `merchant_ids` = #{merchantIds},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+        </set>
+        where  id = #{id}
+    </update>
+
+    <update id="updatDefinition" parameterType="com.uwallet.pay.main.model.entity.AppCustomCategoryDisplayState">
+        UPDATE u_app_custom_category_display_state
+        set `merchant_show_type` = #{merchantDisplayType}
+        where  id = #{id}
+    </update>
+    <select id="getDistanceMerchant" resultType="java.util.HashMap">
+        select a.categories,b.en_name
+        from u_merchant a
+        left join u_static_data b on a.merchant_state = b.value and b.code='merchantState'
+        where a.id = #{id}
+    </select>
+
+
+</mapper>

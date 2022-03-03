@@ -1,0 +1,1434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.ClearDetailDAO">
+
+    <resultMap id="clearDetailMap" type="com.uwallet.pay.main.model.entity.ClearDetail">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="clearBatchId" jdbcType="BIGINT" column="clear_batch_id"/>
+        <result property="userId" jdbcType="BIGINT" column="user_id"/>
+        <result property="merchantId" jdbcType="BIGINT" column="merchant_id"/>
+        <result property="clearNumber" jdbcType="BIGINT" column="clear_number"/>
+        <result property="clearAmount" jdbcType="DECIMAL" column="clear_amount"/>
+        <result property="transAmount" jdbcType="DECIMAL" column="trans_amount"/>
+        <result property="bsb" jdbcType="VARCHAR" column="BSB"/>
+        <result property="accountNo" jdbcType="VARCHAR" column="account_no"/>
+        <result property="bankName" jdbcType="VARCHAR" column="bank_name"/>
+        <result property="state" jdbcType="TINYINT" column="state"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+        <result property="borrowAmount" jdbcType="DECIMAL" column="borrow_amount"/>
+    </resultMap>
+
+    <resultMap id="clearDetailDTOMap" type="com.uwallet.pay.main.model.dto.ClearDetailDTO">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="clearBatchId" jdbcType="BIGINT" column="clear_batch_id"/>
+        <result property="userId" jdbcType="BIGINT" column="user_id"/>
+        <result property="merchantId" jdbcType="BIGINT" column="merchant_id"/>
+        <result property="clearNumber" jdbcType="BIGINT" column="clear_number"/>
+        <result property="clearAmount" jdbcType="DECIMAL" column="clear_amount"/>
+        <result property="transAmount" jdbcType="DECIMAL" column="trans_amount"/>
+        <result property="abn" jdbcType="VARCHAR" column="abn"/>
+        <result property="bsb" jdbcType="VARCHAR" column="BSB"/>
+        <result property="accountNo" jdbcType="VARCHAR" column="account_no"/>
+        <result property="bankName" jdbcType="VARCHAR" column="bank_name"/>
+        <result property="state" jdbcType="TINYINT" column="state"/>
+        <result property="corporateName" jdbcType="VARCHAR" column="corporate_name"/>
+        <result property="practicalName" jdbcType="VARCHAR" column="practical_name"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+        <result property="accountName" jdbcType="VARCHAR" column="account_name"/>
+        <result property="borrowAmount" jdbcType="DECIMAL" column="borrow_amount"/>
+        <result property="realName" jdbcType="VARCHAR" column="real_name"/>
+        <result property="clearType" jdbcType="TINYINT" column="clear_type"/>
+        <result property="fileName" jdbcType="VARCHAR" column="file_name"/>
+
+
+
+    </resultMap>
+
+    <resultMap id="ClearBillCSVDTOMap" type="com.uwallet.pay.main.model.dto.ClearBillCSVDTO">
+        <result property="ContactName" jdbcType="VARCHAR" column="ContactName"/>
+        <result property="EmailAddress" jdbcType="VARCHAR" column="EmailAddress"/>
+        <result property="POAddressLine1" jdbcType="VARCHAR" column="POAddressLine1"/>
+        <result property="POAddressLine2" jdbcType="VARCHAR" column="POAddressLine2"/>
+        <result property="POAddressLine3" jdbcType="VARCHAR" column="POAddressLine3"/>
+        <result property="POAddressLine4" jdbcType="VARCHAR" column="POAddressLine4"/>
+        <result property="POCity" jdbcType="VARCHAR" column="POCity"/>
+        <result property="PORegion" jdbcType="VARCHAR" column="PORegion"/>
+        <result property="POPostalCode" jdbcType="VARCHAR" column="POPostalCode"/>
+        <result property="POCountry" jdbcType="VARCHAR" column="POCountry"/>
+        <result property="InvoiceNumber" jdbcType="VARCHAR" column="InvoiceNumber"/>
+        <result property="InvoiceDate" jdbcType="VARCHAR" column="InvoiceDate"/>
+        <result property="DueDate" jdbcType="VARCHAR" column="DueDate"/>
+        <result property="InventoryItemCode" jdbcType="VARCHAR" column="InventoryItemCode"/>
+        <result property="Description" jdbcType="VARCHAR" column="Description"/>
+        <result property="Quantity" jdbcType="VARCHAR" column="Quantity"/>
+        <result property="UnitAmount" jdbcType="VARCHAR" column="UnitAmount"/>
+        <result property="AccountCode" jdbcType="VARCHAR" column="AccountCode"/>
+        <result property="TaxType" jdbcType="VARCHAR" column="TaxType"/>
+        <result property="TrackingName1" jdbcType="VARCHAR" column="TrackingName1"/>
+        <result property="TrackingOption1" jdbcType="VARCHAR" column="TrackingOption1"/>
+        <result property="TrackingName2" jdbcType="VARCHAR" column="TrackingName2"/>
+        <result property="TrackingOption2" jdbcType="VARCHAR" column="TrackingOption2"/>
+        <result property="Currency" jdbcType="VARCHAR" column="Currency"/>
+
+    </resultMap>
+
+
+    <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.ClearDetail">
+        INSERT INTO u_clear_detail (
+        <if test="id != null">
+            `id`,
+        </if>
+        <if test="clearBatchId != null">
+            `clear_batch_id`,
+        </if>
+        <if test="userId != null">
+            `user_id`,
+        </if>
+        <if test="merchantId != null">
+            `merchant_id`,
+        </if>
+        <if test="clearNumber != null">
+            `clear_number`,
+        </if>
+        <if test="clearAmount != null">
+            `clear_amount`,
+        </if>
+        <if test="transAmount != null">
+            `trans_amount`,
+        </if>
+        <if test="bsb != null">
+            `BSB`,
+        </if>
+        <if test="accountNo != null">
+            `account_no`,
+        </if>
+        <if test="bankName != null">
+            `bank_name`,
+        </if>
+        <if test="state != null">
+            `state`,
+        </if>
+        <if test="createdBy != null">
+            `created_by`,
+        </if>
+        <if test="createdDate != null">
+            `created_date`,
+        </if>
+        <if test="modifiedBy != null">
+            `modified_by`,
+        </if>
+        <if test="modifiedDate != null">
+            `modified_date`,
+        </if>
+        <if test="status != null">
+            `status`,
+        </if>
+        <if test="borrowAmount != null">
+            `borrow_amount`,
+        </if>
+        <if test="ip != null">
+            `ip`
+        </if>
+        ) VALUES (
+        <if test="id != null">
+            #{id},
+        </if>
+        <if test="clearBatchId != null">
+            #{clearBatchId},
+        </if>
+        <if test="userId != null">
+            #{userId},
+        </if>
+        <if test="merchantId != null">
+            #{merchantId},
+        </if>
+        <if test="clearNumber != null">
+            #{clearNumber},
+        </if>
+        <if test="clearAmount != null">
+            #{clearAmount},
+        </if>
+        <if test="transAmount != null">
+            #{transAmount},
+        </if>
+        <if test="bsb != null">
+            #{bsb},
+        </if>
+        <if test="accountNo != null">
+            #{accountNo},
+        </if>
+        <if test="bankName != null">
+            #{bankName},
+        </if>
+        <if test="state != null">
+            #{state},
+        </if>
+        <if test="createdBy != null">
+            #{createdBy},
+        </if>
+        <if test="createdDate != null">
+            #{createdDate},
+        </if>
+        <if test="modifiedBy != null">
+            #{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+            #{modifiedDate},
+        </if>
+        <if test="status != null">
+            #{status},
+        </if>
+        <if test="borrowAmount != null">
+            #{borrowAmount},
+        </if>
+        <if test="ip != null">
+            #{ip}
+        </if>
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="List">
+        INSERT INTO u_clear_detail (
+            `id`,
+            `clear_batch_id`,
+            `user_id`,
+            `merchant_id`,
+            `clear_number`,
+            `clear_amount`,
+            `trans_amount`,
+            `BSB`,
+            `account_no`,
+            `bank_name`,
+            `state`,
+            `created_by`,
+            `created_date`,
+            `modified_by`,
+            `modified_date`,
+            `status`,
+            `borrow_amount`,
+            `ip`
+        ) VALUES
+        <foreach collection="list" item="data" separator=",">
+            (
+                #{data.id},
+                #{data.clearBatchId},
+                #{data.userId},
+                #{data.merchantId},
+                #{data.clearNumber},
+                #{data.clearAmount},
+                #{data.transAmount},
+                #{data.bsb},
+                #{data.accountNo},
+                #{data.bankName},
+                #{data.state},
+                #{data.createdBy},
+                #{data.createdDate},
+                #{data.modifiedBy},
+                #{data.modifiedDate},
+                #{data.status},
+                #{data.borrowAmount},
+                #{data.ip}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.uwallet.pay.main.model.entity.ClearDetail">
+        UPDATE u_clear_detail
+        <set>
+            <if test="id != null">
+                `id`=#{id},
+            </if>
+            <if test="clearBatchId != null">
+                `clear_batch_id`=#{clearBatchId},
+            </if>
+            <if test="userId != null">
+                `user_id`=#{userId},
+            </if>
+            <if test="merchantId != null">
+                `merchant_id`=#{merchantId},
+            </if>
+            <if test="clearNumber != null">
+                `clear_number`=#{clearNumber},
+            </if>
+            <if test="clearAmount != null">
+                `clear_amount`=#{clearAmount},
+            </if>
+            <if test="transAmount != null">
+                `trans_amount`=#{transAmount},
+            </if>
+            <if test="bsb != null">
+                `BSB`=#{bsb},
+            </if>
+            <if test="accountNo != null">
+                `account_no`=#{accountNo},
+            </if>
+            <if test="bankName != null">
+                `bank_name`=#{bankName},
+            </if>
+            <if test="state != null">
+                `state`=#{state},
+            </if>
+            <if test="createdBy != null">
+                `created_by`=#{createdBy},
+            </if>
+            <if test="createdDate != null">
+                `created_date`=#{createdDate},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+            <if test="borrowAmount != null">
+                `borrow_amount`=#{borrowAmount},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <choose>
+                <when test="status != null ">AND status = #{status.value}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            AND id = #{id}
+        </trim>
+    </update>
+
+    <update id="delete" parameterType="Map">
+      UPDATE u_clear_detail
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+    <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_clear_detail
+      WHERE id = #{id}
+  </delete>
+
+    <select id="count" parameterType="Map" resultType="Integer">
+        <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_clear_detail
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="clearBatchId != null">
+                AND `clear_batch_id`=#{clearBatchId}
+            </if>
+            <if test="userId != null">
+                AND `user_id`=#{userId}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="clearNumber != null">
+                AND `clear_number`=#{clearNumber}
+            </if>
+            <if test="clearAmount != null">
+                AND `clear_amount`=#{clearAmount}
+            </if>
+            <if test="borrowAmount != null">
+                AND `borrow_amount`=#{borrowAmount}
+            </if>
+            <if test="transAmount != null">
+                AND `trans_amount`=#{transAmount}
+            </if>
+            <if test="bsb != null">
+                AND `BSB`=#{bsb}
+            </if>
+            <if test="accountNo != null">
+                AND `account_no`=#{accountNo}
+            </if>
+            <if test="bankName != null">
+                AND `bank_name`=#{bankName}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">And status = #{status}</when>
+                <otherwise><![CDATA[And status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="queryTransNo != null">
+                AND `id` like concat('%',#{queryTransNo},'%')
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultMap="clearDetailMap">
+        <![CDATA[
+            SELECT * FROM u_clear_detail
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="clearBatchId != null">
+                AND `clear_batch_id`=#{clearBatchId}
+            </if>
+            <if test="userId != null">
+                AND `user_id`=#{userId}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="clearNumber != null">
+                AND `clear_number`=#{clearNumber}
+            </if>
+            <if test="clearAmount != null">
+                AND `clear_amount`=#{clearAmount}
+            </if>
+            <if test="borrowAmount != null">
+                AND `borrow_amount`=#{borrowAmount}
+            </if>
+            <if test="transAmount != null">
+                AND `trans_amount`=#{transAmount}
+            </if>
+            <if test="bsb != null">
+                AND `BSB`=#{bsb}
+            </if>
+            <if test="accountNo != null">
+                AND `account_no`=#{accountNo}
+            </if>
+            <if test="bankName != null">
+                AND `bank_name`=#{bankName}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="selectOneDTO" parameterType="Map" resultMap="clearDetailDTOMap">
+        <![CDATA[
+            SELECT detail.*, merchant.corporate_name FROM u_clear_detail detail
+            LEFT JOIN u_merchant merchant ON detail.merchant_id = merchant.id
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND detail.`id`=#{id}
+            </if>
+            <if test="clearBatchId != null">
+                AND detail.`clear_batch_id`=#{clearBatchId}
+            </if>
+            <if test="userId != null">
+                AND detail.`user_id`=#{userId}
+            </if>
+            <if test="borrowAmount != null">
+                AND detail.`borrow_amount`=#{borrowAmount}
+            </if>
+            <if test="merchantId != null">
+                AND detail.`merchant_id`=#{merchantId}
+            </if>
+            <if test="clearNumber != null">
+                AND detail.`clear_number`=#{clearNumber}
+            </if>
+            <if test="clearAmount != null">
+                AND detail.`clear_amount`=#{clearAmount}
+            </if>
+            <if test="transAmount != null">
+                AND detail.`trans_amount`=#{transAmount}
+            </if>
+            <if test="bsb != null">
+                AND detail.`BSB`=#{bsb}
+            </if>
+            <if test="accountNo != null">
+                AND detail.`account_no`=#{accountNo}
+            </if>
+            <if test="bankName != null">
+                AND detail.`bank_name`=#{bankName}
+            </if>
+            <if test="state != null">
+                AND detail.`state`=#{state}
+            </if>
+            <if test="createdBy != null">
+                AND detail.`created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND detail.`created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND detail.`modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND detail.`modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND detail.status = #{status}</when>
+                <otherwise><![CDATA[AND detail.status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND detail.`ip`=#{ip}
+            </if>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="select" parameterType="Map" resultMap="clearDetailMap">
+        <![CDATA[
+            SELECT detail.*, merchant.corporate_name FROM u_clear_detail detail
+            LEFT JOIN u_merchant merchant ON detail.merchant_id = merchant.id
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND detail.`id`=#{id}
+            </if>
+            <if test="clearBatchId != null">
+                AND detail.`clear_batch_id`=#{clearBatchId}
+            </if>
+            <if test="userId != null">
+                AND detail.`user_id`=#{userId}
+            </if>
+            <if test="merchantId != null">
+                AND detail.`merchant_id`=#{merchantId}
+            </if>
+            <if test="clearNumber != null">
+                AND detail.`clear_number`=#{clearNumber}
+            </if>
+            <if test="clearAmount != null">
+                AND detail.`clear_amount`=#{clearAmount}
+            </if>
+            <if test="transAmount != null">
+                AND detail.`trans_amount`=#{transAmount}
+            </if>
+            <if test="bsb != null">
+                AND detail.`BSB`=#{bsb}
+            </if>
+            <if test="accountNo != null">
+                AND detail.`account_no`=#{accountNo}
+            </if>
+            <if test="bankName != null">
+                AND detail.`bank_name`=#{bankName}
+            </if>
+            <if test="state != null">
+                AND detail.`state`=#{state}
+            </if>
+            <if test="createdBy != null">
+                AND detail.`created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND detail.`created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND detail.`modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND detail.`modified_date`=#{modifiedDate}
+            </if>
+            <if test="borrowAmount != null">
+                AND detail.`borrow_amount`=#{borrowAmount}
+            </if>
+            <choose>
+                <when test="status != null">AND detail.status = #{status}</when>
+                <otherwise><![CDATA[AND detail.status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND detail.`ip`=#{ip}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectDTO" parameterType="Map" resultMap="clearDetailDTOMap">
+        <![CDATA[
+            SELECT detail.*, merchant.practical_name as corporate_name  FROM u_clear_detail detail
+            LEFT JOIN u_merchant merchant ON detail.merchant_id = merchant.id
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND detail.`id`=#{id}
+            </if>
+            <if test="clearBatchId != null">
+                AND detail.`clear_batch_id`=#{clearBatchId}
+            </if>
+            <if test="userId != null">
+                AND detail.`user_id`=#{userId}
+            </if>
+            <if test="merchantId != null">
+                AND detail.`merchant_id`=#{merchantId}
+            </if>
+            <if test="clearNumber != null">
+                AND detail.`clear_number`=#{clearNumber}
+            </if>
+            <if test="clearAmount != null">
+                AND detail.`clear_amount`=#{clearAmount}
+            </if>
+            <if test="transAmount != null">
+                AND detail.`trans_amount`=#{transAmount}
+            </if>
+            <if test="bsb != null">
+                AND detail.`BSB`=#{bsb}
+            </if>
+            <if test="accountNo != null">
+                AND detail.`account_no`=#{accountNo}
+            </if>
+            <if test="bankName != null">
+                AND detail.`bank_name`=#{bankName}
+            </if>
+            <if test="state != null">
+                AND detail.`state`=#{state}
+            </if>
+            <if test="createdBy != null">
+                AND detail.`created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND detail.`created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND detail.`modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND detail.`modified_date`=#{modifiedDate}
+            </if>
+            <if test="borrowAmount != null">
+                AND detail.`borrow_amount`=#{borrowAmount}
+            </if>
+            <choose>
+                <when test="status != null">AND detail.status = #{status}</when>
+                <otherwise><![CDATA[AND detail.status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND detail.`ip`=#{ip}
+            </if>
+            <if test="queryTransNo != null">
+                AND detail.`id` like concat('%',#{queryTransNo},'%')
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectMap" parameterType="Map" resultType="Map">
+        SELECT
+        <foreach collection="columns" item="cname" separator="," open="`" close="`">
+            ${cname}
+        </foreach>
+        FROM u_clear_detail
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="clearBatchId != null">
+                AND `clear_batch_id`=#{clearBatchId}
+            </if>
+            <if test="userId != null">
+                AND `user_id`=#{userId}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="clearNumber != null">
+                AND `clear_number`=#{clearNumber}
+            </if>
+            <if test="clearAmount != null">
+                AND `clear_amount`=#{clearAmount}
+            </if>
+            <if test="transAmount != null">
+                AND `trans_amount`=#{transAmount}
+            </if>
+            <if test="bsb != null">
+                AND `BSB`=#{bsb}
+            </if>
+            <if test="accountNo != null">
+                AND `account_no`=#{accountNo}
+            </if>
+            <if test="bankName != null">
+                AND `bank_name`=#{bankName}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="borrowAmount != null">
+                AND `borrow_amount`=#{borrowAmount}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <!--统计相关查询-->
+    <select id="groupCount" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_clear_detail
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="clearBatchId != null">
+                AND `clear_batch_id`=#{clearBatchId}
+            </if>
+            <if test="userId != null">
+                AND `user_id`=#{userId}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="clearNumber != null">
+                AND `clear_number`=#{clearNumber}
+            </if>
+            <if test="clearAmount != null">
+                AND `clear_amount`=#{clearAmount}
+            </if>
+            <if test="transAmount != null">
+                AND `trans_amount`=#{transAmount}
+            </if>
+            <if test="bsb != null">
+                AND `BSB`=#{bsb}
+            </if>
+            <if test="accountNo != null">
+                AND `account_no`=#{accountNo}
+            </if>
+            <if test="bankName != null">
+                AND `bank_name`=#{bankName}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="borrowAmount != null">
+                AND `borrow_amount`=#{borrowAmount}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+    <select id="sum" parameterType="Map" resultType="Double">
+        <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_clear_detail
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="clearBatchId != null">
+                AND `clear_batch_id`=#{clearBatchId}
+            </if>
+            <if test="userId != null">
+                AND `user_id`=#{userId}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="clearNumber != null">
+                AND `clear_number`=#{clearNumber}
+            </if>
+            <if test="clearAmount != null">
+                AND `clear_amount`=#{clearAmount}
+            </if>
+            <if test="transAmount != null">
+                AND `trans_amount`=#{transAmount}
+            </if>
+            <if test="bsb != null">
+                AND `BSB`=#{bsb}
+            </if>
+            <if test="accountNo != null">
+                AND `account_no`=#{accountNo}
+            </if>
+            <if test="bankName != null">
+                AND `bank_name`=#{bankName}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="borrowAmount != null">
+                AND `borrow_amount`=#{borrowAmount}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+    </select>
+
+    <select id="groupSum" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_clear_detail
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="clearBatchId != null">
+                AND `clear_batch_id`=#{clearBatchId}
+            </if>
+            <if test="userId != null">
+                AND `user_id`=#{userId}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="clearNumber != null">
+                AND `clear_number`=#{clearNumber}
+            </if>
+            <if test="clearAmount != null">
+                AND `clear_amount`=#{clearAmount}
+            </if>
+            <if test="transAmount != null">
+                AND `trans_amount`=#{transAmount}
+            </if>
+            <if test="bsb != null">
+                AND `BSB`=#{bsb}
+            </if>
+            <if test="accountNo != null">
+                AND `account_no`=#{accountNo}
+            </if>
+            <if test="bankName != null">
+                AND `bank_name`=#{bankName}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="borrowAmount != null">
+                AND `borrow_amount`=#{borrowAmount}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+
+    <select id="getClearBatch" parameterType="Map" resultMap="clearDetailDTOMap">
+        <![CDATA[
+            SELECT  a.batch_id as clear_batch_id,
+            b.id as merchant_id,
+            a.rec_user_id as user_id,
+            SUM(trans_amount) as trans_amount,
+            SUM(rec_amount) as clear_amount,
+            count(a.id) as clear_number,
+            b.BSB as BSB,
+            b.account_no as account_no,
+            b.bank_name as bank_name
+            FROM u_qr_pay_flow a
+            LEFT JOIN u_merchant b
+            ON a.rec_user_id=b.user_id
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <![CDATA[And a.status > 0]]>
+            <if test="isNeedClear != null">
+                AND a.`is_need_clear`=#{isNeedClear}
+            </if>
+            <if test="clearState != null">
+                AND a.`clear_state`=#{clearState}
+            </if>
+            <if test="state != null">
+                AND a.`state`=#{state}
+            </if>
+            <if test="batchId != null">
+                AND a.batch_id =#{batchId}
+            </if>
+        </trim>
+        GROUP BY b.user_id
+    </select>
+
+    <select id="getClearDoubt" resultMap="clearDetailDTOMap">
+        select * from u_clear_detail qf WHERE qf.state =#{state}
+        <![CDATA[AND qf.created_date > unix_timestamp(DATE_SUB(NOW(), INTERVAL 5 DAY))*1000
+        AND qf.modified_date < unix_timestamp(DATE_SUB(NOW(), INTERVAL 5 MINUTE))*1000
+        AND status > 0
+
+        ]]>
+    </select>
+
+
+    <select id="getClearBillList" resultMap="ClearBillCSVDTOMap">
+		SELECT
+	        mer.practical_name AS ContactName,
+	        mc.email AS EmailAddress,
+	        mer.address AS POAddressLine1,
+	        mer.city AS POCity,
+	        mer.county AS POCountry,
+	        mer.merchant_state AS PORegion,
+	        mer.postcode AS POPostalCode,
+	        da.id AS InvoiceNumber,
+	        date_format(now(), '%d/%c/%Y') AS InvoiceDate,
+	        date_format(now(), '%d/%c/%Y') AS DueDate,
+	        1 AS Quantity,
+	        da.trans_amount AS UnitAmount,
+	        'AUD' AS Currency
+        FROM
+			u_clear_detail da
+		LEFT JOIN u_merchant mer ON mer.id = da.merchant_id
+		LEFT JOIN u_contact_person mc on mc.merchant_id=mer.id and mc.status=1
+		WHERE
+			da.clear_batch_id = #{clearBatchId} and  da.state='1' GROUP BY mer.id
+    </select>
+
+    <select id="getClearABAList" resultMap="clearDetailDTOMap">
+		SELECT
+          da.*,mer.corporate_name,mer.account_name,mer.abn
+        FROM
+			u_clear_detail da
+		LEFT JOIN u_merchant mer ON mer.id = da.merchant_id
+		WHERE
+			da.clear_batch_id = #{clearBatchId} and da.state='1'
+			 <![CDATA[and da.clear_amount>0 ]]>
+    </select>
+
+
+    <select id="getClearBatchNew" parameterType="Map" resultMap="clearDetailDTOMap">
+        select
+         <![CDATA[ f.clear_batch_id as clear_batch_id,
+        count(f.id) AS clear_number,
+        f.rec_user_id AS user_id,
+        m.id as merchant_id,
+        m.BSB as BSB,
+        m.account_no as account_no,
+        m.bank_name as bank_name,
+--         0  as clear_amount,
+        sum(f.trans_amount) as trans_amount,
+        sum(f.borrow_amount) as borrow_amount,
+        sum(f.clear_amount) as clear_amount
+        ]]>
+        FROM
+        u_clear_flow_detail f left join u_merchant m on f.rec_user_id = m.user_id
+        where f.clear_batch_id =  #{batchId} and f.state =  #{state} group by f.rec_user_id
+    </select>
+
+    <select id="clearTotal" parameterType="Map" resultMap="clearDetailDTOMap">
+        select sum(clear_amount) as clear_amount,sum(trans_amount) as trans_amount,count(*) as count,
+        sum(borrow_amount) as borrow_amount
+        from u_clear_detail
+        where
+        <![CDATA[ status > 0 ]]>
+        AND clear_batch_id=#{clearBatchId}
+        AND state=1
+    </select>
+
+    <select id="geApiPlatformClearData" parameterType="Map" resultMap="clearDetailDTOMap">
+
+        SELECT
+        <![CDATA[  f.clear_batch_id AS clear_batch_id,
+        count(f.id) AS clear_number,
+        f.rec_user_id AS user_id,
+        m.id AS merchant_id,
+        m.bsb AS BSB,
+        m.account_no AS account_no,
+        m.account_name AS bank_name,
+        0 AS clear_amount,
+        sum(f.trans_amount) AS trans_amount,
+        sum(f.borrow_amount) AS borrow_amount
+        FROM
+        u_clear_flow_detail f
+        LEFT JOIN u_access_merchant m ON f.rec_user_id = m.platform_id and platform_own = 1 ]]>
+        WHERE
+        f.clear_batch_id = #{batchId} and f.state =  #{state}
+        group by f.rec_user_id
+    </select>
+    <update id="clearData" parameterType="Map"  >
+        update u_clear_detail
+        set clear_amount = trans_amount,
+        state = 1
+        where
+        clear_batch_id = #{orgBatchId}
+        <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+    </update>
+
+
+    <select id="getApiPltClearBillList" resultMap="ClearBillCSVDTOMap">
+		SELECT
+	        mer.name AS ContactName,
+-- 	        mer.email AS EmailAddress,
+-- 	        mer.address AS POAddressLine1,
+-- 	        mer.city AS POCity,
+-- 	        mer.county AS POCountry,
+-- 	        mer.merchant_state AS PORegion,
+-- 	        mer.postcode AS POPostalCode,
+	        da.id AS InvoiceNumber,
+	        date_format(now(), '%d/%c/%Y') AS InvoiceDate,
+	        date_format(now(), '%d/%c/%Y') AS DueDate,
+	        1 AS Quantity,
+	        da.trans_amount AS UnitAmount,
+	        'AUD' AS Currency
+        FROM
+			u_clear_detail da
+		LEFT JOIN u_access_merchant mer ON mer.id = da.merchant_id
+		WHERE
+			da.clear_batch_id = #{clearBatchId} and  da.state='1'
+    </select>
+
+    <select id="selectApiPltClearBatchBorrow" parameterType="Map" resultMap="clearDetailDTOMap">
+        <![CDATA[
+            SELECT detail.*, merchant.name as corporate_name FROM u_clear_detail detail
+            LEFT JOIN u_access_merchant merchant ON detail.merchant_id = merchant.id
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND detail.`id`=#{id}
+            </if>
+            <if test="clearBatchId != null">
+                AND detail.`clear_batch_id`=#{clearBatchId}
+            </if>
+            <if test="userId != null">
+                AND detail.`user_id`=#{userId}
+            </if>
+            <if test="merchantId != null">
+                AND detail.`merchant_id`=#{merchantId}
+            </if>
+            <if test="clearNumber != null">
+                AND detail.`clear_number`=#{clearNumber}
+            </if>
+            <if test="clearAmount != null">
+                AND detail.`clear_amount`=#{clearAmount}
+            </if>
+            <if test="transAmount != null">
+                AND detail.`trans_amount`=#{transAmount}
+            </if>
+            <if test="bsb != null">
+                AND detail.`BSB`=#{bsb}
+            </if>
+            <if test="accountNo != null">
+                AND detail.`account_no`=#{accountNo}
+            </if>
+            <if test="bankName != null">
+                AND detail.`bank_name`=#{bankName}
+            </if>
+            <if test="state != null">
+                AND detail.`state`=#{state}
+            </if>
+            <if test="createdBy != null">
+                AND detail.`created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND detail.`created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND detail.`modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND detail.`modified_date`=#{modifiedDate}
+            </if>
+            <if test="borrowAmount != null">
+                AND detail.`borrow_amount`=#{borrowAmount}
+            </if>
+            <choose>
+                <when test="status != null">AND detail.status = #{status}</when>
+                <otherwise><![CDATA[AND detail.status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND detail.`ip`=#{ip}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+
+    <select id="getClearedDetailList" parameterType="Map" resultMap="clearDetailDTOMap">
+        <![CDATA[
+            select d.*, if(b.clear_type=4,di.institute_name,m.practical_name) practical_name ,a.real_name,b.file_name,b.clear_type,if(b.clear_type=4,'0',m.city) city
+             from u_clear_detail d
+            left join u_clear_batch b on d.clear_batch_id = b.id
+            left join u_admin a on d.created_by = a.id
+            left join u_merchant m on d.merchant_id = m.id and d.merchant_id != 1
+            left join u_donation_institute di on di.id = d.merchant_id and d.merchant_id = 1
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="corporateName != null">
+                AND m.`corporate_name` like CONCAT('%', #{corporateName}, '%')
+            </if>
+            <if test="practicalName != null">
+                AND (  m.`practical_name` like CONCAT('%', #{practicalName}, '%') or di.institute_name like CONCAT('%', #{practicalName}, '%'))
+            </if>
+            <if test="state != null">
+                AND d.`state`=#{state}
+            </if>
+            <if test="start != null and end != null">
+                AND d.`created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="city != null">
+                AND m.city=#{city}
+            </if>
+            <if test="clearType != null and clearType != 1">
+                AND b.clear_type=#{clearType}
+            </if>
+            <if test="clearType != null and clearType == 1">
+                AND b.clear_type in (0,3)
+            </if>
+            <choose>
+                <when test="status != null">AND d.status = #{status}</when>
+                <otherwise><![CDATA[AND d.status > 0]]></otherwise>
+            </choose>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                d.${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+
+    <select id="getClearedDetailListCount" parameterType="Map" resultType="int">
+
+        <![CDATA[
+            select count(d.id)  from u_clear_detail d
+            left join u_merchant m on d.merchant_id = m.id and d.merchant_id != 1
+            left join u_clear_batch b on d.clear_batch_id = b.id
+            left join u_donation_institute di on di.id = d.merchant_id and d.merchant_id = 1
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="corporateName != null">
+                AND m.`corporate_name` like CONCAT('%', #{corporateName}, '%')
+            </if>
+            <if test="practicalName != null">
+                AND (  m.`practical_name` like CONCAT('%', #{practicalName}, '%') or di.institute_name like CONCAT('%', #{practicalName}, '%'))
+            </if>
+            <if test="state != null">
+                AND d.`state`=#{state}
+            </if>
+            <if test="start != null and end != null">
+                AND d.`created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="city != null">
+                AND m.city=#{city}
+            </if>
+            <if test="clearType != null and clearType != 1">
+                AND b.clear_type=#{clearType}
+            </if>
+            <if test="clearType != null and clearType == 1">
+                AND b.clear_type in (0,3)
+            </if>
+            <choose>
+                <when test="status != null">AND d.status = #{status}</when>
+                <otherwise><![CDATA[AND d.status > 0]]></otherwise>
+            </choose>
+        </trim>
+    </select>
+    <update id="dealWholeSaleClearSuccess" parameterType="Map" >
+        UPDATE u_clear_detail
+        SET state = 1
+        WHERE
+            STATUS = 1
+        AND state = 0
+        AND merchant_id IS NOT NULL
+        AND account_no IS NOT NULL
+        AND bank_name IS NOT NULL
+        AND bsb IS NOT NULL
+        AND clear_batch_id = #{ id}
+    </update>
+
+    <update id="dealWholeSaleClearFail" parameterType="Map" >
+        UPDATE u_clear_detail
+        SET state = 2
+        WHERE
+            STATUS = 1
+        AND state = 0
+        AND clear_batch_id = #{ id}
+    </update>
+
+    <select id="getDonationClearBatch" resultType="com.uwallet.pay.main.model.entity.ClearDetail">
+        select
+        count(f.id) AS clear_number,
+		m.id as merchant_id,
+        sum(f.trans_amount) as trans_amount,
+        sum(f.borrow_amount) as borrow_amount,
+        sum(f.clear_amount) as clear_amount
+        FROM
+        u_clear_flow_detail f left join u_donation_institute m on f.rec_user_id = m.id
+        where f.clear_batch_id =  #{batchId}  and f.state =  1
+    </select>
+    <select id="getH5MerchantClearDetail" resultType="com.uwallet.pay.main.model.dto.ClearDetailDTO">
+                  select
+         f.clear_batch_id as clear_batch_id,
+        count(f.id) AS clear_number,
+        f.rec_user_id AS user_id,
+        f.merchant_id  as merchant_id,
+        m.BSB as BSB,
+        m.account_no as account_no,
+        m.bank_name as bank_name,
+        sum(case when f.trans_type = 36 then -1*f.trans_amount else f.trans_amount end ) as trans_amount,
+        sum(case when f.trans_type = 36  then -1*f.borrow_amount else f.borrow_amount end) as borrow_amount,
+        sum(case when f.trans_type = 36  then -1*f.clear_amount else f.clear_amount end) as clear_amount
+
+        FROM
+        u_clear_flow_detail f left join u_api_merchant m on f.merchant_id = m.id
+        where f.clear_batch_id =  #{batchId} and f.state =  #{state} group by  f.merchant_id
+    </select>
+    <select id="selectH5MerchantClearData" resultType="com.uwallet.pay.main.model.dto.ClearDetailDTO">
+
+        <![CDATA[
+            SELECT detail.*, merchant.corporate_name as corporate_name FROM u_clear_detail detail
+            LEFT JOIN u_api_merchant merchant ON detail.merchant_id = merchant.id
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND detail.`id`=#{id}
+            </if>
+            <if test="clearBatchId != null">
+                AND detail.`clear_batch_id`=#{clearBatchId}
+            </if>
+            <if test="userId != null">
+                AND detail.`user_id`=#{userId}
+            </if>
+            <if test="merchantId != null">
+                AND detail.`merchant_id`=#{merchantId}
+            </if>
+            <if test="clearNumber != null">
+                AND detail.`clear_number`=#{clearNumber}
+            </if>
+            <if test="clearAmount != null">
+                AND detail.`clear_amount`=#{clearAmount}
+            </if>
+            <if test="transAmount != null">
+                AND detail.`trans_amount`=#{transAmount}
+            </if>
+            <if test="bsb != null">
+                AND detail.`BSB`=#{bsb}
+            </if>
+            <if test="accountNo != null">
+                AND detail.`account_no`=#{accountNo}
+            </if>
+            <if test="bankName != null">
+                AND detail.`bank_name`=#{bankName}
+            </if>
+            <if test="state != null">
+                AND detail.`state`=#{state}
+            </if>
+            <if test="createdBy != null">
+                AND detail.`created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND detail.`created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND detail.`modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND detail.`modified_date`=#{modifiedDate}
+            </if>
+            <if test="borrowAmount != null">
+                AND detail.`borrow_amount`=#{borrowAmount}
+            </if>
+            <choose>
+                <when test="status != null">AND detail.status = #{status}</when>
+                <otherwise><![CDATA[AND detail.status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND detail.`ip`=#{ip}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+
+    <update id="updateStateByBatchId" parameterType="Map" >
+        UPDATE u_clear_detail
+        SET state = #{state}, `modified_by` = #{modifiedBy},
+        `modified_date` = #{modifiedDate}
+        WHERE
+            STATUS = 1
+        AND clear_batch_id = #{clearBatchId}
+    </update>
+
+    <select id="getH5ClearBillList" resultMap="ClearBillCSVDTOMap">
+		SELECT
+	        mer.practical_name AS ContactName,
+	        mer.email AS EmailAddress,
+	        mer.address AS POAddressLine1,
+	        mer.city AS POCity,
+	        mer.county AS POCountry,
+	        mer.merchant_state AS PORegion,
+	        mer.postcode AS POPostalCode,
+	        da.id AS InvoiceNumber,
+	        date_format(now(), '%d/%c/%Y') AS InvoiceDate,
+	        date_format(now(), '%d/%c/%Y') AS DueDate,
+	        1 AS Quantity,
+	        da.trans_amount AS UnitAmount,
+	        'AUD' AS Currency
+        FROM
+			u_clear_detail da
+		LEFT JOIN u_api_merchant mer ON mer.id = da.merchant_id
+		WHERE
+			da.clear_batch_id = #{clearBatchId} and  da.state='1'
+    </select>
+
+    <select id="h5ClearCount" resultType="com.uwallet.pay.main.model.dto.QrPayFlowDTO">
+       select DISTINCT trans_no
+         FROM (
+             SELECT qr.trans_no
+             FROM u_clear_flow_detail fd
+             LEFT JOIN u_clear_detail d
+             ON fd.clear_batch_id = d.clear_batch_id and fd.merchant_id = d.merchant_id
+             LEFT JOIN u_qr_pay_flow qr
+             ON qr.id = fd.flow_id
+             WHERE d.id = #{id}  and fd.trans_type in (2,22)
+         UNION all
+             SELECT qr.trans_no
+             FROM u_clear_flow_detail fd
+             LEFT JOIN u_clear_detail d
+             ON fd.clear_batch_id = d.clear_batch_id and fd.merchant_id = d.merchant_id
+             LEFT JOIN u_refund_order qr
+             ON qr.id = fd.flow_id
+             WHERE d.id = #{id} and fd.trans_type = 36
+        )kk;
+
+
+    </select>
+</mapper>

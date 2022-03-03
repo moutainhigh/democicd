@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.CreateCreditOrderFlowDAO">
+
+  <resultMap id="createCreditOrderFlowMap" type="com.uwallet.pay.main.model.entity.CreateCreditOrderFlow">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="qrPayFlowId" jdbcType="BIGINT" column="qr_pay_flow_id"/>
+    <result property="userId" jdbcType="BIGINT" column="user_id"/>
+    <result property="state" jdbcType="TINYINT" column="state"/>
+    <result property="cardPayRate" jdbcType="DECIMAL" column="card_pay_rate"/>
+    <result property="cardFeeAmount" jdbcType="DECIMAL" column="card_fee_amount"/>
+    <result property="cardPayAmount" jdbcType="DECIMAL" column="card_pay_amount"/>
+    <result property="cardAccountName" jdbcType="VARCHAR" column="card_account_name"/>
+    <result property="cardNo" jdbcType="VARCHAR" column="card_no"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+  </resultMap>
+
+  <resultMap id="createCreditOrderFlowDTOMap" type="com.uwallet.pay.main.model.dto.CreateCreditOrderFlowDTO" extends="createCreditOrderFlowMap"></resultMap>
+
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="qrPayFlowId != null">
+          AND `qr_pay_flow_id`=#{qrPayFlowId}
+        </if>
+        <if test="userId != null">
+          AND `user_id`=#{userId}
+        </if>
+        <if test="state != null">
+          AND `state`=#{state}
+        </if>
+        <if test="cardPayRate != null">
+          AND `card_pay_rate`=#{cardPayRate}
+        </if>
+        <if test="cardFeeAmount != null">
+          AND `card_fee_amount`=#{cardFeeAmount}
+        </if>
+        <if test="cardPayAmount != null">
+          AND `card_pay_amount`=#{cardPayAmount}
+        </if>
+        <if test="cardAccountName != null">
+          AND `card_account_name`=#{cardAccountName}
+        </if>
+        <if test="cardNo != null">
+          AND `card_no`=#{cardNo}
+        </if>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="modifiedBy != null">
+          AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+          AND `modified_date`=#{modifiedDate}
+        </if>
+        <choose>
+          <when test="status != null">AND status = #{status}</when>
+          <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+  </sql>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.CreateCreditOrderFlow">
+    INSERT INTO u_create_credit_order_flow (
+        <if test="id != null">
+            `id` 
+        </if>
+        <if test="qrPayFlowId != null">
+            ,`qr_pay_flow_id` 
+        </if>
+        <if test="userId != null">
+            ,`user_id` 
+        </if>
+        <if test="state != null">
+            ,`state` 
+        </if>
+        <if test="cardPayRate != null">
+            ,`card_pay_rate` 
+        </if>
+        <if test="cardFeeAmount != null">
+            ,`card_fee_amount` 
+        </if>
+        <if test="cardPayAmount != null">
+            ,`card_pay_amount` 
+        </if>
+        <if test="cardAccountName != null">
+            ,`card_account_name` 
+        </if>
+        <if test="cardNo != null">
+            ,`card_no` 
+        </if>
+        <if test="createdBy != null">
+            ,`created_by` 
+        </if>
+        <if test="createdDate != null">
+            ,`created_date` 
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by` 
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date` 
+        </if>
+        <if test="status != null">
+            ,`status` 
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="qrPayFlowId != null">
+              ,#{qrPayFlowId}
+        </if>
+        <if test="userId != null">
+              ,#{userId}
+        </if>
+        <if test="state != null">
+              ,#{state}
+        </if>
+        <if test="cardPayRate != null">
+              ,#{cardPayRate}
+        </if>
+        <if test="cardFeeAmount != null">
+              ,#{cardFeeAmount}
+        </if>
+        <if test="cardPayAmount != null">
+              ,#{cardPayAmount}
+        </if>
+        <if test="cardAccountName != null">
+              ,#{cardAccountName}
+        </if>
+        <if test="cardNo != null">
+              ,#{cardNo}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+              ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+              ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_create_credit_order_flow (
+        `id`,
+        `qr_pay_flow_id`,
+        `user_id`,
+        `state`,
+        `card_pay_rate`,
+        `card_fee_amount`,
+        `card_pay_amount`,
+        `card_account_name`,
+        `card_no`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.qrPayFlowId},
+        #{data.userId},
+        #{data.state},
+        #{data.cardPayRate},
+        #{data.cardFeeAmount},
+        #{data.cardPayAmount},
+        #{data.cardAccountName},
+        #{data.cardNo},
+        #{data.createdBy},
+        #{data.createdDate},
+        #{data.modifiedBy},
+        #{data.modifiedDate},
+        #{data.status},
+        #{data.ip}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.CreateCreditOrderFlow">
+    UPDATE u_create_credit_order_flow
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="qrPayFlowId != null">
+          `qr_pay_flow_id`=#{qrPayFlowId},
+        </if>
+        <if test="userId != null">
+          `user_id`=#{userId},
+        </if>
+        <if test="state != null">
+          `state`=#{state},
+        </if>
+        <if test="cardPayRate != null">
+          `card_pay_rate`=#{cardPayRate},
+        </if>
+        <if test="cardFeeAmount != null">
+          `card_fee_amount`=#{cardFeeAmount},
+        </if>
+        <if test="cardPayAmount != null">
+          `card_pay_amount`=#{cardPayAmount},
+        </if>
+        <if test="cardAccountName != null">
+          `card_account_name`=#{cardAccountName},
+        </if>
+        <if test="cardNo != null">
+          `card_no`=#{cardNo},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="modifiedBy != null">
+          `modified_by`=#{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+          `modified_date`=#{modifiedDate},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_create_credit_order_flow
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+  <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_create_credit_order_flow
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_create_credit_order_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="createCreditOrderFlowMap">
+    <![CDATA[
+            SELECT * FROM u_create_credit_order_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="createCreditOrderFlowDTOMap">
+    <![CDATA[
+            SELECT * FROM u_create_credit_order_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="createCreditOrderFlowMap">
+    <![CDATA[
+            SELECT * FROM u_create_credit_order_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="createCreditOrderFlowDTOMap">
+    <![CDATA[
+            SELECT * FROM u_create_credit_order_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_create_credit_order_flow
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_create_credit_order_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_create_credit_order_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_create_credit_order_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+</mapper>

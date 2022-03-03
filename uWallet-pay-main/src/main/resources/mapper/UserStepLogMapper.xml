@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.UserStepLogDAO">
+
+  <resultMap id="userStepLogMap" type="com.uwallet.pay.main.model.entity.UserStepLog">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="stepId" jdbcType="BIGINT" column="step_id"/>
+    <result property="stepStatus" jdbcType="TINYINT" column="step_status"/>
+    <result property="riskBatchNo" jdbcType="VARCHAR" column="risk_batch_no"/>
+    <result property="refuseReason" jdbcType="VARCHAR" column="refuse_reason"/>
+    <result property="kycInfo" jdbcType="VARCHAR" column="kyc_info"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+  </resultMap>
+
+  <resultMap id="userStepLogDTOMap" type="com.uwallet.pay.main.model.dto.UserStepLogDTO" extends="userStepLogMap"></resultMap>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.UserStepLog">
+    INSERT INTO u_user_step_log (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="stepId != null">
+            ,`step_id`
+        </if>
+        <if test="stepStatus != null">
+            ,`step_status`
+        </if>
+        <if test="riskBatchNo != null">
+            ,`risk_batch_no`
+        </if>
+        <if test="refuseReason != null">
+            ,`refuse_reason`
+        </if>
+          <if test="kycInfo != null">
+              ,`kyc_info`
+          </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="stepId != null">
+              ,#{stepId}
+        </if>
+        <if test="stepStatus != null">
+              ,#{stepStatus}
+        </if>
+        <if test="riskBatchNo != null">
+              ,#{riskBatchNo}
+        </if>
+        <if test="refuseReason != null">
+              ,#{refuseReason}
+        </if>
+      <if test="kycInfo != null">
+          ,#{kycInfo}
+      </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+              ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+              ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_user_step_log (
+        `id`,
+        `step_id`,
+        `step_status`,
+        `risk_batch_no`,
+        `refuse_reason`,
+        `kyc_info`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.stepId},
+        #{data.stepStatus},
+        #{data.riskBatchNo},
+        #{data.refuseReason},
+        #{data.kycInfo},
+        #{data.createdBy},
+        #{data.createdDate},
+        #{data.modifiedBy},
+        #{data.modifiedDate},
+        #{data.status},
+        #{data.ip}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.UserStepLog">
+    UPDATE u_user_step_log
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="stepId != null">
+          `step_id`=#{stepId},
+        </if>
+        <if test="stepStatus != null">
+          `step_status`=#{stepStatus},
+        </if>
+        <if test="riskBatchNo != null">
+          `risk_batch_no`=#{riskBatchNo},
+        </if>
+        <if test="refuseReason != null">
+          `refuse_reason`=#{refuseReason},
+        </if>
+        <if test="kycInfo != null">
+            `kyc_info`=#{kycInfo},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="modifiedBy != null">
+          `modified_by`=#{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+          `modified_date`=#{modifiedDate},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_user_step_log
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+  <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_user_step_log
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_user_step_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="userStepLogMap">
+    <![CDATA[
+            SELECT * FROM u_user_step_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="userStepLogDTOMap">
+    <![CDATA[
+            SELECT * FROM u_user_step_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="userStepLogMap">
+    <![CDATA[
+            SELECT * FROM u_user_step_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="userStepLogDTOMap">
+    <![CDATA[
+            SELECT * FROM u_user_step_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_user_step_log
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_user_step_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_user_step_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_user_step_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="stepId != null">
+          AND `step_id`=#{stepId}
+        </if>
+        <if test="stepStatus != null">
+          AND `step_status`=#{stepStatus}
+        </if>
+        <if test="riskBatchNo != null">
+          AND `risk_batch_no`=#{riskBatchNo}
+        </if>
+        <if test="refuseReason != null">
+          AND `refuse_reason`=#{refuseReason}
+        </if>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="modifiedBy != null">
+          AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+          AND `modified_date`=#{modifiedDate}
+        </if>
+        <choose>
+          <when test="status != null">AND status = #{status}</when>
+          <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+  </sql>
+
+  <select id="findLatestStepLog" resultType="com.uwallet.pay.main.model.dto.UserStepLogDTO" parameterType="long">
+      SELECT * FROM  u_user_step_log WHERE step_id = #{stepId} ORDER BY created_date DESC LIMIT 1
+  </select>
+
+  <select id="findStepLog" resultType="com.uwallet.pay.main.model.dto.UserStepLogDTO" parameterType="long">
+      SELECT * FROM  u_user_step_log WHERE step_id = #{stepId} ORDER BY created_date DESC
+  </select>
+    <select id="findStepLogNew" resultType="com.uwallet.pay.main.model.dto.UserStepLogDTO">
+    SELECT s1.* FROM `u_user_step_log` s1 LEFT JOIN u_user_step s2 on s1.step_id=s2.id where s2.user_id=#{userId} and s2.step =#{step} ORDER BY created_date DESC
+    </select>
+    <select id="findKycLogListCount" resultType="java.lang.Integer">
+        SELECT
+            count(ul.id)
+        FROM
+            u_user_step_log ul
+        LEFT JOIN u_user_step us ON us.id = ul.step_id
+        WHERE
+            us.user_id = #{userId}
+        AND us.step = 1
+    </select>
+    <select id="findKycLogList" resultType="com.uwallet.pay.main.model.dto.UserStepLogDTO">
+        SELECT
+            ul.*
+        FROM
+            u_user_step_log ul
+        LEFT JOIN u_user_step us ON us.id = ul.step_id
+        WHERE
+            us.user_id = #{userId}
+        AND us.step = 1
+        order by ul.created_date desc
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+</mapper>

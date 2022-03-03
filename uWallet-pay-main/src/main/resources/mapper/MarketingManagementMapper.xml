@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.MarketingManagementDAO">
+
+    <resultMap id="marketingManagementMap" type="com.uwallet.pay.main.model.entity.MarketingManagement">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="amount" jdbcType="DECIMAL" column="amount"/>
+        <result property="totalAmount" jdbcType="DECIMAL" column="total_amount"/>
+        <result property="number" jdbcType="INTEGER" column="number"/>
+        <result property="code" jdbcType="VARCHAR" column="code"/>
+        <result property="state" jdbcType="TINYINT" column="state"/>
+        <result property="usedNumber" jdbcType="INTEGER" column="used_number"/>
+        <result property="receiveNumber" jdbcType="INTEGER" column="receive_number"/>
+        <result property="minTransAmount" jdbcType="DECIMAL" column="min_trans_amount"/>
+        <result property="validStartTime" jdbcType="BIGINT" column="valid_start_time"/>
+        <result property="validEndTime" jdbcType="BIGINT" column="valid_end_time"/>
+        <result property="createMethod" jdbcType="TINYINT" column="create_method"/>
+        <result property="activityDescription" jdbcType="VARCHAR" column="activity_description"/>
+        <result property="description" jdbcType="VARCHAR" column="description"/>
+        <result property="type" jdbcType="TINYINT" column="type"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+        <result property="activityState" jdbcType="TINYINT" column="activity_state"/>
+        <result property="validityLimitState" jdbcType="TINYINT" column="validity_limit_state"/>
+        <result property="amountLimitState" jdbcType="TINYINT" column="amount_limit_state"/>
+        <result property="inviteValidityType" jdbcType="TINYINT" column="invite_validity_type"/>
+        <result property="cityLimitState" jdbcType="TINYINT" column="city_limit_state"/>
+        <result property="restaurantLimitState" jdbcType="BIGINT" column="restaurant_limit_state"/>
+    </resultMap>
+
+    <resultMap id="marketingManagementDTOMap" type="com.uwallet.pay.main.model.dto.MarketingManagementDTO" extends="marketingManagementMap"></resultMap>
+
+    <!--通用查询条件-->
+    <sql id="basicParams">
+        <if test="id != null">
+            AND `id`=#{id}
+        </if>
+        <if test="amount != null">
+            AND `amount`=#{amount}
+        </if>
+        <if test="totalAmount != null">
+            AND `total_amount`=#{totalAmount}
+        </if>
+        <if test="number != null">
+            AND `number`=#{number}
+        </if>
+        <if test="code != null">
+            AND `code`=#{code}
+        </if>
+        <if test="state != null">
+            AND `state`=#{state}
+        </if>
+        <if test="usedNumber != null">
+            AND `used_number`=#{usedNumber}
+        </if>
+        <if test="receiveNumber != null">
+            AND `receive_number`=#{receiveNumber}
+        </if>
+        <if test="minTransAmount != null">
+            AND `min_trans_amount`=#{minTransAmount}
+        </if>
+        <if test="validStartTime != null">
+            AND `valid_start_time`=#{validStartTime}
+        </if>
+        <if test="validEndTime != null">
+            AND `valid_end_time`=#{validEndTime}
+        </if>
+        <if test="createMethod != null">
+            AND `create_method`=#{createMethod}
+        </if>
+        <if test="activityDescription != null">
+            AND `activity_description`=#{activityDescription}
+        </if>
+        <if test="description != null">
+            AND `description`=#{description}
+        </if>
+        <if test="type != null">
+            AND `type`=#{type}
+        </if>
+        <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+        </if>
+        <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND (status > 0 or type = 2)]]></otherwise>
+        </choose>
+        <if test="ip != null">
+            AND `ip`=#{ip}
+        </if>
+        <if test="activityState != null">
+            AND `activity_state`=#{activityState}
+        </if>
+        <if test="validityLimitState != null">
+            AND `validity_limit_state`=#{validityLimitState}
+        </if>
+        <if test="amountLimitState != null">
+            AND `amount_limit_state`=#{amountLimitState}
+        </if>
+        <if test="inviteValidityType != null">
+            AND `invite_validity_type`=#{inviteValidityType}
+        </if>
+        <if test="inviteValidityType != null">
+            AND `city_limit_state`=#{cityLimitState}
+        </if>
+        <if test="inviteValidityType != null">
+            AND `restaurant_limit_state`=#{restaurantLimitState}
+        </if>
+    </sql>
+
+    <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.MarketingManagement">
+        INSERT INTO u_marketing_management (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="amount != null">
+            ,`amount`
+        </if>
+        <if test="totalAmount != null">
+            ,`total_amount`
+        </if>
+        <if test="number != null">
+            ,`number`
+        </if>
+        <if test="code != null">
+            ,`code`
+        </if>
+        <if test="state != null">
+            ,`state`
+        </if>
+        <if test="usedNumber != null">
+            ,`used_number`
+        </if>
+        <if test="receiveNumber != null">
+            ,`receive_number`
+        </if>
+        <if test="minTransAmount != null">
+            ,`min_trans_amount`
+        </if>
+        <if test="validStartTime != null">
+            ,`valid_start_time`
+        </if>
+        <if test="validEndTime != null">
+            ,`valid_end_time`
+        </if>
+        <if test="createMethod != null">
+            ,`create_method`
+        </if>
+        <if test="activityDescription != null">
+            ,`activity_description`
+        </if>
+        <if test="description != null">
+            ,`description`
+        </if>
+        <if test="type != null">
+            ,`type`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+        <if test="activityState != null">
+            ,`activity_state`
+        </if>
+        <if test="validityLimitState != null">
+            ,`validity_limit_state`
+        </if>
+        <if test="amountLimitState != null">
+            ,`amount_limit_state`
+        </if>
+        <if test="inviteValidityType != null">
+            ,`invite_validity_type`
+        </if>
+        <if test="cityLimitState != null">
+            ,`city_limit_state`
+        </if>
+        <if test="restaurantLimitState != null">
+            ,`restaurant_limit_state`
+        </if>
+        ) VALUES (
+        <if test="id != null">
+            #{id}
+        </if>
+        <if test="amount != null">
+            ,#{amount}
+        </if>
+        <if test="totalAmount != null">
+            ,#{totalAmount}
+        </if>
+        <if test="number != null">
+            ,#{number}
+        </if>
+        <if test="code != null">
+            ,#{code}
+        </if>
+        <if test="state != null">
+            ,#{state}
+        </if>
+        <if test="usedNumber != null">
+            ,#{usedNumber}
+        </if>
+        <if test="receiveNumber != null">
+            ,#{receiveNumber}
+        </if>
+        <if test="minTransAmount != null">
+            ,#{minTransAmount}
+        </if>
+        <if test="validStartTime != null">
+            ,#{validStartTime}
+        </if>
+        <if test="validEndTime != null">
+            ,#{validEndTime}
+        </if>
+        <if test="createMethod != null">
+            ,#{createMethod}
+        </if>
+        <if test="activityDescription != null">
+            ,#{activityDescription}
+        </if>
+        <if test="description != null">
+            ,#{description}
+        </if>
+        <if test="type != null">
+            ,#{type}
+        </if>
+        <if test="createdBy != null">
+            ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+            ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+            ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+            ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+            ,#{status}
+        </if>
+        <if test="ip != null">
+            ,#{ip}
+        </if>
+        <if test="activityState != null">
+            ,#{activityState}
+        </if>
+        <if test="validityLimitState != null">
+            ,#{validityLimitState}
+        </if>
+        <if test="amountLimitState != null">
+            ,#{amountLimitState}
+        </if>
+        <if test="inviteValidityType != null">
+            ,#{inviteValidityType}
+        </if>
+        <if test="cityLimitState != null">
+            ,#{cityLimitState}
+        </if>
+        <if test="restaurantLimitState != null">
+            ,#{restaurantLimitState}
+        </if>
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="List">
+        INSERT INTO u_marketing_management (
+        `id`,
+        `amount`,
+        `total_amount`,
+        `number`,
+        `code`,
+        `state`,
+        `used_number`,
+        `receive_number`,
+        `min_trans_amount`,
+        `valid_start_time`,
+        `valid_end_time`,
+        `create_method`,
+        `activity_description`,
+        `description`,
+        `type`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`,
+        `activity_state`,
+        `validity_limit_state`,
+        `amount_limit_state`
+        ) VALUES
+        <foreach collection="list" item="data" separator=",">
+            (
+            #{data.id},
+            #{data.amount},
+            #{data.totalAmount},
+            #{data.number},
+            #{data.code},
+            #{data.state},
+            #{data.usedNumber},
+            #{data.receiveNumber},
+            #{data.minTransAmount},
+            #{data.validStartTime},
+            #{data.validEndTime},
+            #{data.createMethod},
+            #{data.activityDescription},
+            #{data.description},
+            #{data.type},
+            #{data.createdBy},
+            #{data.createdDate},
+            #{data.modifiedBy},
+            #{data.modifiedDate},
+            #{data.status},
+            #{data.ip},
+            #{data.activityState},
+            #{data.validityLimitState},
+            #{data.amountLimitState}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.uwallet.pay.main.model.entity.MarketingManagement">
+        UPDATE u_marketing_management
+        <set>
+            <if test="id != null">
+                `id`=#{id},
+            </if>
+            <if test="amount != null">
+                `amount`=#{amount},
+            </if>
+            <if test="totalAmount != null">
+                `total_amount`=#{totalAmount},
+            </if>
+            <if test="number != null">
+                `number`=#{number},
+            </if>
+            <if test="code != null">
+                `code`=#{code},
+            </if>
+            <if test="state != null">
+                `state`=#{state},
+            </if>
+            <if test="usedNumber != null">
+                `used_number`=#{usedNumber},
+            </if>
+            <if test="receiveNumber != null">
+                `receive_number`=#{receiveNumber},
+            </if>
+            <if test="minTransAmount != null">
+                `min_trans_amount`=#{minTransAmount},
+            </if>
+            <if test="validStartTime != null">
+                `valid_start_time`=#{validStartTime},
+            </if>
+            <if test="validEndTime != null">
+                `valid_end_time`=#{validEndTime},
+            </if>
+            <if test="createMethod != null">
+                `create_method`=#{createMethod},
+            </if>
+            <if test="activityDescription != null">
+                `activity_description`=#{activityDescription},
+            </if>
+            <if test="description != null">
+                `description`=#{description},
+            </if>
+            <if test="type != null">
+                `type`=#{type},
+            </if>
+            <if test="createdBy != null">
+                `created_by`=#{createdBy},
+            </if>
+            <if test="createdDate != null">
+                `created_date`=#{createdDate},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+            <if test="activityState != null">
+                `activity_state`=#{activityState},
+            </if>
+            <if test="validityLimitState != null">
+                `validity_limit_state`=#{validityLimitState},
+            </if>
+            <if test="amountLimitState != null">
+                `amount_limit_state`=#{amountLimitState},
+            </if>
+            <if test="inviteValidityType != null">
+                `invite_validity_type`=#{inviteValidityType},
+            </if>
+            <if test="cityLimitState != null">
+                `city_limit_state`=#{cityLimitState},
+            </if>
+            <if test="restaurantLimitState != null">
+                `restaurant_limit_state`=#{restaurantLimitState},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <choose>
+                <when test="status != null ">AND status = #{status.value}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            AND id = #{id}
+        </trim>
+    </update>
+
+    <update id="delete" parameterType="Map">
+      UPDATE u_marketing_management
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+    <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_marketing_management
+      WHERE id = #{id}
+  </delete>
+
+    <select id="count" parameterType="Map" resultType="Integer">
+        <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_marketing_management
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultMap="marketingManagementMap">
+        <![CDATA[
+            SELECT * FROM u_marketing_management
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="selectOneDTO" parameterType="Map" resultMap="marketingManagementDTOMap">
+        <![CDATA[
+            SELECT * FROM u_marketing_management
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="select" parameterType="Map" resultMap="marketingManagementMap">
+        <![CDATA[
+            SELECT * FROM u_marketing_management
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectDTO" parameterType="Map" resultMap="marketingManagementDTOMap">
+        <![CDATA[
+            SELECT * FROM u_marketing_management
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectMap" parameterType="Map" resultType="Map">
+        SELECT
+        <foreach collection="columns" item="cname" separator="," open="`" close="`">
+            ${cname}
+        </foreach>
+        FROM u_marketing_management
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <!--统计相关查询-->
+    <select id="groupCount" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_marketing_management
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+    <select id="sum" parameterType="Map" resultType="Double">
+        <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_marketing_management
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+    </select>
+
+    <select id="groupSum" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_marketing_management
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+
+    <update id="addUsedNumber" parameterType="long">
+        update u_marketing_management set used_number = used_number + 1, modified_date = unix_timestamp() where id = #{id}  <![CDATA[AND number >= used_number + 1]]>
+    </update>
+    <update id="addUsedNumberRollback" parameterType="long">
+        update u_marketing_management set used_number = used_number - 1, modified_date = unix_timestamp() where id = #{id}  <![CDATA[AND number - 1 >=0 ]]>
+    </update>
+
+  <select id="marketingCodeCount" parameterType="java.util.Map" resultType="int">
+    SELECT COUNT(DISTINCT code.id) FROM u_marketing_management code
+    LEFT JOIN u_admin admin ON code.created_by = admin.id
+      <where>
+          code.id not in (620846989825331200, 625123077544005632)
+          <if test="type != null and type == 1">
+              AND code.status = 1
+          </if>
+          <if test="state != null and state != ''">
+              AND code.activity_state = #{state}
+          </if>
+          <if test="code != null">
+              AND LOWER(code.`code`) LIKE CONCAT('%', #{code}, '%')
+          </if>
+          <if test="start != null and end != null">
+              AND code.`created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="founder != null">
+              AND admin.user_name LIKE CONCAT('%', #{founder}, '%')
+          </if>
+          <if test="type != null">
+              AND code.`type`  = #{type}
+          </if>
+          <if test="restaurantLimitState != null">
+              AND code.`restaurant_limit_state`  = #{restaurantLimitState}
+          </if>
+          <if test="cityLimitState != null">
+              AND code.`city_limit_state`  = #{cityLimitState}
+          </if>
+
+      </where>
+  </select>
+
+  <select id="marketingCodeList" parameterType="java.util.Map" resultType="com.uwallet.pay.main.model.dto.MarketingManagementDTO">
+    SELECT
+        code.*, admin.user_name founder, um.practical_name merchantName, sd.en_name cityName, code.created_date as createdDateStr
+    FROM u_marketing_management code
+    LEFT JOIN u_admin admin ON code.created_by = admin.id
+    LEFT JOIN u_merchant um ON um.id = code.restaurant_limit_state and code.restaurant_limit_state > 0
+    LEFT JOIN u_static_data sd ON code.city_limit_state > 0 and sd.code = 'city' and sd.value = code.city_limit_state
+      <where>
+          code.id not in (620846989825331200, 625123077544005632)
+          <if test="type != null and type == 1">
+              AND code.status = 1
+          </if>
+          <if test="state != null and state != ''">
+              AND code.activity_state = #{state}
+          </if>
+          <if test="code != null">
+              AND LOWER(code.`code`) LIKE CONCAT('%', #{code}, '%')
+          </if>
+          <if test="start != null and end != null">
+              AND code.`created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="founder != null">
+              AND admin.user_name LIKE CONCAT('%', #{founder}, '%')
+          </if>
+          <if test="type != null">
+              AND code.`type`  = #{type}
+          </if>
+          <if test="restaurantLimitState != null">
+              AND code.`restaurant_limit_state`  = #{restaurantLimitState}
+          </if>
+          <if test="cityLimitState != null">
+              AND code.`city_limit_state`  = #{cityLimitState}
+          </if>
+
+      </where>
+      ORDER BY code.created_date DESC
+      <if test="pc != null">
+          LIMIT ${pc.startIndex}, ${pc.pageSize}
+      </if>
+  </select>
+
+
+    <select id="getPromotionData" parameterType="java.util.Map" resultMap="marketingManagementDTOMap">
+        SELECT
+            id,
+            `code`,
+            `type`,
+            description,
+            amount,
+            amount_limit_state,
+            min_trans_amount,
+            validity_limit_state,
+            valid_end_time,
+            valid_start_time,
+            `number`,
+            receive_number,
+            city_limit_state,
+            restaurant_limit_state,
+            IFNULL(FROM_UNIXTIME( valid_end_time / 1000, '%d/%m/%y' ), '') expiredTimeStr
+        FROM
+            uwallet_pay.u_marketing_management
+        <where>
+            `status` = 1
+            <if test="code != null">
+                AND LOWER(`code`)  = #{code}
+            </if>
+            <if test="type != null">
+                AND `type` = #{type}
+            </if>
+            <if test="activityState != null">
+                AND activity_state = #{activityState}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
+
+
+    <select id="findAllMarketing" parameterType="java.util.Map" resultType="com.uwallet.pay.main.model.dto.MarketingManagementDTO">
+        SELECT
+            id,
+            `code`,
+            `type`,
+            description,
+            amount,
+            amount_limit_state,
+            min_trans_amount,
+            validity_limit_state,
+            valid_end_time,
+            valid_start_time,
+            activity_state,
+            modified_date,
+            city_limit_state,
+            restaurant_limit_state
+        FROM
+            uwallet_pay.u_marketing_management
+        WHERE
+            ( <![CDATA[ `status` = 1 or type = 2 ]]> )
+            AND
+            id in
+            <foreach collection="ids" item="id" separator=","  index="index"  open="("  close=")">
+                #{id}
+            </foreach>
+    </select>
+
+
+    <update id="addReceivedNumber" parameterType="java.util.Map">
+        update u_marketing_management set receive_number = receive_number + 1, modified_date = unix_timestamp() where id = #{id}
+        <if test="type == 1">
+            AND `number`  >= receive_number + 1
+        </if>
+    </update>
+
+
+
+    <update id="updateInviteMarketingByReceived">
+        update u_marketing_management set total_amount = total_amount + #{money}, receive_number = receive_number + 1, modified_date = unix_timestamp()
+        where id = #{id} <![CDATA[AND number >= receive_number + 1]]>
+    </update>
+
+    <update id="startMarketing">
+        update u_marketing_management set activity_state = 1,
+        modified_date = #{now}
+        where `status` = 1 and state = 1 and  valid_start_time = #{time} and activity_state = 0
+        and validity_limit_state = 1
+    </update>
+
+    <update id="endMarketing">
+        update u_marketing_management set activity_state = 2,
+        modified_date = #{now}
+        where `status` = 1 and state = 1 and  valid_end_time = #{time} and activity_state = 1
+        and validity_limit_state = 1
+    </update>
+
+
+    <update id="addUsedNumberNew" parameterType="java.util.Map">
+        UPDATE u_marketing_management
+        SET used_number = used_number + 1,
+        modified_date = unix_timestamp(),
+        total_amount =
+        CASE
+            `type`
+        WHEN 2 THEN
+            total_amount + amount ELSE total_amount END
+        WHERE
+            id = #{id}
+    </update>
+
+    <update id="updateInvitationCodeNotAvailable" parameterType="Long">
+        update u_marketing_management set id = #{newId}, status = 0 , modified_date = unix_timestamp() where id = #{id}
+    </update>
+
+
+    <select id="countByCode" parameterType="string" resultType="int">
+        SELECT COUNT(*) FROM u_marketing_management code where code.status = 1 and LOWER(code.`code`) = #{code}
+    </select>
+
+    <select id="userPromotionCount" resultType="java.lang.Integer">
+        SELECT
+            count(am.id)
+            FROM
+                uwallet_account.u_marketing_account am
+            LEFT JOIN uwallet_pay.u_marketing_management um ON um.id = am.marking_id
+            WHERE
+                am.user_id = #{userId} and am.`status`=1 and am.`status`=1
+        <if test="type==1">
+            -- 可用
+            and am.state=1 and um.state=1 and um.activity_state=1
+        </if>
+        <if test="type==2">
+            and am.state=2
+            -- 已使用
+        </if>
+        <if test="type==3">
+            and um.activity_state=2 and  am.state=1
+            -- 已过期
+        </if>
+    </select>
+    <select id="userPromotionList" resultType="com.uwallet.pay.main.model.dto.UserPromotionDTO">
+        SELECT
+        qr.trans_type transType,
+        am.last_move_date lastMoveDate,
+            am.id,
+                um.type,
+                um.`code`,
+                am.balance amount,
+                um.min_trans_amount minTransAmount,
+                CASE
+            WHEN um.type = 2 THEN
+            <![CDATA['Share & Earn']]>
+
+            ELSE
+                um.description
+            END description,
+             CASE
+            WHEN um.valid_end_time = 0 THEN
+                'N/A'
+            WHEN um.activity_state = 2 THEN
+                CONCAT(
+                'Expired on ',
+                    FROM_UNIXTIME(
+                    um.valid_end_time/1000,
+                    '%d/%m/%y'
+                    )
+                )
+            ELSE
+                CONCAT(
+                    'Expires on ',
+                    FROM_UNIXTIME(
+                        um.valid_end_time/1000,
+                        '%d/%m/%y'
+                    )
+                )
+            END expiredDate,
+             CASE
+            WHEN um.activity_state = 1 THEN
+                (
+                    CASE
+                    WHEN am.state = 1 THEN
+                        1
+                    WHEN am.state = 2 THEN
+                        2
+                    when am.state = 99 then 5
+                    END
+                )
+            WHEN um.activity_state = 2 and am.state=2 THEN 2
+            WHEN um.activity_state = 2 and am.state=1 THEN
+                3
+            WHEN um.activity_state = 3 THEN
+                4
+            ELSE
+                '--'
+            END AS promotionState
+            FROM
+                uwallet_account.u_marketing_account am
+            LEFT JOIN uwallet_pay.u_marketing_management um ON um.id = am.marking_id
+            LEFT JOIN uwallet_pay.u_qr_pay_flow qr on qr.marketing_id=am.id
+            WHERE
+                am.user_id = #{userId} and am.`status`=1 and am.`status`=1
+            <if test="type==1">
+                and am.state=1 and um.state=1 and um.activity_state=1
+            </if>
+            <if test="type==2">
+                and am.state=2
+            </if>
+            <if test="type==3">
+                and um.activity_state=2 and  am.state=1
+            </if>
+                GROUP BY  am.id
+             ORDER BY am.created_date desc
+
+    </select>
+
+    <update id="rollBackReceivedNumber" parameterType="java.util.Map">
+        update u_marketing_management set receive_number = receive_number - 1, modified_date = unix_timestamp() where id = #{id}
+    </update>
+</mapper>

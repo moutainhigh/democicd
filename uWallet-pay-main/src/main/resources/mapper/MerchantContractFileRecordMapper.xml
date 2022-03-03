@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.MerchantContractFileRecordDAO">
+
+    <resultMap id="merchantContractFileRecordMap" type="com.uwallet.pay.main.model.entity.MerchantContractFileRecord">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="merchantId" jdbcType="BIGINT" column="merchant_id"/>
+        <result property="filePath" jdbcType="VARCHAR" column="file_path"/>
+        <result property="fileOldName" jdbcType="VARCHAR" column="file_old_name"/>
+        <result property="fileName" jdbcType="VARCHAR" column="file_name"/>
+        <result property="fileType" jdbcType="VARCHAR" column="file_type"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+    </resultMap>
+
+    <resultMap id="merchantContractFileRecordDTOMap" type="com.uwallet.pay.main.model.dto.MerchantContractFileRecordDTO"
+               extends="merchantContractFileRecordMap">
+        <result property="userName" jdbcType="VARCHAR" column="real_name"/>
+
+
+
+    </resultMap>
+
+    <!--通用查询条件-->
+    <sql id="basicParams">
+        <if test="id != null">
+            AND `id`=#{id}
+        </if>
+        <if test="merchantId != null">
+            AND `merchant_id`=#{merchantId}
+        </if>
+        <if test="filePath != null">
+            AND `file_path`=#{filePath}
+        </if>
+        <if test="fileOldName != null">
+            AND `file_old_name`=#{fileOldName}
+        </if>
+        <if test="fileName != null">
+            AND `file_name`=#{fileName}
+        </if>
+        <if test="fileType != null">
+            AND `file_type`=#{fileType}
+        </if>
+        <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+        </if>
+        <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+            AND `ip`=#{ip}
+        </if>
+    </sql>
+
+    <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.MerchantContractFileRecord">
+        INSERT INTO u_merchant_contract_file_record (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="merchantId != null">
+            ,`merchant_id`
+        </if>
+        <if test="filePath != null">
+            ,`file_path`
+        </if>
+        <if test="fileOldName != null">
+            ,`file_old_name`
+        </if>
+        <if test="fileName != null">
+            ,`file_name`
+        </if>
+        <if test="fileType != null">
+            ,`file_type`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+        ) VALUES (
+        <if test="id != null">
+            #{id}
+        </if>
+        <if test="merchantId != null">
+            ,#{merchantId}
+        </if>
+        <if test="filePath != null">
+            ,#{filePath}
+        </if>
+        <if test="fileOldName != null">
+            ,#{fileOldName}
+        </if>
+        <if test="fileName != null">
+            ,#{fileName}
+        </if>
+        <if test="fileType != null">
+            ,#{fileType}
+        </if>
+        <if test="createdBy != null">
+            ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+            ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+            ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+            ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+            ,#{status}
+        </if>
+        <if test="ip != null">
+            ,#{ip}
+        </if>
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="List">
+        INSERT INTO u_merchant_contract_file_record (
+        `id`,
+        `merchant_id`,
+        `file_path`,
+        `file_old_name`,
+        `file_name`,
+        `file_type`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`
+        ) VALUES
+        <foreach collection="list" item="data" separator=",">
+            (
+            #{data.id},
+            #{data.merchantId},
+            #{data.filePath},
+            #{data.fileOldName},
+            #{data.fileName},
+            #{data.fileType},
+            #{data.createdBy},
+            #{data.createdDate},
+            #{data.modifiedBy},
+            #{data.modifiedDate},
+            #{data.status},
+            #{data.ip}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.uwallet.pay.main.model.entity.MerchantContractFileRecord">
+        UPDATE u_merchant_contract_file_record
+        <set>
+            <if test="id != null">
+                `id`=#{id},
+            </if>
+            <if test="merchantId != null">
+                `merchant_id`=#{merchantId},
+            </if>
+            <if test="filePath != null">
+                `file_path`=#{filePath},
+            </if>
+            <if test="fileOldName != null">
+                `file_old_name`=#{fileOldName},
+            </if>
+            <if test="fileName != null">
+                `file_name`=#{fileName},
+            </if>
+            <if test="fileType != null">
+                `file_type`=#{fileType},
+            </if>
+            <if test="createdBy != null">
+                `created_by`=#{createdBy},
+            </if>
+            <if test="createdDate != null">
+                `created_date`=#{createdDate},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <choose>
+                <when test="status != null ">AND status = #{status.value}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            AND id = #{id}
+        </trim>
+    </update>
+
+    <update id="delete" parameterType="Map">
+      UPDATE u_merchant_contract_file_record
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+    <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_merchant_contract_file_record
+      WHERE id = #{id}
+  </delete>
+
+    <select id="count" parameterType="Map" resultType="Integer">
+        <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_merchant_contract_file_record
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultMap="merchantContractFileRecordMap">
+        <![CDATA[
+            SELECT * FROM u_merchant_contract_file_record
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="selectOneDTO" parameterType="Map" resultMap="merchantContractFileRecordDTOMap">
+        <![CDATA[
+            SELECT * FROM u_merchant_contract_file_record
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="select" parameterType="Map" resultMap="merchantContractFileRecordMap">
+        <![CDATA[
+            SELECT * FROM u_merchant_contract_file_record
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectDTO" parameterType="Map" resultMap="merchantContractFileRecordDTOMap">
+        <![CDATA[
+            SELECT * FROM u_merchant_contract_file_record
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="listContractFile" parameterType="Map" resultMap="merchantContractFileRecordDTOMap">
+        SELECT * FROM
+        (
+        (
+            SELECT re.*,ua.real_name FROM u_merchant_contract_file_record re
+            LEFT JOIN u_admin ua on re.modified_by = ua.id
+            WHERE re.`status` = 1
+            <if test="merchantId != null">
+                AND re.`merchant_id`=#{merchantId}
+            </if>
+            ORDER BY re.created_date desc
+        )
+        UNION ALL
+        (
+            SELECT re.*,ua.real_name FROM u_merchant_contract_file_record re
+            LEFT JOIN u_admin ua on re.modified_by = ua.id
+            WHERE re.`status` = 0
+            <if test="merchantId != null">
+                AND re.`merchant_id`=#{merchantId}
+            </if>
+            ORDER BY re.created_date desc
+        )
+        ) AS t1
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectMap" parameterType="Map" resultType="Map">
+        SELECT
+        <foreach collection="columns" item="cname" separator="," open="`" close="`">
+            ${cname}
+        </foreach>
+        FROM u_merchant_contract_file_record
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <!--统计相关查询-->
+    <select id="groupCount" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_merchant_contract_file_record
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+    <select id="sum" parameterType="Map" resultType="Double">
+        <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_merchant_contract_file_record
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+    </select>
+
+    <select id="groupSum" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_merchant_contract_file_record
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+</mapper>

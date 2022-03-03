@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.DailyStatisticsDAO">
+
+
+    <select id="queryMerchantMarkting1" resultType="long">
+        SELECT count(*) as r1 FROM uwallet_pay.u_merchant WHERE `status` = 1 AND merchant_approve_pass_time IS NOT NULL;
+    </select>
+
+
+    <select id="queryMerchantMarkting2"  resultType="long">
+        select count(*) as r2 from uwallet_pay.u_merchant where `status` = 1 and  is_available =1;
+    </select>
+
+
+    <select id="queryMerchantMarkting3" parameterType="long" resultType="long">
+        select count(*) from uwallet_pay.u_merchant_login where `status` = 1 and created_date BETWEEN #{startTime} and #{endTime};
+    </select>
+
+    <select id="queryMerchantMarkting4" parameterType="long" resultType="long">
+        select count(*) from uwallet_pay.u_merchant where `status` = 1 and created_date BETWEEN #{startTime} and #{endTime};
+    </select>
+
+
+    <select id="queryMerchantMarkting5" parameterType="long" resultType="long">
+        SELECT
+            sum( t1.r1 )
+        FROM
+            (
+            SELECT
+                count(*) AS r1
+            FROM
+                uwallet_pay.u_merchant
+            WHERE
+                `status` = 1
+                AND state = 2
+                AND modified_date BETWEEN #{startTime} and #{endTime} UNION ALL
+            SELECT
+                count(*) AS r1
+            FROM
+                uwallet_pay.u_merchant
+            WHERE
+                `status` = 1
+                AND modified_date BETWEEN #{startTime} and #{endTime}
+                AND created_date BETWEEN #{startTime} and #{endTime}
+            AND state NOT IN ( - 1, 0, 2, 4 )
+            ) t1
+	    </select>
+
+    <select id="queryMerchantMarkting6" parameterType="long" resultType="long">
+        select count(*) from uwallet_pay.u_merchant where `status` = 1 and  merchant_approve_pass_time  BETWEEN #{startTime} and #{endTime} ;
+    </select>
+
+    <select id="queryMerchantMarkting7" parameterType="long" resultType="long">
+        select count(*) from uwallet_pay.u_merchant where `status` = 1 and created_date BETWEEN #{startTime} and #{endTime} and  is_available =1 ;
+    </select>
+
+
+    <select id="queryUserMarkting1" parameterType="long" resultType="long">
+        select count(*) from uwallet_pay.u_user where status = 1 and user_type = 10  and created_date BETWEEN #{startTime} and #{endTime} ;
+    </select>
+
+
+    <select id="queryUserMarkting2" parameterType="long" resultType="long">
+        SELECT
+            count(*)
+        FROM
+            (
+            SELECT
+                c.customer_id dcount
+            FROM
+                uwallet_risk.rl_riskcontrol_matched m
+                LEFT JOIN uwallet_risk.rl_riskcontrol_customer c ON m.customer_id = c.id
+            WHERE
+                m.event_id = 16
+                AND m.created_date
+                BETWEEN #{startTime} and #{endTime}
+            GROUP BY
+            c.customer_id
+            ) a;
+	    </select>
+
+
+
+    <select id="queryUserMarkting3" parameterType="long" resultType="long">
+        select count(*) from (SELECT c.customer_id  from uwallet_risk.rl_riskcontrol_matched m
+        left join uwallet_risk.rl_riskcontrol_customer c on m.customer_id = c.id
+        where m.event_id = 16 and m.created_date BETWEEN #{startTime} and #{endTime}
+        and final_decision = 'ACCEPT' GROUP BY c.customer_id) a ;
+    </select>
+
+    <select id="queryUserMarkting4" parameterType="long" resultType="long">
+        SELECT count(*) from (SELECT u.batch_no from uwallet_credit.u_rule_match_record record
+        left join uwallet_credit.u_user u on u.batch_no = record.batch_no where u.`status` =1
+        and u.created_date  BETWEEN #{startTime} and #{endTime}  group by u.batch_no ) a ;
+    </select>
+
+
+    <select id="queryUserMarkting5" parameterType="long" resultType="long">
+        select count(*) from uwallet_credit.u_user where `status` = 1 and fore_state is null
+        and created_date BETWEEN #{startTime} and #{endTime} and state = 20 group by state;
+    </select>
+
+
+    <select id="queryUserMarkting6" parameterType="long" resultType="long">
+         SELECT count(*) from (select u.batch_no from uwallet_credit.u_rule_match_record record left join uwallet_credit.u_user u on u.batch_no = record.batch_no where u.`status` =1
+         and u.created_date  BETWEEN  #{startTime} and #{endTime}  and  final_decision = 'REJECT'group by u.batch_no ) a ;
+    </select>
+
+
+    <select id="queryUserMarkting7" parameterType="long" resultType="long">
+        select  count(*) from uwallet_credit.u_user where `status` =1
+        and modified_date BETWEEN #{startTime} and #{endTime} and grade = 'E' ;
+    </select>
+
+    <select id="queryUserMarkting8" parameterType="long" resultType="long">
+        select count(*) from uwallet_credit.u_user_approval where approval_type in (3,4)
+        and modified_date  BETWEEN #{startTime} and #{endTime} ;
+    </select>
+
+
+    <select id="queryUserMarkting9" parameterType="long" resultType="long">
+        select count(*) from uwallet_credit.u_user_approval where approval_type in (3,4)
+        and modified_date  BETWEEN #{startTime} and #{endTime} and approval_result = 1 ;
+    </select>
+
+
+    <select id="queryUserMarkting10" parameterType="long" resultType="long">
+        select count(*) from uwallet_credit.u_user_approval where approval_type in (3,4)
+        and modified_date  BETWEEN #{startTime} and #{endTime}  and approval_result = 2;
+    </select>
+
+
+
+    <select id="queryUserMarkting11" parameterType="long" resultType="long">
+        select count(*) from uwallet_credit.u_user where `status` = 1 and fore_state is null
+        and created_date BETWEEN #{startTime} and #{endTime} and state = 50;
+    </select>
+
+    <select id="queryUserMarkting12" parameterType="long" resultType="long">
+        select count(*) from ( SELECT pay_user_id from uwallet_pay.u_qr_pay_flow where state in (1,31)
+        and created_date BETWEEN #{startTime} and #{endTime}  GROUP BY pay_user_id) a ;
+    </select>
+
+    <select id="queryUserMarkting13" parameterType="long" resultType="long">
+        select sum(trans_amount) from uwallet_pay.u_qr_pay_flow
+        where `status` = 1 and  state in (1,31) and created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryUserMarkting14" parameterType="long" resultType="java.math.BigDecimal">
+        select sum(pay_amount) + sum(donation_amount) + sum(tip_amount)  from uwallet_pay.u_qr_pay_flow where `status` = 1 and  state in (1,31)
+        and created_date BETWEEN  #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryUserMarkting15" parameterType="long" resultType="java.math.BigDecimal">
+        SELECT
+            sum( w.charge )
+        FROM
+            u_qr_pay_flow q
+            LEFT JOIN u_withhold_flow w ON w.flow_id = q.id
+        WHERE
+            q.`status` = 1
+            AND w.`status` = 1
+            AND q.state IN ( 1, 31 )
+            AND q.trans_type = 22
+            AND q.created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryOrder1" parameterType="long" resultType="long">
+        SELECT count(*) from u_qr_pay_flow
+        where sale_type = 0 and trans_type in (2,22) and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryOrder2" parameterType="long" resultType="java.math.BigDecimal">
+        SELECT   IFNULL(sum(trans_amount),0) from u_qr_pay_flow where sale_type = 0 and trans_type in (2,22) and `status` = 1 and state in (1,31) and  created_date
+        BETWEEN #{startTime} and #{endTime}
+    </select>
+
+    <select id="queryOrder3" parameterType="long" resultType="long">
+        SELECT count(*) from u_qr_pay_flow where sale_type = 1 and trans_type in (2,22) and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryOrder4" parameterType="long" resultType="java.math.BigDecimal">
+        SELECT IFNULL(sum(trans_amount),0)  from u_qr_pay_flow where sale_type = 1 and trans_type in (2,22) and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryOrder5" parameterType="long" resultType="long">
+        SELECT count(*) from u_qr_pay_flow where sale_type = 2 and trans_type in (2,22) and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryOrder6" parameterType="long" resultType="java.math.BigDecimal">
+        SELECT IFNULL(sum(trans_amount),0)  from u_qr_pay_flow where sale_type = 2 and trans_type in (2,22) and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryOrder7" parameterType="long" resultType="java.math.BigDecimal">
+    SELECT IFNULL(sum(red_envelope_amount),0)  from u_qr_pay_flow where  `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime} ;
+
+    </select>
+
+    <select id="queryOrder8" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL(sum(trans_amount),0)  from u_qr_pay_flow where sale_type = 0 and trans_type = 2 and `status` = 1 and state in (1,31) and  created_date BETWEEN  #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryOrder9" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL((sum(pay_amount)+  SUM(tip_amount) + sum(donation_amount)),0) from u_qr_pay_flow where sale_type = 0 and trans_type = 2 and `status` = 1 and state in (1,31)
+and  created_date BETWEEN  #{startTime} and #{endTime}
+
+    </select>
+
+
+    <select id="queryOrder10" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL(sum(rec_amount),0) from u_qr_pay_flow where sale_type = 0 and trans_type = 2 and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+
+
+    </select>
+
+    <select id="queryOrder11" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL(sum(trans_amount),0)  from u_qr_pay_flow where sale_type = 0 and trans_type = 22 and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryOrder12" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL((sum(pay_amount) + sum(donation_amount) + sum(tip_amount)),0) from u_qr_pay_flow where sale_type = 0 and trans_type = 22 and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryOrder13" parameterType="long" resultType="java.math.BigDecimal">
+        SELECT
+            IFNULL(sum(w.charge),0)
+        FROM
+            u_qr_pay_flow q
+            LEFT JOIN u_withhold_flow w ON w.flow_id = q.id
+        WHERE
+            q.`status` = 1
+            AND w.`status` = 1
+            AND q.state IN ( 1, 31 )
+            AND q.trans_type = 22
+            AND q.sale_type = 0
+            AND q.created_date BETWEEN #{startTime} and #{endTime}
+	    </select>
+
+
+    <select id="queryOrder14" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL(sum(rec_amount),0) from u_qr_pay_flow where sale_type = 0 and trans_type = 22 and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+
+
+    <select id="queryOrder15" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL(sum(trans_amount),0)  from u_qr_pay_flow where sale_type = 1 and trans_type = 2 and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryOrder16" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL((sum(pay_amount)+  SUM(tip_amount) + sum(donation_amount)),0) from u_qr_pay_flow where sale_type = 1 and trans_type = 2 and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+    <select id="queryOrder17" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL(sum(trans_amount),0)  from u_qr_pay_flow where sale_type = 1 and trans_type = 22 and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+    <select id="queryOrder18" parameterType="long" resultType="java.math.BigDecimal">
+SELECT
+    IFNULL(sum(pay_principal),0)
+
+FROM
+	uwallet_pay.u_qr_pay_flow f
+	LEFT JOIN uwallet_credit.u_borrow b ON b.id = f.credit_order_no
+	LEFT JOIN uwallet_credit.u_repay r ON r.borrow_id = b.id
+WHERE
+	f.state IN ( 1, 31 )
+	AND f.STATUS = 1
+	and f.sale_type = 1
+	AND f.trans_type = 22
+	and period_sort != 1
+	AND f.created_date BETWEEN #{startTime} and #{endTime}
+	    </select>
+
+
+    <select id="queryOrder19" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL(sum(trans_amount),0) from u_qr_pay_flow where sale_type = 2 and trans_type = 2 and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryOrder20" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL((sum(pay_amount)+  SUM(tip_amount) + sum(donation_amount)),0)  from u_qr_pay_flow where sale_type = 2 and trans_type = 2 and `status` = 1 and state in (1,31) and  created_date BETWEEN  #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryOrder21" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL(sum(rec_amount),0)  from u_qr_pay_flow where sale_type = 2 and trans_type = 2 and `status` = 1 and state in (1,31) and  created_date BETWEEN  #{startTime} and #{endTime}
+    </select>
+
+
+    <select id="queryOrder22" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL(sum(trans_amount),0)from u_qr_pay_flow where sale_type = 2 and trans_type = 22 and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+    <select id="queryOrder23" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL((sum(pay_amount) + sum(donation_amount) + sum(tip_amount)),0) from u_qr_pay_flow where sale_type = 2 and trans_type = 22 and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+    <select id="queryOrder24" parameterType="long" resultType="java.math.BigDecimal">
+        SELECT
+            IFNULL(sum( w.charge ),0)
+        FROM
+            u_qr_pay_flow q
+            LEFT JOIN u_withhold_flow w ON w.flow_id = q.id
+        WHERE
+            q.`status` = 1
+            AND w.`status` = 1
+            AND q.state IN ( 1, 31 )
+            AND q.trans_type = 22
+            AND q.sale_type = 2
+            AND q.created_date BETWEEN #{startTime} and #{endTime}
+        </select>
+
+    <select id="queryOrder25" parameterType="long" resultType="java.math.BigDecimal">
+SELECT IFNULL(sum(rec_amount),0)from u_qr_pay_flow where sale_type = 2 and trans_type = 22 and `status` = 1 and state in (1,31) and  created_date BETWEEN #{startTime} and #{endTime}
+    </select>
+
+    <select id="queryOrder26" resultType="map">
+        select ifnull(sum(amount),0) as s ,count(id) as c from u_whole_sales_flow where  status = 1 and state = 1 and created_date > 1606752000000;
+    </select>
+
+    <select id="queryOrder27" parameterType="long" resultType="map">
+        select ifnull(sum(amount), 0 ) as s  ,count(id) as c from u_whole_sales_flow where  status = 1 and state = 1 and created_date > #{startTime};
+    </select>
+
+    <select id="queryOrder28"  resultType="java.math.BigDecimal">
+    select sum(balance) from uwallet_account.u_sub_account s left join uwallet_account.u_account a on s.account_id = a.id
+    where s.type = 1  and a.account_type = 20 and s.balance >0
+    </select>
+
+    <select id="queryRepay1" parameterType="long" resultType="long">
+        SELECT
+            count(*)
+        FROM
+            uwallet_credit.u_repay_record
+        WHERE
+            created_date BETWEEN #{startTime} and #{endTime};
+	    </select>
+
+
+    <select id="queryRepay2" parameterType="long" resultType="long">
+        SELECT
+            count(*)
+        FROM
+            uwallet_credit.u_repay_record
+        WHERE
+            modified_date BETWEEN #{startTime} and #{endTime}
+            AND repay_status = 1;
+    </select>
+
+
+    <select id="queryRepay3" parameterType="long" resultType="java.math.BigDecimal">
+        	SELECT
+            ifnull(sum( pay_principal ),0)
+        FROM
+            uwallet_credit.u_repay_record
+        WHERE
+            modified_date BETWEEN  #{startTime} and #{endTime}
+            AND repay_status = 1;
+    </select>
+
+
+
+    <select id="queryRepay4" parameterType="long" resultType="long">
+        	SELECT
+                count(*)
+            FROM
+                uwallet_credit.u_repay_record
+            WHERE
+                modified_date BETWEEN #{startTime} and #{endTime}
+                AND repay_status = 2;
+    </select>
+
+
+    <select id="queryRepay42" parameterType="long" resultType="java.math.BigDecimal">
+
+            SELECT
+            ifnull(sum( pay_principal ),0)
+        FROM
+            uwallet_credit.u_repay_record
+        WHERE
+            modified_date BETWEEN #{startTime} and #{endTime}
+            AND repay_status = 2;
+    </select>
+
+    <select id="queryRepay5" parameterType="long" resultType="long">
+        	SELECT count(*) from (
+                SELECT b.user_id
+
+            FROM
+                uwallet_credit.u_repay_record r
+                LEFT JOIN uwallet_credit.u_borrow b ON b.id = r.borrow_id
+            WHERE
+                r.modified_date BETWEEN #{startTime} and #{endTime}
+                AND r.repay_status = 1 GROUP BY b.user_id
+                ) t1;
+    </select>
+
+    <select id="queryRepay6" parameterType="long" resultType="long">
+        		SELECT count(*) from (
+                SELECT b.user_id
+            FROM
+                uwallet_credit.u_repay_record r
+                LEFT JOIN uwallet_credit.u_borrow b ON b.id = r.borrow_id
+            WHERE
+                r.modified_date BETWEEN #{startTime} and #{endTime}
+                AND r.repay_status = 2 GROUP BY b.user_id
+                ) t1;
+    </select>
+
+
+    <select id="queryRepay7" parameterType="long" resultType="long">
+        		SELECT count(*) from (
+                SELECT b.user_id
+
+            FROM
+                uwallet_credit.u_repay_record r
+                LEFT JOIN uwallet_credit.u_borrow b ON b.id = r.borrow_id
+            WHERE
+
+                 r.repay_status = 1 GROUP BY b.user_id
+                ) t1;
+    </select>
+
+    <select id="queryRepay8" parameterType="long" resultType="long">
+        		SELECT count(*) from (
+            SELECT b.user_id
+
+        FROM
+            uwallet_credit.u_repay_record r
+            LEFT JOIN uwallet_credit.u_borrow b ON b.id = r.borrow_id
+        WHERE
+
+             r.repay_status = 2 GROUP BY b.user_id
+            ) t1;
+
+    </select>
+
+
+    <select id="queryMerchantSettle1" parameterType="long" resultType="long">
+        select count(*) from (SELECT merchant_id from u_clear_detail where state=1 and created_date BETWEEN #{startTime} and #{endTime}  group by merchant_id) a;
+    </select>
+
+
+    <select id="queryMerchantSettle2" parameterType="long" resultType="long">
+select count(*) from u_clear_flow_detail where state=1 and created_date BETWEEN #{startTime} and #{endTime} ;
+    </select>
+
+    <select id="queryMerchantSettle3" parameterType="long" resultType="java.math.BigDecimal">
+select ifnull(sum(clear_amount),0) from u_clear_flow_detail where state=1 and created_date BETWEEN #{startTime} and #{endTime};
+    </select>
+
+    <select id="queryMerchantSettle4" parameterType="long" resultType="long">
+        select count(DISTINCT k.user_id) from
+        (SELECT
+            a.rec_user_id as user_id,a.clear_amount as amount
+        FROM
+            u_qr_pay_flow a
+        WHERE
+            a. STATUS = 1
+        AND a.`state` in (1, 31)
+        AND a. STATUS > 0
+        AND a.`clear_state` = 0
+        AND a.`is_need_clear` = 1
+        AND a.clear_amount > 0
+        union all
+        select
+        f.user_id as user_id,f.settlement_amount as amount
+        from u_whole_sales_flow f
+        where f.status = 1 and f.state = 1 and f.settlement_state = 0) k ;
+    </select>
+
+
+    <select id="queryMerchantSettle5"  resultType="map">
+        select count(*) as c, ifnull(sum(amount), 0)  as s from
+        (SELECT
+            a.rec_user_id as user_id,a.clear_amount as amount
+        FROM
+            u_qr_pay_flow a
+        WHERE
+            a. STATUS = 1
+        AND a.`state` in (1, 31)
+        AND a. STATUS > 0
+        AND a.`clear_state` = 0
+        AND a.`is_need_clear` = 1
+        AND a.clear_amount > 0
+        union all
+        select
+        f.user_id as user_id,f.settlement_amount as amount
+        from u_whole_sales_flow f
+        where f.status = 1 and f.state = 1 and f.settlement_state = 0) k
+    </select>
+
+
+    <select id="queryMerchantSettle6"  resultType="map">
+        select count(*) as c , ifnull(sum(clear_amount), 0) as s from u_clear_flow_detail where state=1;
+    </select>
+
+</mapper>

@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.RoleDAO">
+
+    <resultMap id="roleMap" type="com.uwallet.pay.main.model.entity.Role">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+        <result property="remarkName" jdbcType="VARCHAR" column="remark_name"/>
+        <result property="remark" jdbcType="VARCHAR" column="remark"/>
+        <result property="stats" jdbcType="TINYINT" column="stats"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+    </resultMap>
+
+    <resultMap id="roleByIdDTOMap" type="com.uwallet.pay.main.model.dto.RoleDTO">
+        <result property="id" jdbcType="VARCHAR" column="id"/>
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+    </resultMap>
+
+    <resultMap id="riskRoleByIdDTOMap" type="com.uwallet.pay.main.model.dto.RoleDTO">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <collection property="roleActionDTO"
+                    column="{roleId=id}"
+                    select="com.uwallet.pay.main.dao.RoleActionDAO.selectOneDTOByRoleId">
+        </collection>
+    </resultMap>
+
+    <resultMap id="roleDTOMap" type="com.uwallet.pay.main.model.dto.RoleDTO">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+        <result property="remarkName" jdbcType="VARCHAR" column="remark_name"/>
+        <result property="remark" jdbcType="VARCHAR" column="remark"/>
+        <result property="stats" jdbcType="TINYINT" column="stats"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+    </resultMap>
+    <resultMap id="roleAndActionDTOMap" type="com.uwallet.pay.main.model.dto.RoleAndActionDTO">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.Role">
+    INSERT INTO u_role (
+        `id`,
+        `name`,
+        `remark_name`,
+        `remark`,
+        `stats`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`
+    ) VALUES (
+        #{id},
+        #{name},
+        #{remarkName},
+        #{remark},
+        #{stats},
+        #{createdBy},
+        #{createdDate},
+        #{modifiedBy},
+        #{modifiedDate},
+        #{status},
+        #{ip}
+    )
+  </insert>
+
+    <insert id="insertList" parameterType="List">
+        INSERT INTO u_role (
+        `id`,
+        `name`,
+        `remark_name`,
+        `remark`,
+        `stats`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`
+        ) VALUES
+        <foreach collection="list" item="data" separator=",">
+            (
+            #{data.id},
+            #{data.name},
+            #{data.remarkName},
+            #{data.remark},
+            #{data.stats},
+            #{data.createdBy},
+            #{data.createdDate},
+            #{data.modifiedBy},
+            #{data.modifiedDate},
+            #{data.status},
+            #{data.ip}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.uwallet.pay.main.model.entity.Role">
+        UPDATE u_role
+        <set>
+            <if test="id != null">
+                `id`=#{id},
+            </if>
+            <if test="name != null">
+                `name`=#{name},
+            </if>
+            <if test="remarkName != null">
+                `remark_name`=#{remarkName},
+            </if>
+            <if test="remark != null">
+                `remark`=#{remark},
+            </if>
+            <if test="stats != null">
+                `stats`=#{stats},
+            </if>
+            <if test="createdBy != null">
+                `created_by`=#{createdBy},
+            </if>
+            <if test="createdDate != null">
+                `created_date`=#{createdDate},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <choose>
+                <when test="status != null ">AND status = #{status.value}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            AND id = #{id}
+        </trim>
+    </update>
+
+    <update id="delete" parameterType="Map">
+      UPDATE u_role
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+    <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_role
+      WHERE id = #{id}
+  </delete>
+
+    <select id="count" parameterType="Map" resultType="Integer">
+        <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_role
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="remarkName != null">
+                AND `remark_name`=#{remarkName}
+            </if>
+            <if test="remark != null">
+                AND `remark`=#{remark}
+            </if>
+            <if test="stats != null">
+                AND `stats`=#{stats}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="sign != null">
+                AND id not in(3475387659080663010,3475387659080663020,3475387659080663030,3475387659080663040)
+            </if>
+            <choose>
+                <when test="status != null">And status = #{status}</when>
+                <otherwise><![CDATA[And status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultMap="roleMap">
+        <![CDATA[
+            SELECT * FROM u_role
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="remarkName != null">
+                AND `remark_name`=#{remarkName}
+            </if>
+            <if test="remark != null">
+                AND `remark`=#{remark}
+            </if>
+            <if test="stats != null">
+                AND `stats`=#{stats}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="selectOneDTO" parameterType="Map" resultMap="roleDTOMap">
+        <![CDATA[
+            SELECT * FROM u_role
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="remarkName != null">
+                AND `remark_name`=#{remarkName}
+            </if>
+            <if test="remark != null">
+                AND `remark`=#{remark}
+            </if>
+            <if test="stats != null">
+                AND `stats`=#{stats}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="findRoleDTOById" parameterType="Map" resultMap="roleAndActionDTOMap">
+        <![CDATA[
+            select a.id,c.name from u_role a
+            LEFT JOIN u_role_action b on a.id=b.role_id and b.status>0
+            LEFT JOIN u_action c on b.action_id=c.id  and c.status>0
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND a.`id`=#{id}
+            </if>
+            <if test="name != null">
+                AND a.`name`=#{name}
+            </if>
+            <if test="remarkName != null">
+                AND a.`remark_name`=#{remarkName}
+            </if>
+            <if test="remark != null">
+                AND a.`remark`=#{remark}
+            </if>
+            <if test="stats != null">
+                AND a.`stats`=#{stats}
+            </if>
+            <if test="createdBy != null">
+                AND a.`created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND a.`created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND a.`modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND a.`modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND a.status = #{status}</when>
+                <otherwise><![CDATA[AND a.status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND a.`ip`=#{ip}
+            </if>
+        </trim>
+    </select>
+
+    <select id="select" parameterType="Map" resultMap="roleMap">
+        <![CDATA[
+            SELECT * FROM u_role
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="remarkName != null">
+                AND `remark_name`=#{remarkName}
+            </if>
+            <if test="remark != null">
+                AND `remark`=#{remark}
+            </if>
+            <if test="stats != null">
+                AND `stats`=#{stats}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectDTO" parameterType="Map" resultMap="roleDTOMap">
+        <![CDATA[
+            SELECT * FROM u_role
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="remarkName != null">
+                AND `remark_name`=#{remarkName}
+            </if>
+            <if test="remark != null">
+                AND `remark`=#{remark}
+            </if>
+            <if test="stats != null">
+                AND `stats`=#{stats}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="sign != null">
+                AND id not in(3475387659080663010,3475387659080663020,3475387659080663030,3475387659080663040)
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectMap" parameterType="Map" resultType="Map">
+        SELECT
+        <foreach collection="columns" item="cname" separator="," open="`" close="`">
+            ${cname}
+        </foreach>
+        FROM u_role
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="remarkName != null">
+                AND `remark_name`=#{remarkName}
+            </if>
+            <if test="remark != null">
+                AND `remark`=#{remark}
+            </if>
+            <if test="stats != null">
+                AND `stats`=#{stats}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <!--统计相关查询-->
+    <select id="groupCount" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_role
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="remarkName != null">
+                AND `remark_name`=#{remarkName}
+            </if>
+            <if test="remark != null">
+                AND `remark`=#{remark}
+            </if>
+            <if test="stats != null">
+                AND `stats`=#{stats}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+    <select id="sum" parameterType="Map" resultType="Double">
+        <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_role
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="remarkName != null">
+                AND `remark_name`=#{remarkName}
+            </if>
+            <if test="remark != null">
+                AND `remark`=#{remark}
+            </if>
+            <if test="stats != null">
+                AND `stats`=#{stats}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+    </select>
+
+    <select id="groupSum" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_role
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="remarkName != null">
+                AND `remark_name`=#{remarkName}
+            </if>
+            <if test="remark != null">
+                AND `remark`=#{remark}
+            </if>
+            <if test="stats != null">
+                AND `stats`=#{stats}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+    <select id="selectByIdDTO" parameterType="Map" resultMap="roleByIdDTOMap">
+        <![CDATA[
+            SELECT * FROM u_role
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="remark != null">
+                AND `remark`=#{remark}
+            </if>
+            <if test="remarkName != null">
+                AND `remark_name`=#{remarkName}
+            </if>
+            <if test="stats != null">
+                AND `stats`=#{stats}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+    </select>
+    <select id="selectOneByIdDTO" parameterType="Map" resultMap="riskRoleByIdDTOMap">
+        <![CDATA[
+            SELECT * FROM u_role
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="remark != null">
+                AND `remark`=#{remark}
+            </if>
+            <if test="remarkName != null">
+                AND `remark_name`=#{remarkName}
+            </if>
+            <if test="stats != null">
+                AND `stats`=#{stats}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+    </select>
+</mapper>

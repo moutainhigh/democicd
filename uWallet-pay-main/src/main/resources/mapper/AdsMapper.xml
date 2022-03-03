@@ -1,0 +1,997 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.AdsDAO">
+
+    <resultMap id="adsMap" type="com.uwallet.pay.main.model.entity.Ads">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="title" jdbcType="VARCHAR" column="title"/>
+        <result property="subtitle" jdbcType="VARCHAR" column="subtitle"/>
+        <result property="form" jdbcType="TINYINT" column="form"/>
+        <result property="position" jdbcType="INTEGER" column="position"/>
+        <result property="description" jdbcType="LONGVARCHAR" column="description"/>
+        <result property="autoclose" jdbcType="TINYINT" column="autoclose"/>
+        <result property="priority" jdbcType="INTEGER" column="priority"/>
+        <result property="path" jdbcType="VARCHAR" column="path"/>
+        <result property="link" jdbcType="VARCHAR" column="link"/>
+        <result property="start" jdbcType="BIGINT" column="start"/>
+        <result property="end" jdbcType="BIGINT" column="end"/>
+        <result property="state" jdbcType="TINYINT" column="state"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+    </resultMap>
+
+    <resultMap id="adsDTOMap" type="com.uwallet.pay.main.model.dto.AdsDTO">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="title" jdbcType="VARCHAR" column="title"/>
+        <result property="subtitle" jdbcType="VARCHAR" column="subtitle"/>
+        <result property="form" jdbcType="TINYINT" column="form"/>
+        <result property="position" jdbcType="INTEGER" column="position"/>
+        <result property="description" jdbcType="LONGVARCHAR" column="description"/>
+        <result property="autoclose" jdbcType="TINYINT" column="autoclose"/>
+        <result property="priority" jdbcType="INTEGER" column="priority"/>
+        <result property="path" jdbcType="VARCHAR" column="path"/>
+        <result property="link" jdbcType="VARCHAR" column="link"/>
+        <result property="start" jdbcType="BIGINT" column="start"/>
+        <result property="end" jdbcType="BIGINT" column="end"/>
+        <result property="state" jdbcType="TINYINT" column="state"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.Ads">
+        INSERT INTO u_ads (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="title != null">
+            ,`title`
+        </if>
+        <if test="subtitle != null">
+            ,`subtitle`
+        </if>
+        <if test="form != null">
+            ,`form`
+        </if>
+        <if test="position != null">
+            ,`position`
+        </if>
+        <if test="description != null">
+            ,`description`
+        </if>
+        <if test="autoclose != null">
+            ,`autoclose`
+        </if>
+        <if test="priority != null">
+            ,`priority`
+        </if>
+        <if test="path != null">
+            ,`path`
+        </if>
+        <if test="link != null">
+            ,`link`
+        </if>
+        <if test="start != null">
+            ,`start`
+        </if>
+        <if test="end != null">
+            ,`end`
+        </if>
+        <if test="state != null">
+            ,`state`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+        ) VALUES (
+        <if test="id != null">
+            #{id}
+        </if>
+        <if test="title != null">
+            ,#{title}
+        </if>
+        <if test="subtitle != null">
+            ,#{subtitle}
+        </if>
+        <if test="form != null">
+            ,#{form}
+        </if>
+        <if test="position != null">
+            ,#{position}
+        </if>
+        <if test="description != null">
+            ,#{description}
+        </if>
+        <if test="autoclose != null">
+            ,#{autoclose}
+        </if>
+        <if test="priority != null">
+            ,#{priority}
+        </if>
+        <if test="path != null">
+            ,#{path}
+        </if>
+        <if test="link != null">
+            ,#{link}
+        </if>
+        <if test="start != null">
+            ,#{start}
+        </if>
+        <if test="end != null">
+            ,#{end}
+        </if>
+        <if test="state != null">
+            ,#{state}
+        </if>
+        <if test="modifiedBy != null">
+            ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+            ,#{modifiedDate}
+        </if>
+        <if test="createdBy != null">
+            ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+            ,#{createdDate}
+        </if>
+        <if test="status != null">
+            ,#{status}
+        </if>
+        <if test="ip != null">
+            ,#{ip}
+        </if>
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="List">
+        INSERT INTO u_ads (
+        `id`,
+        `title`,
+        `subtitle`,
+        `form`,
+        `position`,
+        `description`,
+        `autoclose`,
+        `priority`,
+        `path`,
+        `link`,
+        `start`,
+        `end`,
+        `state`,
+        `modified_by`,
+        `modified_date`,
+        `created_by`,
+        `created_date`,
+        `status`,
+        `ip`
+        ) VALUES
+        <foreach collection="list" item="data" separator=",">
+            (
+            #{data.id},
+            #{data.title},
+            #{data.subtitle},
+            #{data.form},
+            #{data.position},
+            #{data.description},
+            #{data.autoclose},
+            #{data.priority},
+            #{data.path},
+            #{data.link},
+            #{data.start},
+            #{data.end},
+            #{data.state},
+            #{data.modifiedBy},
+            #{data.modifiedDate},
+            #{data.createdBy},
+            #{data.createdDate},
+            #{data.status},
+            #{data.ip}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.uwallet.pay.main.model.entity.Ads">
+        UPDATE u_ads
+        <set>
+            <if test="id != null">
+                `id`=#{id},
+            </if>
+            <if test="title != null">
+                `title`=#{title},
+            </if>
+            <if test="subtitle != null">
+                `subtitle`=#{subtitle},
+            </if>
+            <if test="form != null">
+                `form`=#{form},
+            </if>
+            <if test="position != null">
+                `position`=#{position},
+            </if>
+            <if test="description != null">
+                `description`=#{description},
+            </if>
+            <if test="autoclose != null">
+                `autoclose`=#{autoclose},
+            </if>
+            <if test="priority != null">
+                `priority`=#{priority},
+            </if>
+            <if test="path != null">
+                `path`=#{path},
+            </if>
+            <if test="link != null">
+                `link`=#{link},
+            </if>
+            <if test="start != null">
+                `start`=#{start},
+            </if>
+            <if test="end != null">
+                `end`=#{end},
+            </if>
+            <if test="state != null">
+                `state`=#{state},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="createdBy != null">
+                `created_by`=#{createdBy},
+            </if>
+            <if test="createdDate != null">
+                `created_date`=#{createdDate},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <choose>
+                <when test="status != null ">AND status = #{status.value}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            AND id = #{id}
+        </trim>
+    </update>
+
+    <update id="delete" parameterType="Map">
+      UPDATE u_ads
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+    <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_ads
+      WHERE id = #{id}
+  </delete>
+
+    <select id="count" parameterType="Map" resultType="Integer">
+        <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_ads
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="title != null">
+                AND `title`=#{title}
+            </if>
+            <if test="subtitle != null">
+                AND `subtitle`=#{subtitle}
+            </if>
+            <if test="form != null">
+                AND `form`=#{form}
+            </if>
+            <if test="position != null">
+                AND `position`=#{position}
+            </if>
+            <if test="description != null">
+                AND `description`=#{description}
+            </if>
+            <if test="autoclose != null">
+                AND `autoclose`=#{autoclose}
+            </if>
+            <if test="priority != null">
+                AND `priority`=#{priority}
+            </if>
+            <if test="path != null">
+                AND `path`=#{path}
+            </if>
+            <if test="link != null">
+                AND `link`=#{link}
+            </if>
+            <if test="start != null">
+                AND `start`=#{start}
+            </if>
+            <if test="end != null">
+                AND `end`=#{end}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">And status = #{status}</when>
+                <otherwise><![CDATA[And status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultMap="adsMap">
+        <![CDATA[
+            SELECT * FROM u_ads
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="title != null">
+                AND `title`=#{title}
+            </if>
+            <if test="subtitle != null">
+                AND `subtitle`=#{subtitle}
+            </if>
+            <if test="form != null">
+                AND `form`=#{form}
+            </if>
+            <if test="position != null">
+                AND `position`=#{position}
+            </if>
+            <if test="description != null">
+                AND `description`=#{description}
+            </if>
+            <if test="autoclose != null">
+                AND `autoclose`=#{autoclose}
+            </if>
+            <if test="priority != null">
+                AND `priority`=#{priority}
+            </if>
+            <if test="path != null">
+                AND `path`=#{path}
+            </if>
+            <if test="link != null">
+                AND `link`=#{link}
+            </if>
+            <if test="start != null">
+                AND `start`=#{start}
+            </if>
+            <if test="end != null">
+                AND `end`=#{end}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="selectOneDTO" parameterType="Map" resultMap="adsDTOMap">
+        <![CDATA[
+            SELECT * FROM u_ads
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="title != null">
+                AND `title`=#{title}
+            </if>
+            <if test="subtitle != null">
+                AND `subtitle`=#{subtitle}
+            </if>
+            <if test="form != null">
+                AND `form`=#{form}
+            </if>
+            <if test="position != null">
+                AND `position`=#{position}
+            </if>
+            <if test="description != null">
+                AND `description`=#{description}
+            </if>
+            <if test="autoclose != null">
+                AND `autoclose`=#{autoclose}
+            </if>
+            <if test="priority != null">
+                AND `priority`=#{priority}
+            </if>
+            <if test="path != null">
+                AND `path`=#{path}
+            </if>
+            <if test="link != null">
+                AND `link`=#{link}
+            </if>
+            <if test="start != null">
+                AND `start`=#{start}
+            </if>
+            <if test="end != null">
+                AND `end`=#{end}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="selectOneByIdDTO" parameterType="Map" resultMap="adsDTOMap">
+        <![CDATA[
+            SELECT * FROM u_ads
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`!=#{id}
+            </if>
+            <if test="title != null">
+                AND `title`=#{title}
+            </if>
+            <if test="subtitle != null">
+                AND `subtitle`=#{subtitle}
+            </if>
+            <if test="form != null">
+                AND `form`=#{form}
+            </if>
+            <if test="position != null">
+                AND `position`=#{position}
+            </if>
+            <if test="description != null">
+                AND `description`=#{description}
+            </if>
+            <if test="autoclose != null">
+                AND `autoclose`=#{autoclose}
+            </if>
+            <if test="priority != null">
+                AND `priority`=#{priority}
+            </if>
+            <if test="path != null">
+                AND `path`=#{path}
+            </if>
+            <if test="link != null">
+                AND `link`=#{link}
+            </if>
+            <if test="start != null">
+                AND `start`=#{start}
+            </if>
+            <if test="end != null">
+                AND `end`=#{end}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="appFindOneAds" parameterType="Map" resultMap="adsDTOMap">
+            SELECT * FROM u_ads where `start` <![CDATA[ <= ]]> #{date} AND `end` <![CDATA[ >= ]]> #{date} AND state=1 AND status=1 LIMIT 1
+    </select>
+
+    <select id="select" parameterType="Map" resultMap="adsMap">
+        <![CDATA[
+            SELECT * FROM u_ads
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="title != null">
+                AND `title`=#{title}
+            </if>
+            <if test="subtitle != null">
+                AND `subtitle`=#{subtitle}
+            </if>
+            <if test="form != null">
+                AND `form`=#{form}
+            </if>
+            <if test="position != null">
+                AND `position`=#{position}
+            </if>
+            <if test="description != null">
+                AND `description`=#{description}
+            </if>
+            <if test="autoclose != null">
+                AND `autoclose`=#{autoclose}
+            </if>
+            <if test="priority != null">
+                AND `priority`=#{priority}
+            </if>
+            <if test="path != null">
+                AND `path`=#{path}
+            </if>
+            <if test="link != null">
+                AND `link`=#{link}
+            </if>
+            <if test="start != null">
+                AND `start`=#{start}
+            </if>
+            <if test="end != null">
+                AND `end`=#{end}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectDTO" parameterType="Map" resultMap="adsDTOMap">
+        <![CDATA[
+            SELECT * FROM u_ads
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="title != null">
+                AND `title`=#{title}
+            </if>
+            <if test="subtitle != null">
+                AND `subtitle`=#{subtitle}
+            </if>
+            <if test="form != null">
+                AND `form`=#{form}
+            </if>
+            <if test="position != null">
+                AND `position`=#{position}
+            </if>
+            <if test="description != null">
+                AND `description`=#{description}
+            </if>
+            <if test="autoclose != null">
+                AND `autoclose`=#{autoclose}
+            </if>
+            <if test="priority != null">
+                AND `priority`=#{priority}
+            </if>
+            <if test="path != null">
+                AND `path`=#{path}
+            </if>
+            <if test="link != null">
+                AND `link`=#{link}
+            </if>
+            <if test="start != null">
+                AND `start`=#{start}
+            </if>
+            <if test="end != null">
+                AND `end`=#{end}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectMap" parameterType="Map" resultType="Map">
+        SELECT
+        <foreach collection="columns" item="cname" separator="," open="`" close="`">
+            ${cname}
+        </foreach>
+        FROM u_ads
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="title != null">
+                AND `title`=#{title}
+            </if>
+            <if test="subtitle != null">
+                AND `subtitle`=#{subtitle}
+            </if>
+            <if test="form != null">
+                AND `form`=#{form}
+            </if>
+            <if test="position != null">
+                AND `position`=#{position}
+            </if>
+            <if test="description != null">
+                AND `description`=#{description}
+            </if>
+            <if test="autoclose != null">
+                AND `autoclose`=#{autoclose}
+            </if>
+            <if test="priority != null">
+                AND `priority`=#{priority}
+            </if>
+            <if test="path != null">
+                AND `path`=#{path}
+            </if>
+            <if test="link != null">
+                AND `link`=#{link}
+            </if>
+            <if test="start != null">
+                AND `start`=#{start}
+            </if>
+            <if test="end != null">
+                AND `end`=#{end}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <!--统计相关查询-->
+    <select id="groupCount" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_ads
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="title != null">
+                AND `title`=#{title}
+            </if>
+            <if test="subtitle != null">
+                AND `subtitle`=#{subtitle}
+            </if>
+            <if test="form != null">
+                AND `form`=#{form}
+            </if>
+            <if test="position != null">
+                AND `position`=#{position}
+            </if>
+            <if test="description != null">
+                AND `description`=#{description}
+            </if>
+            <if test="autoclose != null">
+                AND `autoclose`=#{autoclose}
+            </if>
+            <if test="priority != null">
+                AND `priority`=#{priority}
+            </if>
+            <if test="path != null">
+                AND `path`=#{path}
+            </if>
+            <if test="link != null">
+                AND `link`=#{link}
+            </if>
+            <if test="start != null">
+                AND `start`=#{start}
+            </if>
+            <if test="end != null">
+                AND `end`=#{end}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+    <select id="sum" parameterType="Map" resultType="Double">
+        <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_ads
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="title != null">
+                AND `title`=#{title}
+            </if>
+            <if test="subtitle != null">
+                AND `subtitle`=#{subtitle}
+            </if>
+            <if test="form != null">
+                AND `form`=#{form}
+            </if>
+            <if test="position != null">
+                AND `position`=#{position}
+            </if>
+            <if test="description != null">
+                AND `description`=#{description}
+            </if>
+            <if test="autoclose != null">
+                AND `autoclose`=#{autoclose}
+            </if>
+            <if test="priority != null">
+                AND `priority`=#{priority}
+            </if>
+            <if test="path != null">
+                AND `path`=#{path}
+            </if>
+            <if test="link != null">
+                AND `link`=#{link}
+            </if>
+            <if test="start != null">
+                AND `start`=#{start}
+            </if>
+            <if test="end != null">
+                AND `end`=#{end}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+    </select>
+
+    <select id="groupSum" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_ads
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="title != null">
+                AND `title`=#{title}
+            </if>
+            <if test="subtitle != null">
+                AND `subtitle`=#{subtitle}
+            </if>
+            <if test="form != null">
+                AND `form`=#{form}
+            </if>
+            <if test="position != null">
+                AND `position`=#{position}
+            </if>
+            <if test="description != null">
+                AND `description`=#{description}
+            </if>
+            <if test="autoclose != null">
+                AND `autoclose`=#{autoclose}
+            </if>
+            <if test="priority != null">
+                AND `priority`=#{priority}
+            </if>
+            <if test="path != null">
+                AND `path`=#{path}
+            </if>
+            <if test="link != null">
+                AND `link`=#{link}
+            </if>
+            <if test="start != null">
+                AND `start`=#{start}
+            </if>
+            <if test="end != null">
+                AND `end`=#{end}
+            </if>
+            <if test="state != null">
+                AND `state`=#{state}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+</mapper>

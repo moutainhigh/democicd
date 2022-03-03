@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.CodeUpdateLogDAO">
+
+  <resultMap id="codeUpdateLogMap" type="com.uwallet.pay.main.model.entity.CodeUpdateLog">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="merchantId" jdbcType="BIGINT" column="merchant_id"/>
+    <result property="code" jdbcType="VARCHAR" column="code"/>
+    <result property="type" jdbcType="TINYINT" column="type"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+    <result property="state" jdbcType="TINYINT" column="state"/>
+  </resultMap>
+
+  <resultMap id="codeUpdateLogDTOMap" type="com.uwallet.pay.main.model.dto.CodeUpdateLogDTO" extends="codeUpdateLogMap"></resultMap>
+
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="merchantId != null">
+          AND `merchant_id`=#{merchantId}
+        </if>
+        <if test="code != null">
+          AND `code`=#{code}
+        </if>
+        <if test="type != null">
+          AND `type`=#{type}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+        <if test="state != null">
+          AND `state`=#{state}
+        </if>
+  </sql>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.CodeUpdateLog">
+    INSERT INTO u_code_update_log (
+        <if test="id != null">
+            `id` 
+        </if>
+        <if test="merchantId != null">
+            ,`merchant_id` 
+        </if>
+        <if test="code != null">
+            ,`code` 
+        </if>
+        <if test="type != null">
+            ,`type` 
+        </if>
+        <if test="createdDate != null">
+            ,`created_date` 
+        </if>
+        <if test="createdBy != null">
+            ,`created_by` 
+        </if>
+        <if test="ip != null">
+            ,`ip` 
+        </if>
+        <if test="state != null">
+            ,`state`
+        </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="merchantId != null">
+              ,#{merchantId}
+        </if>
+        <if test="code != null">
+              ,#{code}
+        </if>
+        <if test="type != null">
+              ,#{type}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+        <if test="state != null">
+              ,#{state}
+        </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_code_update_log (
+        `id`,
+        `merchant_id`,
+        `code`,
+        `type`,
+        `created_date`,
+        `created_by`,
+        `ip`,
+        `state`
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.merchantId},
+        #{data.code},
+        #{data.type},
+        #{data.createdDate},
+        #{data.createdBy},
+        #{data.ip},
+        #{data.state}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.CodeUpdateLog">
+    UPDATE u_code_update_log
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="merchantId != null">
+          `merchant_id`=#{merchantId},
+        </if>
+        <if test="code != null">
+          `code`=#{code},
+        </if>
+        <if test="type != null">
+          `type`=#{type},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+        <if test="state != null">
+          `state`=#{state},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_code_update_log
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+  <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_code_update_log
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_code_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="codeUpdateLogMap">
+    <![CDATA[
+            SELECT * FROM u_code_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="codeUpdateLogDTOMap">
+    <![CDATA[
+            SELECT * FROM u_code_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="codeUpdateLogMap">
+    <![CDATA[
+            SELECT * FROM u_code_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="codeUpdateLogDTOMap">
+    <![CDATA[
+            SELECT * FROM u_code_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_code_update_log
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_code_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_code_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_code_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+</mapper>

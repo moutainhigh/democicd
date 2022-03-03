@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.TopDealDAO">
+
+  <resultMap id="topDealMap" type="com.uwallet.pay.main.model.entity.TopDeal">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="name" jdbcType="VARCHAR" column="name"/>
+    <result property="skipType" jdbcType="TINYINT" column="skip_type"/>
+    <result property="skipRoute" jdbcType="VARCHAR" column="skip_route"/>
+    <result property="path" jdbcType="VARCHAR" column="path"/>
+    <result property="info" jdbcType="VARCHAR" column="info"/>
+    <result property="sort" jdbcType="TINYINT" column="sort"/>
+    <result property="state" jdbcType="TINYINT" column="state"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+  </resultMap>
+
+  <resultMap id="topDealDTOMap" type="com.uwallet.pay.main.model.dto.TopDealDTO">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+        <result property="skipType" jdbcType="TINYINT" column="skip_type"/>
+        <result property="skipRoute" jdbcType="VARCHAR" column="skip_route"/>
+        <result property="path" jdbcType="VARCHAR" column="path"/>
+        <result property="info" jdbcType="VARCHAR" column="info"/>
+        <result property="sort" jdbcType="TINYINT" column="sort"/>
+        <result property="state" jdbcType="TINYINT" column="state"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.TopDeal">
+    INSERT INTO u_top_deal (
+        <if test="id != null">
+            `id` 
+        </if>
+        <if test="name != null">
+            ,`name` 
+        </if>
+        <if test="skipType != null">
+            ,`skip_type` 
+        </if>
+        <if test="skipRoute != null">
+            ,`skip_route` 
+        </if>
+        <if test="path != null">
+            ,`path` 
+        </if>
+        <if test="info != null">
+            ,`info` 
+        </if>
+        <if test="sort != null">
+            ,`sort` 
+        </if>
+        <if test="state != null">
+            ,`state` 
+        </if>
+        <if test="createdBy != null">
+            ,`created_by` 
+        </if>
+        <if test="createdDate != null">
+            ,`created_date` 
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by` 
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date` 
+        </if>
+        <if test="status != null">
+            ,`status` 
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="name != null">
+              ,#{name}
+        </if>
+        <if test="skipType != null">
+              ,#{skipType}
+        </if>
+        <if test="skipRoute != null">
+              ,#{skipRoute}
+        </if>
+        <if test="path != null">
+              ,#{path}
+        </if>
+        <if test="info != null">
+              ,#{info}
+        </if>
+        <if test="sort != null">
+              ,#{sort}
+        </if>
+        <if test="state != null">
+              ,#{state}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+              ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+              ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_top_deal (
+        `id`,
+        `name`,
+        `skip_type`,
+        `skip_route`,
+        `path`,
+        `info`,
+        `sort`,
+        `state`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.name},
+        #{data.skipType},
+        #{data.skipRoute},
+        #{data.path},
+        #{data.info},
+        #{data.sort},
+        #{data.state},
+        #{data.createdBy},
+        #{data.createdDate},
+        #{data.modifiedBy},
+        #{data.modifiedDate},
+        #{data.status},
+        #{data.ip}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.TopDeal">
+    UPDATE u_top_deal
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="name != null">
+          `name`=#{name},
+        </if>
+        <if test="skipType != null">
+          `skip_type`=#{skipType},
+        </if>
+        <if test="skipRoute != null">
+          `skip_route`=#{skipRoute},
+        </if>
+        <if test="path != null">
+          `path`=#{path},
+        </if>
+        <if test="info != null">
+          `info`=#{info},
+        </if>
+        <if test="sort != null">
+          `sort`=#{sort},
+        </if>
+        <if test="state != null">
+          `state`=#{state},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="modifiedBy != null">
+          `modified_by`=#{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+          `modified_date`=#{modifiedDate},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_top_deal
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+  <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_top_deal
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_top_deal
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="name != null">
+            AND `name`=#{name}
+          </if>
+          <if test="skipType != null">
+            AND `skip_type`=#{skipType}
+          </if>
+          <if test="skipRoute != null">
+            AND `skip_route`=#{skipRoute}
+          </if>
+          <if test="path != null">
+            AND `path`=#{path}
+          </if>
+          <if test="info != null">
+            AND `info`=#{info}
+          </if>
+          <if test="sort != null">
+            AND `sort`=#{sort}
+          </if>
+          <if test="state != null">
+            AND `state`=#{state}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">And status = #{status}</when>
+            <otherwise><![CDATA[And status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="topDealMap">
+    <![CDATA[
+            SELECT * FROM u_top_deal
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="name != null">
+            AND `name`=#{name}
+          </if>
+          <if test="skipType != null">
+            AND `skip_type`=#{skipType}
+          </if>
+          <if test="skipRoute != null">
+            AND `skip_route`=#{skipRoute}
+          </if>
+          <if test="path != null">
+            AND `path`=#{path}
+          </if>
+          <if test="info != null">
+            AND `info`=#{info}
+          </if>
+          <if test="sort != null">
+            AND `sort`=#{sort}
+          </if>
+          <if test="state != null">
+            AND `state`=#{state}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="topDealDTOMap">
+    <![CDATA[
+            SELECT * FROM u_top_deal
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="name != null">
+            AND `name`=#{name}
+          </if>
+          <if test="skipType != null">
+            AND `skip_type`=#{skipType}
+          </if>
+          <if test="skipRoute != null">
+            AND `skip_route`=#{skipRoute}
+          </if>
+          <if test="path != null">
+            AND `path`=#{path}
+          </if>
+          <if test="info != null">
+            AND `info`=#{info}
+          </if>
+          <if test="sort != null">
+            AND `sort`=#{sort}
+          </if>
+          <if test="state != null">
+            AND `state`=#{state}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="topDealMap">
+    <![CDATA[
+            SELECT * FROM u_top_deal
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="name != null">
+            AND `name`=#{name}
+          </if>
+          <if test="skipType != null">
+            AND `skip_type`=#{skipType}
+          </if>
+          <if test="skipRoute != null">
+            AND `skip_route`=#{skipRoute}
+          </if>
+          <if test="path != null">
+            AND `path`=#{path}
+          </if>
+          <if test="info != null">
+            AND `info`=#{info}
+          </if>
+          <if test="sort != null">
+            AND `sort`=#{sort}
+          </if>
+          <if test="state != null">
+            AND `state`=#{state}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="topDealDTOMap">
+    <![CDATA[
+            SELECT * FROM u_top_deal
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="name != null">
+            AND `name`=#{name}
+          </if>
+          <if test="skipType != null">
+            AND `skip_type`=#{skipType}
+          </if>
+          <if test="skipRoute != null">
+            AND `skip_route`=#{skipRoute}
+          </if>
+          <if test="path != null">
+            AND `path`=#{path}
+          </if>
+          <if test="info != null">
+            AND `info`=#{info}
+          </if>
+          <if test="sort != null">
+            AND `sort`=#{sort}
+          </if>
+          <if test="state != null">
+            AND `state`=#{state}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_top_deal
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="name != null">
+            AND `name`=#{name}
+          </if>
+          <if test="skipType != null">
+            AND `skip_type`=#{skipType}
+          </if>
+          <if test="skipRoute != null">
+            AND `skip_route`=#{skipRoute}
+          </if>
+          <if test="path != null">
+            AND `path`=#{path}
+          </if>
+          <if test="info != null">
+            AND `info`=#{info}
+          </if>
+          <if test="sort != null">
+            AND `sort`=#{sort}
+          </if>
+          <if test="state != null">
+            AND `state`=#{state}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_top_deal
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="name != null">
+            AND `name`=#{name}
+          </if>
+          <if test="skipType != null">
+            AND `skip_type`=#{skipType}
+          </if>
+          <if test="skipRoute != null">
+            AND `skip_route`=#{skipRoute}
+          </if>
+          <if test="path != null">
+            AND `path`=#{path}
+          </if>
+          <if test="info != null">
+            AND `info`=#{info}
+          </if>
+          <if test="sort != null">
+            AND `sort`=#{sort}
+          </if>
+          <if test="state != null">
+            AND `state`=#{state}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_top_deal
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="name != null">
+            AND `name`=#{name}
+          </if>
+          <if test="skipType != null">
+            AND `skip_type`=#{skipType}
+          </if>
+          <if test="skipRoute != null">
+            AND `skip_route`=#{skipRoute}
+          </if>
+          <if test="path != null">
+            AND `path`=#{path}
+          </if>
+          <if test="info != null">
+            AND `info`=#{info}
+          </if>
+          <if test="sort != null">
+            AND `sort`=#{sort}
+          </if>
+          <if test="state != null">
+            AND `state`=#{state}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_top_deal
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+          <if test="id != null">
+            AND `id`=#{id}
+          </if>
+          <if test="name != null">
+            AND `name`=#{name}
+          </if>
+          <if test="skipType != null">
+            AND `skip_type`=#{skipType}
+          </if>
+          <if test="skipRoute != null">
+            AND `skip_route`=#{skipRoute}
+          </if>
+          <if test="path != null">
+            AND `path`=#{path}
+          </if>
+          <if test="info != null">
+            AND `info`=#{info}
+          </if>
+          <if test="sort != null">
+            AND `sort`=#{sort}
+          </if>
+          <if test="state != null">
+            AND `state`=#{state}
+          </if>
+          <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+          </if>
+          <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+          </if>
+          <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+          </if>
+          <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+          </if>
+          <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+          </choose>
+          <if test="ip != null">
+            AND `ip`=#{ip}
+          </if>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+    <select id="shiftUpOrDown" resultType="com.uwallet.pay.main.model.dto.TopDealDTO">
+        SELECT * FROM u_top_deal
+        <if test="upOrDown == 0">
+            WHERE sort &lt; (
+                SELECT sort FROM u_top_deal WHERE id = #{id}
+            ) AND status > 0 ORDER BY sort DESC
+        </if>
+        <if test="upOrDown == 1">
+            WHERE sort &gt; (
+                SELECT sort FROM u_top_deal WHERE id = #{id}
+            ) AND status > 0 ORDER BY sort ASC
+        </if>
+        LIMIT 0, 1
+    </select>
+
+    <select id="selectMaxSort" resultType="java.lang.Integer">
+        SELECT MAX(sort) FROM u_top_deal
+    </select>
+
+    <select id="getTopDealImg" resultType="com.uwallet.pay.main.model.dto.TopDealDTO">
+      SELECT skip_type, skip_route, path FROM u_top_deal WHERE state = 1 AND status = 1 ORDER BY sort ASC
+    </select>
+
+
+
+</mapper>

@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.PosQrPayFlowDAO">
+
+  <resultMap id="posQrPayFlowMap" type="com.uwallet.pay.main.model.entity.PosQrPayFlow">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="posTransNo" jdbcType="VARCHAR" column="pos_trans_no"/>
+    <result property="currencyType" jdbcType="CHAR" column="currency_type"/>
+    <result property="transAmount" jdbcType="DECIMAL" column="trans_amount"/>
+    <result property="notifyUrl" jdbcType="VARCHAR" column="notify_url"/>
+    <result property="qrCode" jdbcType="VARCHAR" column="qr_code"/>
+    <result property="posId" jdbcType="VARCHAR" column="pos_id"/>
+    <result property="merchantId" jdbcType="BIGINT" column="merchant_id"/>
+    <result property="sysTransNo" jdbcType="VARCHAR" column="sys_trans_no"/>
+    <result property="showThirdTransNo" jdbcType="VARCHAR" column="show_third_trans_no"/>
+    <result property="orderStatus" jdbcType="TINYINT" column="order_status"/>
+    <result property="notifyStatus" jdbcType="TINYINT" column="notify_status"/>
+    <result property="payDate" jdbcType="BIGINT" column="pay_date"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+  </resultMap>
+
+  <resultMap id="posQrPayFlowDTOMap" type="com.uwallet.pay.main.model.dto.PosQrPayFlowDTO" extends="posQrPayFlowMap"></resultMap>
+
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="posTransNo != null">
+          AND `pos_trans_no`=#{posTransNo}
+        </if>
+        <if test="currencyType != null">
+          AND `currency_type`=#{currencyType}
+        </if>
+        <if test="transAmount != null">
+          AND `trans_amount`=#{transAmount}
+        </if>
+        <if test="notifyUrl != null">
+          AND `notify_url`=#{notifyUrl}
+        </if>
+        <if test="qrCode != null">
+          AND `qr_code`=#{qrCode}
+        </if>
+        <if test="posId != null">
+          AND `pos_id`=#{posId}
+        </if>
+        <if test="merchantId != null">
+          AND `merchant_id`=#{merchantId}
+        </if>
+        <if test="sysTransNo != null">
+          AND `sys_trans_no`=#{sysTransNo}
+        </if>
+      <if test="showThirdTransNo != null">
+          AND `show_third_trans_no`=#{showThirdTransNo}
+      </if>
+        <if test="orderStatus != null">
+          AND `order_status`=#{orderStatus}
+        </if>
+        <choose>
+          <when test="status != null">AND status = #{status}</when>
+          <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="modifiedBy != null">
+          AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+          AND `modified_date`=#{modifiedDate}
+        </if>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+  </sql>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.PosQrPayFlow">
+    INSERT INTO u_pos_qr_pay_flow (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="posTransNo != null">
+            ,`pos_trans_no`
+        </if>
+        <if test="currencyType != null">
+            ,`currency_type`
+        </if>
+        <if test="transAmount != null">
+            ,`trans_amount`
+        </if>
+        <if test="notifyUrl != null">
+            ,`notify_url`
+        </if>
+        <if test="qrCode != null">
+            ,`qr_code`
+        </if>
+        <if test="posId != null">
+            ,`pos_id`
+        </if>
+        <if test="merchantId != null">
+            ,`merchant_id`
+        </if>
+        <if test="sysTransNo != null">
+            ,`sys_trans_no`
+        </if>
+      <if test="showThirdTransNo != null">
+          ,`show_third_trans_no`
+      </if>
+        <if test="orderStatus != null">
+            ,`order_status`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="posTransNo != null">
+              ,#{posTransNo}
+        </if>
+        <if test="currencyType != null">
+              ,#{currencyType}
+        </if>
+        <if test="transAmount != null">
+              ,#{transAmount}
+        </if>
+        <if test="notifyUrl != null">
+              ,#{notifyUrl}
+        </if>
+        <if test="qrCode != null">
+              ,#{qrCode}
+        </if>
+        <if test="posId != null">
+              ,#{posId}
+        </if>
+        <if test="merchantId != null">
+              ,#{merchantId}
+        </if>
+        <if test="sysTransNo != null">
+              ,#{sysTransNo}
+        </if>
+      <if test="showThirdTransNo != null">
+          ,#{showThirdTransNo}
+      </if>
+        <if test="orderStatus != null">
+              ,#{orderStatus}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+              ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+              ,#{modifiedDate}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_pos_qr_pay_flow (
+        `id`,
+        `pos_trans_no`,
+        `currency_type`,
+        `trans_amount`,
+        `notify_url`,
+        `qr_code`,
+        `pos_id`,
+        `merchant_id`,
+        `sys_trans_no`,
+        `order_status`,
+        `status`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `ip`
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.posTransNo},
+        #{data.currencyType},
+        #{data.transAmount},
+        #{data.notifyUrl},
+        #{data.qrCode},
+        #{data.posId},
+        #{data.merchantId},
+        #{data.sysTransNo},
+        #{data.showThirdTransNo},
+        #{data.orderStatus},
+        #{data.status},
+        #{data.createdBy},
+        #{data.createdDate},
+        #{data.modifiedBy},
+        #{data.modifiedDate},
+        #{data.ip}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.PosQrPayFlow">
+    UPDATE u_pos_qr_pay_flow
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="posTransNo != null">
+          `pos_trans_no`=#{posTransNo},
+        </if>
+        <if test="currencyType != null">
+          `currency_type`=#{currencyType},
+        </if>
+        <if test="transAmount != null">
+          `trans_amount`=#{transAmount},
+        </if>
+        <if test="notifyUrl != null">
+          `notify_url`=#{notifyUrl},
+        </if>
+        <if test="qrCode != null">
+          `qr_code`=#{qrCode},
+        </if>
+        <if test="posId != null">
+          `pos_id`=#{posId},
+        </if>
+        <if test="merchantId != null">
+          `merchant_id`=#{merchantId},
+        </if>
+        <if test="sysTransNo != null">
+          `sys_trans_no`=#{sysTransNo},
+        </if>
+        <if test="showThirdTransNo != null">
+            `show_third_trans_no`=#{showThirdTransNo},
+        </if>
+        <if test="orderStatus != null">
+          `order_status`=#{orderStatus},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="modifiedBy != null">
+          `modified_by`=#{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+          `modified_date`=#{modifiedDate},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_pos_qr_pay_flow
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+  <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_pos_qr_pay_flow
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_pos_qr_pay_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="posQrPayFlowMap">
+    <![CDATA[
+            SELECT * FROM u_pos_qr_pay_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="posQrPayFlowDTOMap">
+    <![CDATA[
+            SELECT * FROM u_pos_qr_pay_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="posQrPayFlowMap">
+    <![CDATA[
+            SELECT * FROM u_pos_qr_pay_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="posQrPayFlowDTOMap">
+    <![CDATA[
+            SELECT * FROM u_pos_qr_pay_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_pos_qr_pay_flow
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_pos_qr_pay_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_pos_qr_pay_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_pos_qr_pay_flow
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+
+    <select id="listPosTransaction" parameterType="Map" resultType="com.uwallet.pay.main.model.dto.PosTransactionRecordDTO">
+        SELECT
+            pos.id,
+            pos.pos_trans_no posTransNo,
+            pos.show_third_trans_no payoTransNo,
+            pos.order_status orderStatus,
+            pos.trans_amount transAmount,
+            q.sale_type saleType,
+            q.platform_fee platformFee,
+            q.pay_amount payAmount,
+            pos.created_date createDate,
+            pos.pay_date payDate
+        FROM
+            u_pos_qr_pay_flow pos
+        LEFT JOIN u_qr_pay_flow q ON pos.sys_trans_no = q.trans_no
+        <where>
+            <if test="merchantId != null">
+                AND pos.merchant_id = #{merchantId}
+            </if>
+            <if test="startTimeStamp != null">
+                AND pos.created_date &gt;= #{startTimeStamp}
+            </if>
+            <if test="endTimeStamp != null">
+                AND pos.created_date &lt;= #{endTimeStamp}
+            </if>
+            <if test="orderStatus != null">
+                AND q.state = #{orderStatus}
+            </if>
+            <if test="posTransNo != null">
+                AND pos.pos_trans_no = #{posTransNo}
+            </if>
+            <if test="transNo != null">
+                AND pos.sys_trans_no = #{transNo}
+            </if>
+        </where>
+        ORDER BY
+            pos.created_by DESC
+        LIMIT ${startIndex}, ${limit}
+    </select>
+
+    <select id="countPosTransaction" parameterType="Map" resultType="Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            u_pos_qr_pay_flow pos
+        LEFT JOIN u_qr_pay_flow q ON pos.sys_trans_no = q.trans_no
+        <where>
+            <if test="merchantId != null">
+                AND pos.merchant_id = #{merchantId}
+            </if>
+            <if test="startTimeStamp != null">
+                AND pos.created_date &gt;= #{startTimeStamp}
+            </if>
+            <if test="endTimeStamp != null">
+                AND pos.created_date &lt;= #{endTimeStamp}
+            </if>
+            <if test="orderStatus != null">
+                AND q.state = #{orderStatus}
+            </if>
+            <if test="posTransNo != null">
+                AND pos.pos_trans_no = #{posTransNo}
+            </if>
+            <if test="transNo != null">
+                AND pos.sys_trans_no = #{transNo}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateSysTransNoByThirdTransNo">
+        UPDATE
+            u_pos_qr_pay_flow
+        SET
+            sys_trans_no = #{sysNo},
+            modified_by = #{userId},
+            modified_date =#{modifyTime}
+        WHERE
+            show_third_trans_no = #{thirdNo}
+    </update>
+
+
+    <update id="updateOrderStatusBySysTransNo">
+        UPDATE
+            u_pos_qr_pay_flow
+        SET
+            order_status = #{orderStatus},
+            modified_by = #{userId},
+            modified_date =#{modifyTime}
+        WHERE
+            sys_trans_no = #{sysTransNo}
+    </update>
+
+
+
+</mapper>

@@ -1,0 +1,1298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.ApiMerchantDAO">
+
+  <resultMap id="apiMerchantMap" type="com.uwallet.pay.main.model.entity.ApiMerchant">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="superMerchantId" jdbcType="BIGINT" column="super_merchant_id"/>
+    <result property="merchantClass" jdbcType="TINYINT" column="merchant_class"/>
+    <result property="entityType" jdbcType="TINYINT" column="entity_type"/>
+    <result property="fileList" jdbcType="VARCHAR" column="file_list"/>
+    <result property="trusteeFileList" jdbcType="VARCHAR" column="trustee_file_list"/>
+    <result property="isAvailable" jdbcType="TINYINT" column="is_available"/>
+    <result property="abn" jdbcType="VARCHAR" column="ABN"/>
+    <result property="acn" jdbcType="VARCHAR" column="ACN"/>
+    <result property="corporateName" jdbcType="VARCHAR" column="corporate_name"/>
+    <result property="practicalName" jdbcType="VARCHAR" column="practical_name"/>
+    <result property="trusteeType" jdbcType="TINYINT" column="trustee_type"/>
+    <result property="businessPhone" jdbcType="VARCHAR" column="business_phone"/>
+    <result property="email" jdbcType="VARCHAR" column="email"/>
+    <result property="postcode" jdbcType="VARCHAR" column="postcode"/>
+    <result property="bsb" jdbcType="VARCHAR" column="BSB"/>
+    <result property="accountNo" jdbcType="VARCHAR" column="account_no"/>
+    <result property="accountName" jdbcType="VARCHAR" column="account_name"/>
+    <result property="bankName" jdbcType="VARCHAR" column="bank_name"/>
+    <result property="county" jdbcType="VARCHAR" column="county"/>
+    <result property="address" jdbcType="VARCHAR" column="address"/>
+    <result property="streetNumber" jdbcType="VARCHAR" column="street_number"/>
+    <result property="streetName" jdbcType="VARCHAR" column="street_name"/>
+    <result property="suburb" jdbcType="VARCHAR" column="suburb"/>
+    <result property="city" jdbcType="VARCHAR" column="city"/>
+    <result property="province" jdbcType="VARCHAR" column="province"/>
+    <result property="merchantState" jdbcType="VARCHAR" column="merchant_state"/>
+    <result property="websites" jdbcType="VARCHAR" column="websites"/>
+    <result property="operationTime" jdbcType="TINYINT" column="operation_time"/>
+    <result property="estimatedAnnualSales" jdbcType="TINYINT" column="estimated_annual_sales"/>
+    <result property="avgSalesValue" jdbcType="TINYINT" column="avg_sales_value"/>
+    <result property="salesValueByCard" jdbcType="TINYINT" column="sales_value_by_card"/>
+    <result property="marchantRate" jdbcType="DECIMAL" column="marchant_rate"/>
+      <result property="marchantRateChoice" jdbcType="TINYINT" column="marchant_rate_choice"/>
+    <result property="paymentContract" jdbcType="VARCHAR" column="payment_contract"/>
+    <result property="installmentContract" jdbcType="VARCHAR" column="installment_contract"/>
+    <result property="remark" jdbcType="VARCHAR" column="remark"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="state" jdbcType="TINYINT" column="state"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+    <result property="asicExtractFileUrl" jdbcType="VARCHAR" column="asic_extract_file_url"/>
+    <result property="asicExtractFileName" jdbcType="VARCHAR" column="asic_extract_file_name"/>
+    <result property="docusignEnvelopeid" jdbcType="VARCHAR" column="docusign_envelopeid"/>
+    <result property="docusignHasSigned" jdbcType="TINYINT" column="docusign_has_signed"/>
+    <result property="docusignFiles" jdbcType="VARCHAR" column="docusign_files"/>
+    <result property="trusteeDeed" jdbcType="TINYINT" column="trustee_deed"/>
+    <result property="trusteeCompanyType" jdbcType="TINYINT" column="trustee_company_type"/>
+    <result property="docusignSigner" jdbcType="VARCHAR" column="docusign_signer"/>
+    <result property="tradingIsNoRegistered" jdbcType="VARCHAR" column="trading_is_no_registered"/>
+    <result property="contractType" jdbcType="TINYINT" column="contract_type"/>
+    <result property="authorisedTitle" jdbcType="TINYINT" column="authorised_title"/>
+    <result property="contractStartTime" jdbcType="BIGINT" column="contract_start_time"/>
+    <result property="contractEndTime" jdbcType="BIGINT" column="contract_end_time"/>
+    <result property="merchantApprovePassTime" jdbcType="BIGINT" column="merchant_approve_pass_time"/>
+    <result property="basePayRate" jdbcType="DECIMAL" column="base_pay_rate"/>
+      <result property="basePayRateChoice" jdbcType="TINYINT" column="base_pay_rate_choice"/>
+    <result property="docusignContractType" jdbcType="TINYINT" column="docusign_contract_type"/>
+    <result property="logoUrl" jdbcType="VARCHAR" column="logo_url"/>
+    <result property="intro" jdbcType="VARCHAR" column="intro"/>
+    <result property="keyword" jdbcType="VARCHAR" column="keyword"/>
+    <result property="categories" jdbcType="TINYINT" column="categories"/>
+      <result property="key" jdbcType="VARCHAR" column="key"/>
+      <result property="secret" jdbcType="VARCHAR" column="secret"/>
+      <result property="representativeName" jdbcType="VARCHAR" column="representative_name"/>
+      <result property="otherEntity" jdbcType="VARCHAR" column="other_entity"/>
+  </resultMap>
+
+  <resultMap id="apiMerchantDTOMap" type="com.uwallet.pay.main.model.dto.ApiMerchantDTO" extends="apiMerchantMap"></resultMap>
+
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="superMerchantId != null">
+          AND `super_merchant_id`=#{superMerchantId}
+        </if>
+        <if test="merchantClass != null">
+          AND `merchant_class`=#{merchantClass}
+        </if>
+        <if test="entityType != null">
+          AND `entity_type`=#{entityType}
+        </if>
+        <if test="fileList != null">
+          AND `file_list`=#{fileList}
+        </if>
+        <if test="trusteeFileList != null">
+          AND `trustee_file_list`=#{trusteeFileList}
+        </if>
+        <if test="isAvailable != null">
+          AND `is_available`=#{isAvailable}
+        </if>
+        <if test="abn != null">
+          AND `ABN`=#{abn}
+        </if>
+        <if test="acn != null">
+          AND `ACN`=#{acn}
+        </if>
+        <if test="corporateName != null">
+          AND `corporate_name`=#{corporateName}
+        </if>
+        <if test="practicalName != null">
+          AND `practical_name`=#{practicalName}
+        </if>
+        <if test="trusteeType != null">
+          AND `trustee_type`=#{trusteeType}
+        </if>
+        <if test="businessPhone != null">
+          AND `business_phone`=#{businessPhone}
+        </if>
+        <if test="email != null">
+          AND `email`=#{email}
+        </if>
+        <if test="postcode != null">
+          AND `postcode`=#{postcode}
+        </if>
+        <if test="bsb != null">
+          AND `BSB`=#{bsb}
+        </if>
+        <if test="accountNo != null">
+          AND `account_no`=#{accountNo}
+        </if>
+        <if test="accountName != null">
+          AND `account_name`=#{accountName}
+        </if>
+        <if test="bankName != null">
+          AND `bank_name`=#{bankName}
+        </if>
+        <if test="county != null">
+          AND `county`=#{county}
+        </if>
+        <if test="address != null">
+          AND `address`=#{address}
+        </if>
+        <if test="streetNumber != null">
+          AND `street_number`=#{streetNumber}
+        </if>
+        <if test="streetName != null">
+          AND `street_name`=#{streetName}
+        </if>
+        <if test="suburb != null">
+          AND `suburb`=#{suburb}
+        </if>
+        <if test="city != null">
+          AND `city`=#{city}
+        </if>
+        <if test="province != null">
+          AND `province`=#{province}
+        </if>
+        <if test="merchantState != null">
+          AND `merchant_state`=#{merchantState}
+        </if>
+      <if test="marchantRateChoice != null">
+          AND `marchant_rate_choice`=#{marchantRateChoice}
+      </if>
+        <if test="websites != null">
+          AND `websites`=#{websites}
+        </if>
+        <if test="operationTime != null">
+          AND `operation_time`=#{operationTime}
+        </if>
+        <if test="estimatedAnnualSales != null">
+          AND `estimated_annual_sales`=#{estimatedAnnualSales}
+        </if>
+        <if test="avgSalesValue != null">
+          AND `avg_sales_value`=#{avgSalesValue}
+        </if>
+        <if test="salesValueByCard != null">
+          AND `sales_value_by_card`=#{salesValueByCard}
+        </if>
+        <if test="marchantRate != null">
+          AND `marchant_rate`=#{marchantRate}
+        </if>
+        <if test="paymentContract != null">
+          AND `payment_contract`=#{paymentContract}
+        </if>
+        <if test="installmentContract != null">
+          AND `installment_contract`=#{installmentContract}
+        </if>
+        <if test="remark != null">
+          AND `remark`=#{remark}
+        </if>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="modifiedBy != null">
+          AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+          AND `modified_date`=#{modifiedDate}
+        </if>
+        <if test="state != null">
+          AND `state`=#{state}
+        </if>
+        <choose>
+          <when test="status != null">AND status = #{status}</when>
+          <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+        <if test="asicExtractFileUrl != null">
+          AND `asic_extract_file_url`=#{asicExtractFileUrl}
+        </if>
+        <if test="asicExtractFileName != null">
+          AND `asic_extract_file_name`=#{asicExtractFileName}
+        </if>
+        <if test="docusignEnvelopeid != null">
+          AND `docusign_envelopeid`=#{docusignEnvelopeid}
+        </if>
+        <if test="docusignHasSigned != null">
+          AND `docusign_has_signed`=#{docusignHasSigned}
+        </if>
+        <if test="docusignFiles != null">
+          AND `docusign_files`=#{docusignFiles}
+        </if>
+        <if test="trusteeDeed != null">
+          AND `trustee_deed`=#{trusteeDeed}
+        </if>
+        <if test="trusteeCompanyType != null">
+          AND `trustee_company_type`=#{trusteeCompanyType}
+        </if>
+        <if test="docusignSigner != null">
+          AND `docusign_signer`=#{docusignSigner}
+        </if>
+        <if test="tradingIsNoRegistered != null">
+          AND `trading_is_no_registered`=#{tradingIsNoRegistered}
+        </if>
+        <if test="contractType != null">
+          AND `contract_type`=#{contractType}
+        </if>
+        <if test="authorisedTitle != null">
+          AND `authorised_title`=#{authorisedTitle}
+        </if>
+        <if test="contractStartTime != null">
+          AND `contract_start_time`=#{contractStartTime}
+        </if>
+        <if test="contractEndTime != null">
+          AND `contract_end_time`=#{contractEndTime}
+        </if>
+        <if test="merchantApprovePassTime != null">
+          AND `merchant_approve_pass_time`=#{merchantApprovePassTime}
+        </if>
+        <if test="basePayRate != null">
+          AND `base_pay_rate`=#{basePayRate}
+        </if>
+      <if test="basePayRateChoice != null">
+          AND `base_pay_rate_choice`=#{basePayRateChoice}
+      </if>
+        <if test="docusignContractType != null">
+          AND `docusign_contract_type`=#{docusignContractType}
+        </if>
+        <if test="logoUrl != null">
+           AND `logo_url`=#{logoUrl}
+        </if>
+        <if test="intro != null">
+           AND `intro`=#{intro}
+        </if>
+        <if test="keyword != null">
+           AND `keyword`=#{keyword}
+        </if>
+        <if test="categories != null">
+           AND `categories`=#{categories}
+        </if>
+      <if test="key != null">
+          AND `key`=#{key}
+      </if>
+      <if test="secret != null">
+          AND `secret`=#{secret}
+      </if>
+      <if test="modifyStart != null and modifyEnd != null">
+          AND `modified_date` BETWEEN #{modifyStart} AND #{ modifyEnd}
+      </if>
+      <if test="practicalNameLike != null">
+          AND `practical_name` like CONCAT('%',#{ practicalNameLike},'%')
+      </if>
+      <if test="representativeName != null">
+          AND `representative_name`=#{representativeName}
+      </if>
+      <if test="otherEntity != null">
+          AND `other_entity`=#{otherEntity}
+      </if>
+  </sql>
+
+    <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.ApiMerchant">
+        INSERT INTO u_api_merchant (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="superMerchantId != null">
+            ,`super_merchant_id`
+        </if>
+        <if test="merchantClass != null">
+            ,`merchant_class`
+        </if>
+        <if test="entityType != null">
+            ,`entity_type`
+        </if>
+        <if test="fileList != null">
+            ,`file_list`
+        </if>
+        <if test="trusteeFileList != null">
+            ,`trustee_file_list`
+        </if>
+        <if test="isAvailable != null">
+            ,`is_available`
+        </if>
+        <if test="abn != null">
+            ,`ABN`
+        </if>
+        <if test="acn != null">
+            ,`ACN`
+        </if>
+        <if test="corporateName != null">
+            ,`corporate_name`
+        </if>
+        <if test="practicalName != null">
+            ,`practical_name`
+        </if>
+        <if test="trusteeType != null">
+            ,`trustee_type`
+        </if>
+        <if test="businessPhone != null">
+            ,`business_phone`
+        </if>
+        <if test="email != null">
+            ,`email`
+        </if>
+        <if test="postcode != null">
+            ,`postcode`
+        </if>
+        <if test="bsb != null">
+            ,`BSB`
+        </if>
+        <if test="accountNo != null">
+            ,`account_no`
+        </if>
+        <if test="accountName != null">
+            ,`account_name`
+        </if>
+        <if test="bankName != null">
+            ,`bank_name`
+        </if>
+        <if test="county != null">
+            ,`county`
+        </if>
+        <if test="address != null">
+            ,`address`
+        </if>
+        <if test="streetNumber != null">
+            ,`street_number`
+        </if>
+        <if test="streetName != null">
+            ,`street_name`
+        </if>
+        <if test="suburb != null">
+            ,`suburb`
+        </if>
+        <if test="city != null">
+            ,`city`
+        </if>
+        <if test="province != null">
+            ,`province`
+        </if>
+        <if test="merchantState != null">
+            ,`merchant_state`
+        </if>
+        <if test="websites != null">
+            ,`websites`
+        </if>
+        <if test="operationTime != null">
+            ,`operation_time`
+        </if>
+        <if test="estimatedAnnualSales != null">
+            ,`estimated_annual_sales`
+        </if>
+        <if test="avgSalesValue != null">
+            ,`avg_sales_value`
+        </if>
+        <if test="salesValueByCard != null">
+            ,`sales_value_by_card`
+        </if>
+        <if test="marchantRate != null">
+            ,`marchant_rate`
+        </if>
+        <if test="marchantRateChoice != null">
+            ,`marchant_rate_choice`
+        </if>
+        <if test="paymentContract != null">
+            ,`payment_contract`
+        </if>
+        <if test="installmentContract != null">
+            ,`installment_contract`
+        </if>
+        <if test="remark != null">
+            ,`remark`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="state != null">
+            ,`state`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+        <if test="asicExtractFileUrl != null">
+            ,`asic_extract_file_url`
+        </if>
+        <if test="asicExtractFileName != null">
+            ,`asic_extract_file_name`
+        </if>
+        <if test="docusignEnvelopeid != null">
+            ,`docusign_envelopeid`
+        </if>
+        <if test="docusignHasSigned != null">
+            ,`docusign_has_signed`
+        </if>
+        <if test="docusignFiles != null">
+            ,`docusign_files`
+        </if>
+        <if test="trusteeDeed != null">
+            ,`trustee_deed`
+        </if>
+        <if test="trusteeCompanyType != null">
+            ,`trustee_company_type`
+        </if>
+        <if test="docusignSigner != null">
+            ,`docusign_signer`
+        </if>
+        <if test="tradingIsNoRegistered != null">
+            ,`trading_is_no_registered`
+        </if>
+        <if test="contractType != null">
+            ,`contract_type`
+        </if>
+        <if test="authorisedTitle != null">
+            ,`authorised_title`
+        </if>
+        <if test="contractStartTime != null">
+            ,`contract_start_time`
+        </if>
+        <if test="contractEndTime != null">
+            ,`contract_end_time`
+        </if>
+        <if test="merchantApprovePassTime != null">
+            ,`merchant_approve_pass_time`
+        </if>
+        <if test="basePayRate != null">
+            ,`base_pay_rate`
+        </if>
+        <if test="basePayRateChoice != null">
+            ,`base_pay_rate_choice`
+        </if>
+        <if test="docusignContractType != null">
+            ,`docusign_contract_type`
+        </if>
+        <if test="logoUrl != null">
+            ,`logo_url`
+        </if>
+        <if test="intro != null">
+            ,`intro`
+        </if>
+        <if test="keyword != null">
+            ,`keyword`
+        </if>
+        <if test="categories != null">
+            ,`categories`
+        </if>
+        <if test="key != null">
+            ,`key`
+        </if>
+        <if test="secret != null">
+            ,`secret`
+        </if>
+        <if test="representativeName != null">
+            ,`representative_name`
+        </if>
+        <if test="otherEntity != null">
+            ,`other_entity`
+        </if>
+        ) VALUES (
+        <if test="id != null">
+            #{id}
+        </if>
+        <if test="superMerchantId != null">
+            ,#{superMerchantId}
+        </if>
+        <if test="merchantClass != null">
+            ,#{merchantClass}
+        </if>
+        <if test="entityType != null">
+            ,#{entityType}
+        </if>
+        <if test="fileList != null">
+            ,#{fileList}
+        </if>
+        <if test="trusteeFileList != null">
+            ,#{trusteeFileList}
+        </if>
+        <if test="isAvailable != null">
+            ,#{isAvailable}
+        </if>
+        <if test="abn != null">
+            ,#{abn}
+        </if>
+        <if test="acn != null">
+            ,#{acn}
+        </if>
+        <if test="corporateName != null">
+            ,#{corporateName}
+        </if>
+        <if test="practicalName != null">
+            ,#{practicalName}
+        </if>
+        <if test="trusteeType != null">
+            ,#{trusteeType}
+        </if>
+        <if test="businessPhone != null">
+            ,#{businessPhone}
+        </if>
+        <if test="email != null">
+            ,#{email}
+        </if>
+        <if test="postcode != null">
+            ,#{postcode}
+        </if>
+        <if test="bsb != null">
+            ,#{bsb}
+        </if>
+        <if test="accountNo != null">
+            ,#{accountNo}
+        </if>
+        <if test="accountName != null">
+            ,#{accountName}
+        </if>
+        <if test="bankName != null">
+            ,#{bankName}
+        </if>
+        <if test="county != null">
+            ,#{county}
+        </if>
+        <if test="address != null">
+            ,#{address}
+        </if>
+        <if test="streetNumber != null">
+            ,#{streetNumber}
+        </if>
+        <if test="streetName != null">
+            ,#{streetName}
+        </if>
+        <if test="suburb != null">
+            ,#{suburb}
+        </if>
+        <if test="city != null">
+            ,#{city}
+        </if>
+        <if test="province != null">
+            ,#{province}
+        </if>
+        <if test="merchantState != null">
+            ,#{merchantState}
+        </if>
+        <if test="websites != null">
+            ,#{websites}
+        </if>
+        <if test="operationTime != null">
+            ,#{operationTime}
+        </if>
+        <if test="estimatedAnnualSales != null">
+            ,#{estimatedAnnualSales}
+        </if>
+        <if test="avgSalesValue != null">
+            ,#{avgSalesValue}
+        </if>
+        <if test="salesValueByCard != null">
+            ,#{salesValueByCard}
+        </if>
+        <if test="marchantRate != null">
+            ,#{marchantRate}
+        </if>
+        <if test="marchantRateChoice != null">
+            ,#{marchantRateChoice}
+        </if>
+        <if test="paymentContract != null">
+            ,#{paymentContract}
+        </if>
+        <if test="installmentContract != null">
+            ,#{installmentContract}
+        </if>
+        <if test="remark != null">
+            ,#{remark}
+        </if>
+        <if test="createdBy != null">
+            ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+            ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+            ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+            ,#{modifiedDate}
+        </if>
+        <if test="state != null">
+            ,#{state}
+        </if>
+        <if test="status != null">
+            ,#{status}
+        </if>
+        <if test="ip != null">
+            ,#{ip}
+        </if>
+        <if test="asicExtractFileUrl != null">
+            ,#{asicExtractFileUrl}
+        </if>
+        <if test="asicExtractFileName != null">
+            ,#{asicExtractFileName}
+        </if>
+        <if test="docusignEnvelopeid != null">
+            ,#{docusignEnvelopeid}
+        </if>
+        <if test="docusignHasSigned != null">
+            ,#{docusignHasSigned}
+        </if>
+        <if test="docusignFiles != null">
+            ,#{docusignFiles}
+        </if>
+        <if test="trusteeDeed != null">
+            ,#{trusteeDeed}
+        </if>
+        <if test="trusteeCompanyType != null">
+            ,#{trusteeCompanyType}
+        </if>
+        <if test="docusignSigner != null">
+            ,#{docusignSigner}
+        </if>
+        <if test="tradingIsNoRegistered != null">
+            ,#{tradingIsNoRegistered}
+        </if>
+        <if test="contractType != null">
+            ,#{contractType}
+        </if>
+        <if test="authorisedTitle != null">
+            ,#{authorisedTitle}
+        </if>
+        <if test="contractStartTime != null">
+            ,#{contractStartTime}
+        </if>
+        <if test="contractEndTime != null">
+            ,#{contractEndTime}
+        </if>
+        <if test="merchantApprovePassTime != null">
+            ,#{merchantApprovePassTime}
+        </if>
+        <if test="basePayRate != null">
+            ,#{basePayRate}
+        </if>
+        <if test="basePayRateChoice != null">
+            ,#{basePayRateChoice}
+        </if>
+        <if test="docusignContractType != null">
+            ,#{docusignContractType}
+        </if>
+        <if test="logoUrl != null">
+            ,#{logoUrl}
+        </if>
+        <if test="intro != null">
+            ,#{intro}
+        </if>
+        <if test="keyword != null">
+            ,#{keyword}
+        </if>
+        <if test="categories != null">
+            ,#{categories}
+        </if>
+        <if test="key != null">
+            ,#{key}
+        </if>
+        <if test="secret != null">
+            ,#{secret}
+        </if>
+        <if test="representativeName != null">
+            ,#{representativeName}
+        </if>
+        <if test="otherEntity != null">
+            ,#{otherEntity}
+        </if>
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="List">
+        INSERT INTO u_api_merchant (
+        `id`,
+        `super_merchant_id`,
+        `merchant_class`,
+        `entity_type`,
+        `file_list`,
+        `trustee_file_list`,
+        `is_available`,
+        `ABN`,
+        `ACN`,
+        `corporate_name`,
+        `practical_name`,
+        `trustee_type`,
+        `business_phone`,
+        `email`,
+        `postcode`,
+        `BSB`,
+        `account_no`,
+        `account_name`,
+        `bank_name`,
+        `county`,
+        `address`,
+        `street_number`,
+        `street_name`,
+        `suburb`,
+        `city`,
+        `province`,
+        `merchant_state`,
+        `websites`,
+        `operation_time`,
+        `estimated_annual_sales`,
+        `avg_sales_value`,
+        `sales_value_by_card`,
+        `marchant_rate`,
+        `marchant_rate_choice`,
+        `payment_contract`,
+        `installment_contract`,
+        `remark`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `state`,
+        `status`,
+        `ip`,
+        `asic_extract_file_url`,
+        `asic_extract_file_name`,
+        `docusign_envelopeid`,
+        `docusign_has_signed`,
+        `docusign_files`,
+        `trustee_deed`,
+        `trustee_company_type`,
+        `docusign_signer`,
+        `trading_is_no_registered`,
+        `contract_type`,
+        `authorised_title`,
+        `contract_start_time`,
+        `contract_end_time`,
+        `merchant_approve_pass_time`,
+        `base_pay_rate`,
+        `base_pay_rate_choice`,
+        `docusign_contract_type`,
+        `logo_url`,
+        `intro`,
+        `keyword`,
+        `categories`,
+        `key`,
+        `secret`,
+        `representative_name`,
+        `other_entity`
+        ) VALUES
+        <foreach collection="list" item="data" separator=",">
+            (
+            #{data.id},
+            #{data.superMerchantId},
+            #{data.merchantClass},
+            #{data.entityType},
+            #{data.fileList},
+            #{data.trusteeFileList},
+            #{data.isAvailable},
+            #{data.abn},
+            #{data.acn},
+            #{data.corporateName},
+            #{data.practicalName},
+            #{data.trusteeType},
+            #{data.businessPhone},
+            #{data.email},
+            #{data.postcode},
+            #{data.bsb},
+            #{data.accountNo},
+            #{data.accountName},
+            #{data.bankName},
+            #{data.county},
+            #{data.address},
+            #{data.streetNumber},
+            #{data.streetName},
+            #{data.suburb},
+            #{data.city},
+            #{data.province},
+            #{data.merchantState},
+            #{data.websites},
+            #{data.operationTime},
+            #{data.estimatedAnnualSales},
+            #{data.avgSalesValue},
+            #{data.salesValueByCard},
+            #{data.marchantRate},
+            #{data.marchantRateChoice},
+            #{data.paymentContract},
+            #{data.installmentContract},
+            #{data.remark},
+            #{data.createdBy},
+            #{data.createdDate},
+            #{data.modifiedBy},
+            #{data.modifiedDate},
+            #{data.state},
+            #{data.status},
+            #{data.ip},
+            #{data.asicExtractFileUrl},
+            #{data.asicExtractFileName},
+            #{data.docusignEnvelopeid},
+            #{data.docusignHasSigned},
+            #{data.docusignFiles},
+            #{data.trusteeDeed},
+            #{data.trusteeCompanyType},
+            #{data.docusignSigner},
+            #{data.tradingIsNoRegistered},
+            #{data.contractType},
+            #{data.authorisedTitle},
+            #{data.contractStartTime},
+            #{data.contractEndTime},
+            #{data.merchantApprovePassTime},
+            #{data.basePayRate},
+            #{data.basePayRateChoice},
+            #{data.docusignContractType},
+            #{data.logoUrl},
+            #{data.intro},
+            #{data.keyword},
+            #{data.categories},
+            #{data.key},
+            #{data.secret},
+            #{data.representativeName},
+            #{data.otherEntity}
+            )
+        </foreach>
+    </insert>
+
+
+    <update id="update" parameterType="com.uwallet.pay.main.model.entity.ApiMerchant">
+        UPDATE u_api_merchant
+        <set>
+            <if test="id != null">
+                `id`=#{id},
+            </if>
+            <if test="superMerchantId != null">
+                `super_merchant_id`=#{superMerchantId},
+            </if>
+            <if test="merchantClass != null">
+                `merchant_class`=#{merchantClass},
+            </if>
+            <if test="entityType != null">
+                `entity_type`=#{entityType},
+            </if>
+            <if test="fileList != null">
+                `file_list`=#{fileList},
+            </if>
+            <if test="trusteeFileList != null">
+                `trustee_file_list`=#{trusteeFileList},
+            </if>
+            <if test="isAvailable != null">
+                `is_available`=#{isAvailable},
+            </if>
+            <if test="abn != null">
+                `ABN`=#{abn},
+            </if>
+            <if test="acn != null">
+                `ACN`=#{acn},
+            </if>
+            <if test="corporateName != null">
+                `corporate_name`=#{corporateName},
+            </if>
+            <if test="practicalName != null">
+                `practical_name`=#{practicalName},
+            </if>
+            <if test="trusteeType != null">
+                `trustee_type`=#{trusteeType},
+            </if>
+            <if test="businessPhone != null">
+                `business_phone`=#{businessPhone},
+            </if>
+            <if test="email != null">
+                `email`=#{email},
+            </if>
+            <if test="postcode != null">
+                `postcode`=#{postcode},
+            </if>
+            <if test="bsb != null">
+                `BSB`=#{bsb},
+            </if>
+            <if test="accountNo != null">
+                `account_no`=#{accountNo},
+            </if>
+            <if test="accountName != null">
+                `account_name`=#{accountName},
+            </if>
+            <if test="bankName != null">
+                `bank_name`=#{bankName},
+            </if>
+            <if test="county != null">
+                `county`=#{county},
+            </if>
+            <if test="address != null">
+                `address`=#{address},
+            </if>
+            <if test="streetNumber != null">
+                `street_number`=#{streetNumber},
+            </if>
+            <if test="streetName != null">
+                `street_name`=#{streetName},
+            </if>
+            <if test="suburb != null">
+                `suburb`=#{suburb},
+            </if>
+            <if test="city != null">
+                `city`=#{city},
+            </if>
+            <if test="province != null">
+                `province`=#{province},
+            </if>
+            <if test="merchantState != null">
+                `merchant_state`=#{merchantState},
+            </if>
+            <if test="websites != null">
+                `websites`=#{websites},
+            </if>
+            <if test="operationTime != null">
+                `operation_time`=#{operationTime},
+            </if>
+            <if test="estimatedAnnualSales != null">
+                `estimated_annual_sales`=#{estimatedAnnualSales},
+            </if>
+            <if test="avgSalesValue != null">
+                `avg_sales_value`=#{avgSalesValue},
+            </if>
+            <if test="salesValueByCard != null">
+                `sales_value_by_card`=#{salesValueByCard},
+            </if>
+            <if test="marchantRate != null">
+                `marchant_rate`=#{marchantRate},
+            </if>
+            <if test="marchantRateChoice != null">
+                `marchant_rate_choice`=#{marchantRateChoice},
+            </if>
+            <if test="paymentContract != null">
+                `payment_contract`=#{paymentContract},
+            </if>
+            <if test="installmentContract != null">
+                `installment_contract`=#{installmentContract},
+            </if>
+            <if test="remark != null">
+                `remark`=#{remark},
+            </if>
+            <if test="createdBy != null">
+                `created_by`=#{createdBy},
+            </if>
+            <if test="createdDate != null">
+                `created_date`=#{createdDate},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="state != null">
+                `state`=#{state},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+            <if test="asicExtractFileUrl != null">
+                `asic_extract_file_url`=#{asicExtractFileUrl},
+            </if>
+            <if test="asicExtractFileName != null">
+                `asic_extract_file_name`=#{asicExtractFileName},
+            </if>
+            <if test="docusignEnvelopeid != null">
+                `docusign_envelopeid`=#{docusignEnvelopeid},
+            </if>
+            <if test="docusignHasSigned != null">
+                `docusign_has_signed`=#{docusignHasSigned},
+            </if>
+            <if test="docusignFiles != null">
+                `docusign_files`=#{docusignFiles},
+            </if>
+            <if test="trusteeDeed != null">
+                `trustee_deed`=#{trusteeDeed},
+            </if>
+            <if test="trusteeCompanyType != null">
+                `trustee_company_type`=#{trusteeCompanyType},
+            </if>
+            <if test="docusignSigner != null">
+                `docusign_signer`=#{docusignSigner},
+            </if>
+            <if test="tradingIsNoRegistered != null">
+                `trading_is_no_registered`=#{tradingIsNoRegistered},
+            </if>
+            <if test="contractType != null">
+                `contract_type`=#{contractType},
+            </if>
+            <if test="authorisedTitle != null">
+                `authorised_title`=#{authorisedTitle},
+            </if>
+            <if test="contractStartTime != null">
+                `contract_start_time`=#{contractStartTime},
+            </if>
+            <if test="contractEndTime != null">
+                `contract_end_time`=#{contractEndTime},
+            </if>
+            <if test="merchantApprovePassTime != null">
+                `merchant_approve_pass_time`=#{merchantApprovePassTime},
+            </if>
+            <if test="basePayRate != null">
+                `base_pay_rate`=#{basePayRate},
+            </if>
+            <if test="basePayRateChoice != null">
+                `base_pay_rate_choice`=#{basePayRateChoice},
+            </if>
+            <if test="docusignContractType != null">
+                `docusign_contract_type`=#{docusignContractType},
+            </if>
+            <if test="logoUrl != null">
+                `logo_url`=#{logoUrl},
+            </if>
+            <if test="intro != null">
+                `intro`=#{intro},
+            </if>
+            <if test="keyword != null">
+                `keyword`=#{keyword},
+            </if>
+            <if test="categories != null">
+                `categories`=#{categories},
+            </if>
+            <if test="key != null">
+                `key`=#{key},
+            </if>
+            <if test="secret != null">
+                `secret`=#{secret},
+            </if>
+            <if test="representativeName != null">
+                `representative_name`=#{representativeName},
+            </if>
+            <if test="otherEntity != null">
+                `other_entity`=#{otherEntity},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <choose>
+                <when test="status != null ">AND status = #{status.value}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            AND id = #{id}
+        </trim>
+    </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_api_merchant
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+  <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_api_merchant
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_api_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="apiMerchantMap">
+    <![CDATA[
+            SELECT * FROM u_api_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="apiMerchantDTOMap">
+    <![CDATA[
+            SELECT * FROM u_api_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="apiMerchantMap">
+    <![CDATA[
+            SELECT * FROM u_api_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="apiMerchantDTOMap">
+    <![CDATA[
+            SELECT * FROM u_api_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_api_merchant
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_api_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_api_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_api_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+
+    <select id="getApiClearMerchantList"  parameterType="Map" resultType="com.uwallet.pay.main.model.dto.ApiMerchantDTO">
+         SELECT
+            mm.id AS id,
+            mm.mname AS practical_name,
+            mm.state AS state,
+            mm.abn AS abn,
+            mm.city
+        FROM
+            (
+            SELECT
+            m.id AS id,
+            m.practical_name mname,
+            m.state state,
+            m.abn,
+            m.city
+            FROM
+            u_api_merchant m
+            LEFT JOIN  u_qr_pay_flow f ON f.merchant_id = m.id and f.order_source = 1
+            WHERE
+            f.`status` = 1
+            AND m.`status` = 1
+            AND f.state IN (104, 31)
+            AND f.is_need_clear = 1
+            AND f.sale_type in (0,2)
+            <if test="city != null">
+                AND m.`city`=${city}
+            </if>
+            <![CDATA[AND f.rec_amount > 0 ]]>
+            <if test="clearState != null">
+                AND f.`clear_state` = #{clearState}
+            </if>
+            <if test="practicalName != null">
+                AND m.`practical_name` LIKE CONCAT('%', #{practicalName}, '%')
+            </if>
+            <if test="merchantId != null">
+                AND m.`id` =  #{merchantId}
+            </if>
+            <if test="abn != null">
+                AND m.ABN = #{abn}
+            </if>
+            <if test="start != null and end != null">
+                AND f.`created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            GROUP BY
+            m.id
+            ) mm
+            ORDER BY mm.mname ASC
+            <if test="pc != null">
+                LIMIT ${pc.startIndex}, ${pc.pageSize}
+            </if>
+
+    </select>
+
+    <select id="findSuperMerchantMap" resultType="java.util.Map">
+        select u.practical_name practicalName,CONCAT('',u.id) as id
+        from u_api_merchant u
+        where u.is_available=1 and status=1
+        <if test="searchKeyword != null">
+            AND u.`practical_name` LIKE CONCAT('%', #{searchKeyword}, '%')
+        </if>
+        <if test="merchantClass != null">
+            AND u.`merchant_class` = #{merchantClass}
+        </if>
+        <if test="endTime != null">
+            AND u.`created_date` > #{endTime}
+        </if>
+        ORDER BY u.`practical_name` ASC
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+    <select id="getMaxId" resultType="java.lang.Long">
+        select max(id) from u_api_merchant
+    </select>
+
+</mapper>

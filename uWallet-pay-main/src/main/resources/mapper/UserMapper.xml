@@ -1,0 +1,2915 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.UserDAO">
+
+    <resultMap id="userMap" type="com.uwallet.pay.main.model.entity.User">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="uuid" jdbcType="VARCHAR" column="uuid"/>
+        <result property="userType" jdbcType="TINYINT" column="user_type"/>
+        <result property="password" jdbcType="VARCHAR" column="password"/>
+        <result property="payPassword" jdbcType="VARCHAR" column="pay_password"/>
+        <result property="pinNumber" jdbcType="VARCHAR" column="pin_number"/>
+        <result property="paymentState" jdbcType="TINYINT" column="payment_state"/>
+        <result property="cardState" jdbcType="TINYINT" column="card_state"/>
+        <result property="installmentState" jdbcType="TINYINT" column="installment_state"/>
+        <result property="investState" jdbcType="TINYINT" column="invest_state"/>
+        <result property="phone" jdbcType="VARCHAR" column="phone"/>
+        <result property="email" jdbcType="VARCHAR" column="email"/>
+        <result property="merchantId" jdbcType="BIGINT" column="merchant_id"/>
+        <result property="role" jdbcType="TINYINT" column="role"/>
+        <result property="lat" jdbcType="VARCHAR" column="lat"/>
+        <result property="lng" jdbcType="VARCHAR" column="lng"/>
+        <result property="userState" jdbcType="VARCHAR" column="user_state"/>
+        <result property="userCity" jdbcType="VARCHAR" column="user_city"/>
+        <result property="pushToken" jdbcType="VARCHAR" column="push_token"/>
+        <result property="imeiNo" jdbcType="VARCHAR" column="imei_no"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+        <result property="isInvestAgree" jdbcType="TINYINT" column="is_invest_agree"/>
+        <result property="isCreditAgree" jdbcType="TINYINT" column="is_credit_agree"/>
+        <result property="inviteCode" jdbcType="VARCHAR" column="invite_code"/>
+        <result property="inviterId" jdbcType="BIGINT" column="inviter_id"/>
+        <result property="invitationToRegister" jdbcType="INTEGER" column="invitation_to_register"/>
+        <result property="inviteConsumption" jdbcType="INTEGER" column="invite_consumption"/>
+        <result property="expectAmount" jdbcType="DECIMAL" column="expect_amount"/>
+        <result property="actualAmount" jdbcType="DECIMAL" column="actual_amount"/>
+        <result property="splitAddInfoState" jdbcType="TINYINT" column="split_add_info_state"/>
+        <result property="firstDealState" jdbcType="TINYINT" column="first_deal_state"/>
+        <result property="userFirstName" jdbcType="VARCHAR" column="user_first_name"/>
+        <result property="userLastName" jdbcType="VARCHAR" column="user_last_name"/>
+        <result property="registerFrom" jdbcType="TINYINT" column="register_from"/>
+        <result property="readAgreementState" jdbcType="TINYINT" column="read_agreement_state"/>
+        <result property="creditCardAgreementState" jdbcType="TINYINT" column="credit_card_agreement_state"/>
+        <result property="loginTime" jdbcType="BIGINT" column="login_time"/>
+        <result property="phoneModel" jdbcType="VARCHAR" column="phone_model"/>
+        <result property="appVersionId" jdbcType="VARCHAR" column="app_version_id"/>
+        <result property="splitRedEnvelopeState" jdbcType="TINYINT" column="split_red_envelope_state"/>
+        <result property="phoneSystem" jdbcType="TINYINT" column="phone_system"/>
+        <result property="phoneSystemVersion" jdbcType="VARCHAR" column="phone_system_version"/>
+        <result property="mobileModel" jdbcType="VARCHAR" column="mobile_model"/>
+        <result property="stripeState" jdbcType="TINYINT" column="stripe_state"/>
+    </resultMap>
+
+    <resultMap id="userDTOMap" type="com.uwallet.pay.main.model.dto.UserDTO">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="uuid" jdbcType="VARCHAR" column="uuid"/>
+        <result property="userType" jdbcType="TINYINT" column="user_type"/>
+        <result property="password" jdbcType="VARCHAR" column="password"/>
+        <result property="payPassword" jdbcType="VARCHAR" column="pay_password"/>
+        <result property="pinNumber" jdbcType="VARCHAR" column="pin_number"/>
+        <result property="paymentState" jdbcType="TINYINT" column="payment_state"/>
+        <result property="cardState" jdbcType="TINYINT" column="card_state"/>
+        <result property="installmentState" jdbcType="TINYINT" column="installment_state"/>
+        <result property="investState" jdbcType="TINYINT" column="invest_state"/>
+        <result property="phone" jdbcType="VARCHAR" column="phone"/>
+        <result property="email" jdbcType="VARCHAR" column="email"/>
+        <result property="merchantId" jdbcType="BIGINT" column="merchant_id"/>
+        <result property="role" jdbcType="TINYINT" column="role"/>
+        <result property="lat" jdbcType="VARCHAR" column="lat"/>
+        <result property="lng" jdbcType="VARCHAR" column="lng"/>
+        <result property="userState" jdbcType="VARCHAR" column="user_state"/>
+        <result property="userCity" jdbcType="VARCHAR" column="user_city"/>
+        <result property="pushToken" jdbcType="VARCHAR" column="push_token"/>
+        <result property="imeiNo" jdbcType="VARCHAR" column="imei_no"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+        <result property="isInvestAgree" jdbcType="TINYINT" column="is_invest_agree"/>
+        <result property="isCreditAgree" jdbcType="TINYINT" column="is_credit_agree"/>
+        <result property="inviterId" jdbcType="BIGINT" column="inviter_id"/>
+        <result property="invitationToRegister" jdbcType="INTEGER" column="invitation_to_register"/>
+        <result property="inviteConsumption" jdbcType="INTEGER" column="invite_consumption"/>
+        <result property="expectAmount" jdbcType="DECIMAL" column="expect_amount"/>
+        <result property="actualAmount" jdbcType="DECIMAL" column="actual_amount"/>
+        <result property="splitAddInfoState" jdbcType="TINYINT" column="split_add_info_state"/>
+        <result property="firstDealState" jdbcType="TINYINT" column="first_deal_state"/>
+        <result property="userFirstName" jdbcType="VARCHAR" column="user_first_name"/>
+        <result property="userLastName" jdbcType="VARCHAR" column="user_last_name"/>
+        <result property="registerFrom" jdbcType="TINYINT" column="register_from"/>
+        <result property="readAgreementState" jdbcType="TINYINT" column="read_agreement_state"/>
+        <result property="creditCardAgreementState" jdbcType="TINYINT" column="credit_card_agreement_state"/>
+        <result property="loginTime" jdbcType="BIGINT" column="login_time"/>
+        <result property="phoneModel" jdbcType="VARCHAR" column="phone_model"/>
+        <result property="appVersionId" jdbcType="VARCHAR" column="app_version_id"/>
+        <result property="phoneSystem" jdbcType="TINYINT" column="phone_system"/>
+        <result property="phoneSystemVersion" jdbcType="VARCHAR" column="phone_system_version"/>
+        <result property="mobileModel" jdbcType="VARCHAR" column="mobile_model"/>
+        <result property="splitRedEnvelopeState" jdbcType="TINYINT" column="split_red_envelope_state"/>
+        <result property="stripeState" jdbcType="TINYINT" column="stripe_state"/>
+    </resultMap>
+
+    <resultMap id="userExcelDTOMap" type="com.uwallet.pay.main.model.dto.UserExcelDTO">
+        <result property="phone" jdbcType="VARCHAR" column="phone"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.User">
+        INSERT INTO u_user (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="uuid != null">
+            ,`uuid`
+        </if>
+        <if test="userType != null">
+            ,`user_type`
+        </if>
+        <if test="password != null">
+            ,`password`
+        </if>
+        <if test="payPassword != null">
+            ,`pay_password`
+        </if>
+        <if test="paymentState != null">
+            ,`payment_state`
+        </if>
+        <if test="cardState != null">
+            ,`card_ctate`
+        </if>
+        <if test="installmentState != null">
+            ,`installment_state`
+        </if>
+        <if test="investState != null">
+            ,`invest_state`
+        </if>
+        <if test="phone != null">
+            ,`phone`
+        </if>
+        <if test="email != null">
+            ,`email`
+        </if>
+        <if test="merchantId != null">
+            ,`merchant_id`
+        </if>
+        <if test="role != null">
+            ,`role`
+        </if>
+        <if test="lat != null">
+            ,`lat`
+        </if>
+        <if test="lng != null">
+            ,`lng`
+        </if>
+        <if test="userState != null">
+            ,`user_state`
+        </if>
+        <if test="userCity != null">
+            ,`user_city`
+        </if>
+        <if test="pushToken != null">
+            ,`push_token`
+        </if>
+        <if test="imeiNo != null">
+            ,`imei_no`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+        <if test="isInvestAgree != null">
+            ,`is_invest_agree`
+        </if>
+        <if test="isCreditAgree != null">
+            ,`is_credit_agree`
+        </if>
+        <if test="inviteCode != null">
+            ,`invite_code`
+        </if>
+        <if test="inviterId != null">
+            ,`inviter_id`
+        </if>
+        <if test="invitationToRegister != null">
+            ,`invitation_to_register`
+        </if>
+        <if test="inviteConsumption != null">
+            ,`invite_consumption`
+        </if>
+        <if test="expectAmount != null">
+            ,`expect_amount`
+        </if>
+        <if test="actualAmount != null">
+            ,`actual_amount`
+        </if>
+        <if test="splitAddInfoState != null">
+            ,`split_add_info_state`
+        </if>
+        <if test="firstDealState != null">
+            ,`first_deal_state`
+        </if>
+        <if test="userFirstName != null">
+            ,`user_first_name`
+        </if>
+        <if test="userLastName != null">
+            ,`user_last_name`
+        </if>
+        <if test="registerFrom != null">
+            ,`register_from`
+        </if>
+        <if test="loginTime != null">
+            ,`login_time`
+        </if>
+        <if test="readAgreementState != null">
+            ,`read_agreement_state`
+        </if>
+        <if test="creditCardAgreementState != null">
+            ,`credit_card_agreement_state`
+        </if>
+        <if test="phoneModel != null">
+            ,`phone_model`
+        </if>
+        <if test="appVersionId != null">
+            ,`app_version_id`
+        </if>
+        <if test="phoneSystem != null">
+            ,`phone_system`
+        </if>
+        <if test="phoneSystemVersion != null">
+            ,`phone_system_version`
+        </if>
+        <if test="mobileModel != null">
+            ,`mobile_model`
+        </if>
+        <if test="stripeState != null">
+            ,`stripe_state`
+        </if>
+        ) VALUES (
+        <if test="id != null">
+            #{id}
+        </if>
+        <if test="uuid != null">
+            ,#{uuid}
+        </if>
+        <if test="userType != null">
+            ,#{userType}
+        </if>
+        <if test="password != null">
+            ,#{password}
+        </if>
+        <if test="payPassword != null">
+            ,#{payPassword}
+        </if>
+        <if test="paymentState != null">
+            ,#{paymentState}
+        </if>
+        <if test="cardState != null">
+            ,#{cardState}
+        </if>
+        <if test="installmentState != null">
+            ,#{installmentState}
+        </if>
+        <if test="investState != null">
+            ,#{investState}
+        </if>
+        <if test="phone != null">
+            ,#{phone}
+        </if>
+        <if test="email != null">
+            ,LOWER(#{email})
+        </if>
+        <if test="merchantId != null">
+            ,#{merchantId}
+        </if>
+        <if test="role != null">
+            ,#{role}
+        </if>
+        <if test="lat != null">
+            ,#{lat}
+        </if>
+        <if test="lng != null">
+            ,#{lng}
+        </if>
+        <if test="userState != null">
+            ,#{userState}
+        </if>
+        <if test="userCity != null">
+            ,#{userCity}
+        </if>
+        <if test="pushToken != null">
+            ,#{pushToken}
+        </if>
+        <if test="imeiNo != null">
+            ,#{imeiNo}
+        </if>
+        <if test="createdBy != null">
+            ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+            ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+            ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+            ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+            ,#{status}
+        </if>
+        <if test="ip != null">
+            ,#{ip}
+        </if>
+        <if test="isInvestAgree != null">
+            ,#{isInvestAgree}
+        </if>
+        <if test="isCreditAgree != null">
+            ,#{isCreditAgree}
+        </if>
+        <if test="inviteCode != null">
+            ,#{inviteCode}
+        </if>
+        <if test="inviterId != null">
+            ,#{inviterId}
+        </if>
+        <if test="invitationToRegister != null">
+            ,#{invitationToRegister}
+        </if>
+        <if test="inviteConsumption != null">
+            ,#{inviteConsumption}
+        </if>
+        <if test="expectAmount != null">
+            ,#{expectAmount}
+        </if>
+        <if test="actualAmount != null">
+            ,#{actualAmount}
+        </if>
+        <if test="splitAddInfoState != null">
+            ,#{splitAddInfoState}
+        </if>
+        <if test="firstDealState != null">
+            ,#{firstDealState}
+        </if>
+        <if test="userFirstName != null">
+            ,#{userFirstName}
+        </if>
+        <if test="userLastName != null">
+            ,#{userLastName}
+        </if>
+        <if test="registerFrom != null">
+            ,#{registerFrom}
+        </if>
+        <if test="loginTime != null">
+            ,#{loginTime}
+        </if>
+        <if test="readAgreementState != null">
+            ,#{readAgreementState}
+        </if>
+        <if test="creditCardAgreementState != null">
+            ,#{creditCardAgreementState}
+        </if>
+        <if test="phoneModel != null">
+            ,#{phoneModel}
+        </if>
+        <if test="appVersionId != null">
+            ,#{appVersionId}
+        </if>
+        <if test="phoneSystem != null">
+            ,#{phoneSystem}
+        </if>
+        <if test="phoneSystemVersion != null">
+            ,#{phoneSystemVersion}
+        </if>
+        <if test="mobileModel != null">
+            ,#{mobileModel}
+        </if>
+        <if test="stripeState != null">
+            ,#{stripeState}
+        </if>
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="List">
+        INSERT INTO u_user (
+        `id`,
+        `uuid`,
+        `user_type`,
+        `password`,
+        `pay_password`,
+        `pin_number`,
+        `payment_state`,
+        `card_state`,
+        `installment_state`,
+        `invest_state`,
+        `phone`,
+        `email`,
+        `merchant_id`,
+        `role`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`,
+        `lat`,
+        `lng`,
+        `user_state`,
+        `user_city`,
+        `push_token`,
+        `is_invest_agree`,
+        `is_credit_agree`,
+        `imei_no`,
+        `inviter_id`,
+        `invitation_to_register`,
+        `invite_consumption`,
+        `invite_code`,
+        `expect_amount`,
+        `actual_amount`,
+        `first_deal_state`,
+        `split_add_info_state`,
+        `user_first_name`,
+        `user_last_name`,
+        `register_from`,
+        `login_time`,
+        `phone_system`,
+        `phone_system_version`,
+        `mobile_model`
+        ) VALUES
+        <foreach collection="list" item="data" separator=",">
+            (
+            #{data.id},
+            #{data.uuid},
+            #{data.userType},
+            #{data.password},
+            #{data.payPassword},
+            #{data.pinNumber},
+            #{data.paymentState},
+            #{data.cardState},
+            #{data.installmentState},
+            #{data.investState},
+            #{data.phone},
+            #{data.email},
+            #{data.merchantId},
+            #{data.role},
+            #{data.createdBy},
+            #{data.createdDate},
+            #{data.modifiedBy},
+            #{data.modifiedDate},
+            #{data.status},
+            #{data.ip},
+            #{data.lat},
+            #{data.lng},
+            #{data.userState},
+            #{data.userCity},
+            #{data.pushToken},
+            #{data.isInvestAgree},
+            #{data.isCreditAgree},
+            #{data.imeiNo},
+            #{data.inviterId},
+            #{data.invitationToRegister},
+            #{data.inviteConsumption},
+            #{data.inviteCode},
+            #{data.expectAmount},
+            #{data.actualAmount},
+            #{data.firstDealState},
+            #{data.splitAddInfoState},
+            #{data.userFirstName},
+            #{data.userLastName},
+            #{data.registerFrom},
+            #{data.loginTime},
+            #{data.phoneSystem},
+            #{data.phoneSystemVersion},
+            #{data.mobileModel}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.uwallet.pay.main.model.entity.User">
+        UPDATE u_user
+        <set>
+            <if test="id != null">
+                `id`=#{id},
+            </if>
+            <if test="uuid != null">
+                `uuid`=#{uuid},
+            </if>
+            <if test="userType != null">
+                `user_type`=#{userType},
+            </if>
+            <if test="password != null">
+                `password`=#{password},
+            </if>
+            <if test="payPassword != null">
+                `pay_password`=#{payPassword},
+            </if>
+            <if test="pinNumber != null">
+                `pin_number`=#{pinNumber},
+            </if>
+            <if test="paymentState != null">
+                `payment_state`=#{paymentState},
+            </if>
+            <if test="cardState != null">
+                `card_state`=#{cardState},
+            </if>
+            <if test="installmentState != null">
+                `installment_state`=#{installmentState},
+            </if>
+            <if test="investState != null">
+                `invest_state`=#{investState},
+            </if>
+            <if test="phone != null">
+                `phone`=#{phone},
+            </if>
+            <if test="email != null">
+                `email`=#{email},
+            </if>
+            <if test="merchantId != null">
+                `merchant_id`=#{merchantId},
+            </if>
+            <if test="role != null">
+                `role`=#{role},
+            </if>
+            <if test="createdBy != null">
+                `created_by`=#{createdBy},
+            </if>
+            <if test="createdDate != null">
+                `created_date`=#{createdDate},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+            <if test="lat != null">
+                `lat`=#{lat},
+            </if>
+            <if test="lng != null">
+                `lng`=#{lng},
+            </if>
+            <if test="userState != null">
+                `user_state`=#{userState},
+            </if>
+            <if test="userCity != null">
+                `user_city`=#{userCity},
+            </if>
+            <if test="pushToken != null">
+                `push_token`=#{pushToken},
+            </if>
+            <if test="isInvestAgree != null">
+                `is_invest_agree`=#{isInvestAgree},
+            </if>
+            <if test="isCreditAgree != null">
+                `is_credit_agree`=#{isCreditAgree},
+            </if>
+            <if test="imeiNo != null">
+                `imei_no`=#{imeiNo},
+            </if>
+            <if test="inviteCode != null">
+                `invite_code`=#{inviteCode},
+            </if>
+            <if test="inviterId != null">
+                `inviter_id`=#{inviterId},
+            </if>
+            <if test="invitationToRegister != null">
+                `invitation_to_register`=#{invitationToRegister},
+            </if>
+            <if test="inviteConsumption != null">
+                `invite_consumption`=#{inviteConsumption},
+            </if>
+            <if test="expectAmount != null">
+                `expect_amount`=#{expectAmount},
+            </if>
+            <if test="actualAmount != null">
+                `actual_amount`=#{actualAmount},
+            </if>
+            <if test="splitAddInfoState != null">
+                `split_add_info_state`=#{splitAddInfoState},
+            </if>
+            <if test="firstDealState != null">
+                `first_deal_state`=#{firstDealState},
+            </if>
+            <if test="userFirstName != null">
+                `user_first_name`=#{userFirstName},
+            </if>
+            <if test="userLastName != null">
+                `user_last_name`=#{userLastName},
+            </if>
+            <if test="registerFrom != null">
+                `register_from`=#{registerFrom},
+            </if>
+            <if test="loginTime != null">
+                `login_time`=#{loginTime},
+            </if>
+            <if test="readAgreementState != null">
+                `read_agreement_state`=#{readAgreementState},
+            </if>
+            <if test="creditCardAgreementState != null">
+                `credit_card_agreement_state`=#{creditCardAgreementState},
+            </if>
+            <if test="phoneModel != null">
+                `phone_model`=#{phoneModel},
+            </if>
+            <if test="appVersionId != null">
+                `app_version_id`=#{appVersionId},
+            </if>
+            <if test="phoneSystem != null">
+                `phone_system`=#{phoneSystem},
+            </if>
+            <if test="phoneSystemVersion != null">
+                `phone_system_version`=#{phoneSystemVersion},
+            </if>
+            <if test="mobileModel != null">
+                `mobile_model`=#{mobileModel},
+            </if>
+            <if test="splitRedEnvelopeState != null">
+                `split_red_envelope_state`=#{splitRedEnvelopeState},
+            </if>
+            <if test="stripeState != null">
+                `stripe_state`=#{stripeState},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <choose>
+                <when test="status != null ">AND status = #{status.value}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            AND id = #{id}
+        </trim>
+    </update>
+
+    <update id="delete" parameterType="Map">
+      UPDATE u_user
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+    <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_user
+      WHERE id = #{id}
+  </delete>
+
+    <select id="count" parameterType="Map" resultType="Integer">
+        <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_user
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="uuid != null">
+                AND `uuid`=#{uuid}
+            </if>
+            <if test="userType != null">
+                AND `user_type`=#{userType}
+            </if>
+            <if test="password != null">
+                AND `password`=#{password}
+            </if>
+            <if test="payPassword != null">
+                AND `pay_password`=#{payPassword}
+            </if>
+            <if test="pinNumber != null">
+                AND `pin_number`=#{pinNumber}
+            </if>
+            <if test="paymentState != null">
+                AND `payment_state`=#{paymentState}
+            </if>
+            <if test="cardState != null">
+                and `card_state`=#{cardState}
+            </if>
+            <if test="installmentState != null">
+                AND `installment_state`=#{installmentState}
+            </if>
+            <if test="investState != null">
+                AND `invest_state`=#{investState}
+            </if>
+            <if test="phone != null">
+                AND `phone`=#{phone}
+            </if>
+            <if test="email != null">
+                AND `email`=#{email}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="role != null">
+                AND `role`=#{role}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">And status = #{status}</when>
+                <otherwise><![CDATA[And status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="lat != null">
+                AND `lat`=#{lat}
+            </if>
+            <if test="lng != null">
+                AND `lng`=#{lng}
+            </if>
+            <if test="userState != null">
+                AND `user_state`=#{userState}
+            </if>
+            <if test="userCity != null">
+                AND `user_city`=#{userCity}
+            </if>
+            <if test="pushToken != null">
+                AND `push_token`=#{pushToken}
+            </if>
+            <if test="isInvestAgree != null">
+                AND `is_invest_agree`=#{isInvestAgree}
+            </if>
+            <if test="isCreditAgree != null">
+                AND `is_credit_agree`=#{isCreditAgree}
+            </if>
+            <if test="imeiNo != null">
+                AND `imei_no`=#{imeiNo}
+            </if>
+            <if test="splitAddInfoState != null">
+                AND `split_add_info_state`=#{splitAddInfoState}
+            </if>
+            <if test="firstDealState != null">
+                AND `first_deal_state`=#{firstDealState}
+            </if>
+            <if test="userFirstName != null">
+                AND `user_first_name`=#{userFirstName}
+            </if>
+            <if test="userLastName != null">
+                AND `user_last_name`=#{userLastName}
+            </if>
+            <if test="registerFrom != null">
+                AND `register_from`=#{registerFrom}
+            </if>
+            <if test="inviteCode != null">
+                AND `invite_code`=#{inviteCode}
+            </if>
+            <if test="loginTime != null">
+                AND `login_time`=#{loginTime}
+            </if>
+            <if test="phoneSystem != null">
+                AND `phone_system`=#{phoneSystem}
+            </if>
+            <if test="phoneSystemVersion != null">
+                AND `phone_system_version`=#{phoneSystemVersion}
+            </if>
+            <if test="mobileModel != null">
+                AND `mobile_model`=#{mobileModel}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultMap="userMap">
+        <![CDATA[
+            SELECT * FROM u_user
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="uuid != null">
+                AND `uuid`=#{uuid}
+            </if>
+            <if test="userType != null">
+                AND `user_type`=#{userType}
+            </if>
+            <if test="password != null">
+                AND `password`=#{password}
+            </if>
+            <if test="payPassword != null">
+                AND `pay_password`=#{payPassword}
+            </if>
+            <if test="pinNumber != null">
+                AND `pin_number`=#{pinNumber}
+            </if>
+            <if test="paymentState != null">
+                AND `payment_state`=#{paymentState}
+            </if>
+            <if test="cardState != null">
+                AND `card_state`=#{cardState}
+            </if>
+            <if test="installmentState != null">
+                AND `installment_state`=#{installmentState}
+            </if>
+            <if test="investState != null">
+                AND `invest_state`=#{investState}
+            </if>
+            <if test="phone != null">
+                AND `phone`=#{phone}
+            </if>
+            <if test="email != null">
+                AND `email`=#{email}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="role != null">
+                AND `role`=#{role}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="inviteCode != null">
+                AND `invite_code`=#{inviteCode}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="lat != null">
+                AND `lat`=#{lat}
+            </if>
+            <if test="lng != null">
+                AND `lng`=#{lng}
+            </if>
+            <if test="userState != null">
+                AND `user_state`=#{userState}
+            </if>
+            <if test="userCity != null">
+                AND `user_city`=#{userCity}
+            </if>
+            <if test="pushToken != null">
+                AND `push_token`=#{pushToken}
+            </if>
+            <if test="isInvestAgree != null">
+                AND `is_invest_agree`=#{isInvestAgree}
+            </if>
+            <if test="isCreditAgree != null">
+                AND `is_credit_agree`=#{isCreditAgree}
+            </if>
+            <if test="imeiNo != null">
+                AND `imei_no`=#{imeiNo}
+            </if>
+            <if test="splitAddInfoState != null">
+                AND `split_add_info_state`=#{splitAddInfoState}
+            </if>
+            <if test="firstDealState != null">
+                AND `first_deal_state`=#{firstDealState}
+            </if>
+            <if test="userFirstName != null">
+                AND `user_first_name`=#{userFirstName}
+            </if>
+            <if test="userLastName != null">
+                AND `user_last_name`=#{userLastName}
+            </if>
+            <if test="registerFrom != null">
+                AND `register_from`=#{registerFrom}
+            </if>
+            <if test="loginTime != null">
+                AND `login_time`=#{loginTime}
+            </if>
+            <if test="phoneSystem != null">
+                AND `phone_system`=#{phoneSystem}
+            </if>
+            <if test="phoneSystemVersion != null">
+                AND `phone_system_version`=#{phoneSystemVersion}
+            </if>
+            <if test="mobileModel != null">
+                AND `mobile_model`=#{mobileModel}
+            </if>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="selectOneDTO" parameterType="Map" resultMap="userDTOMap">
+        <![CDATA[
+            SELECT * FROM u_user
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="inviteCode != null">
+                AND `invite_code`=#{inviteCode}
+            </if>
+            <if test="uuid != null">
+                AND `uuid`=#{uuid}
+            </if>
+            <if test="userType != null">
+                AND `user_type`=#{userType}
+            </if>
+            <if test="password != null">
+                AND `password`=#{password}
+            </if>
+            <if test="payPassword != null">
+                AND `pay_password`=#{payPassword}
+            </if>
+            <if test="pinNumber != null">
+                AND `pin_number`=#{pinNumber}
+            </if>
+            <if test="paymentState != null">
+                AND `payment_state`=#{paymentState}
+            </if>
+            <if test="cardState != null">
+                AND `card_state`=#{cardState}
+            </if>
+            <if test="installmentState != null">
+                AND `installment_state`=#{installmentState}
+            </if>
+            <if test="investState != null">
+                AND `invest_state`=#{investState}
+            </if>
+            <if test="phone != null">
+                AND `phone`=#{phone}
+            </if>
+            <if test="email != null">
+                AND `email`=#{email}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="role != null">
+                AND `role`=#{role}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="lat != null">
+                AND `lat`=#{lat}
+            </if>
+            <if test="lng != null">
+                AND `lng`=#{lng}
+            </if>
+            <if test="userState != null">
+                AND `user_state`=#{userState}
+            </if>
+            <if test="userCity != null">
+                AND `user_city`=#{userCity}
+            </if>
+            <if test="pushToken != null">
+                AND `push_token`=#{pushToken}
+            </if>
+            <if test="isInvestAgree != null">
+                AND `is_invest_agree`=#{isInvestAgree}
+            </if>
+            <if test="isCreditAgree != null">
+                AND `is_credit_agree`=#{isCreditAgree}
+            </if>
+            <if test="imeiNo != null">
+                AND `imei_no`=#{imeiNo}
+            </if>
+            <if test="splitAddInfoState != null">
+                AND `split_add_info_state`=#{splitAddInfoState}
+            </if>
+            <if test="firstDealState != null">
+                AND `first_deal_state`=#{firstDealState}
+            </if>
+            <if test="userFirstName != null">
+                AND `user_first_name`=#{userFirstName}
+            </if>
+            <if test="userLastName != null">
+                AND `user_last_name`=#{userLastName}
+            </if>
+            <if test="registerFrom != null">
+                AND `register_from`=#{registerFrom}
+            </if>
+            <if test="loginTime != null">
+                AND `login_time`=#{loginTime}
+            </if>
+            <if test="phoneSystem != null">
+                AND `phone_system`=#{phoneSystem}
+            </if>
+            <if test="phoneSystemVersion != null">
+                AND `phone_system_version`=#{phoneSystemVersion}
+            </if>
+            <if test="mobileModel != null">
+                AND `mobile_model`=#{mobileModel}
+            </if>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="select" parameterType="Map" resultMap="userMap">
+        <![CDATA[
+            SELECT * FROM u_user
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="uuid != null">
+                AND `uuid`=#{uuid}
+            </if>
+            <if test="userType != null">
+                AND `user_type`=#{userType}
+            </if>
+            <if test="password != null">
+                AND `password`=#{password}
+            </if>
+            <if test="payPassword != null">
+                AND `pay_password`=#{payPassword}
+            </if>
+            <if test="pinNumber != null">
+                AND `pin_number`=#{pinNumber}
+            </if>
+            <if test="paymentState != null">
+                AND `payment_state`=#{paymentState}
+            </if>
+            <if test="cardState != null">
+                AND `card_state`=#{cardState}
+            </if>
+            <if test="installmentState != null">
+                AND `installment_state`=#{installmentState}
+            </if>
+            <if test="investState != null">
+                AND `invest_state`=#{investState}
+            </if>
+            <if test="phone != null">
+                AND `phone`=#{phone}
+            </if>
+            <if test="email != null">
+                AND `email`=#{email}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="role != null">
+                AND `role`=#{role}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="lat != null">
+                AND `lat`=#{lat}
+            </if>
+            <if test="lng != null">
+                AND `lng`=#{lng}
+            </if>
+            <if test="userState != null">
+                AND `user_state`=#{userState}
+            </if>
+            <if test="userCity != null">
+                AND `user_city`=#{userCity}
+            </if>
+            <if test="pushToken != null">
+                AND `push_token`=#{pushToken}
+            </if>
+            <if test="isInvestAgree != null">
+                AND `is_invest_agree`=#{isInvestAgree}
+            </if>
+            <if test="isCreditAgree != null">
+                AND `is_credit_agree`=#{isCreditAgree}
+            </if>
+            <if test="imeiNo != null">
+                AND `imei_no`=#{imeiNo}
+            </if>
+            <if test="splitAddInfoState != null">
+                AND `split_add_info_state`=#{splitAddInfoState}
+            </if>
+            <if test="firstDealState != null">
+                AND `first_deal_state`=#{firstDealState}
+            </if>
+            <if test="userFirstName != null">
+                AND `user_first_name`=#{userFirstName}
+            </if>
+            <if test="userLastName != null">
+                AND `user_last_name`=#{userLastName}
+            </if>
+            <if test="registerFrom != null">
+                AND `register_from`=#{registerFrom}
+            </if>
+            <if test="loginTime != null">
+                AND `login_time`=#{loginTime}
+            </if>
+            <if test="phoneSystem != null">
+                AND `phone_system`=#{phoneSystem}
+            </if>
+            <if test="phoneSystemVersion != null">
+                AND `phone_system_version`=#{phoneSystemVersion}
+            </if>
+            <if test="mobileModel != null">
+                AND `mobile_model`=#{mobileModel}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+
+    <select id="selectDTO" parameterType="Map" resultMap="userDTOMap">
+        <![CDATA[
+            SELECT * FROM u_user
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="uuid != null">
+                AND `uuid`=#{uuid}
+            </if>
+            <if test="userType != null">
+                AND `user_type`=#{userType}
+            </if>
+            <if test="password != null">
+                AND `password`=#{password}
+            </if>
+            <if test="payPassword != null">
+                AND `pay_password`=#{payPassword}
+            </if>
+            <if test="pinNumber != null">
+                AND `pin_number`=#{pinNumber}
+            </if>
+            <if test="paymentState != null">
+                AND `payment_state`=#{paymentState}
+            </if>
+            <if test="cardState != null">
+                AND `card_state`=#{cardState}
+            </if>
+            <if test="installmentState != null">
+                AND `installment_state`=#{installmentState}
+            </if>
+            <if test="investState != null">
+                AND `invest_state`=#{investState}
+            </if>
+            <if test="phone != null">
+                AND `phone`=#{phone}
+            </if>
+            <if test="email != null">
+                AND `email`=#{email}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="role != null">
+                AND `role`=#{role}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="lat != null">
+                AND `lat`=#{lat}
+            </if>
+            <if test="lng != null">
+                AND `lng`=#{lng}
+            </if>
+            <if test="userState != null">
+                AND `user_state`=#{userState}
+            </if>
+            <if test="userCity != null">
+                AND `user_city`=#{userCity}
+            </if>
+            <if test="pushToken != null">
+                AND `push_token`=#{pushToken}
+            </if>
+            <if test="isInvestAgree != null">
+                AND `is_invest_agree`=#{isInvestAgree}
+            </if>
+            <if test="isCreditAgree != null">
+                AND `is_credit_agree`=#{isCreditAgree}
+            </if>
+            <if test="imeiNo != null">
+                AND `imei_no`=#{imeiNo}
+            </if>
+            <if test="splitAddInfoState != null">
+                AND `split_add_info_state`=#{splitAddInfoState}
+            </if>
+            <if test="firstDealState != null">
+                AND `first_deal_state`=#{firstDealState}
+            </if>
+            <if test="userFirstName != null">
+                AND `user_first_name`=#{userFirstName}
+            </if>
+            <if test="userLastName != null">
+                AND `user_last_name`=#{userLastName}
+            </if>
+            <if test="loginTime != null">
+                AND `login_time`=#{loginTime}
+            </if>
+            <if test="phoneSystem != null">
+                AND `phone_system`=#{phoneSystem}
+            </if>
+            <if test="phoneSystemVersion != null">
+                AND `phone_system_version`=#{phoneSystemVersion}
+            </if>
+            <if test="mobileModel != null">
+                AND `mobile_model`=#{mobileModel}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="findList" parameterType="Map" resultMap="userExcelDTOMap">
+        <![CDATA[
+            SELECT * FROM u_user
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="uuid != null">
+                AND `uuid`=#{uuid}
+            </if>
+            <if test="userType != null">
+                AND `user_type`=#{userType}
+            </if>
+            <if test="password != null">
+                AND `password`=#{password}
+            </if>
+            <if test="payPassword != null">
+                AND `pay_password`=#{payPassword}
+            </if>
+            <if test="paymentState != null">
+                AND `payment_state`=#{paymentState}
+            </if>
+            <if test="cardState != null">
+                AND `card_state`=#{cardState}
+            </if>
+            <if test="installmentState != null">
+                AND `installment_state`=#{installmentState}
+            </if>
+            <if test="investState != null">
+                `invest_state`=#{investState}
+            </if>
+            <if test="phone != null">
+                AND `phone` like concat('%',#{phone},'%')
+            </if>
+            <if test="email != null">
+                AND `email` like concat('%',LOWER(#{email}),'%')
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="role != null">
+                AND `role`=#{role}
+            </if>
+            <if test="lat != null">
+                AND `lat`=#{lat}
+            </if>
+            <if test="lng != null">
+                AND `lng`=#{lng}
+            </if>
+            <if test="userState != null">
+                AND `user_state`=#{userState}
+            </if>
+            <if test="userCity != null">
+                AND `user_city`=#{userCity}
+            </if>
+            <if test="pushToken != null">
+                AND `push_token`=#{pushToken}
+            </if>
+            <if test="imeiNo != null">
+                AND `imei_no`=#{imeiNo}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="splitAddInfoState != null">
+                AND `split_add_info_state`=#{splitAddInfoState}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="firstDealState != null">
+                AND `first_deal_state`=#{firstDealState}
+            </if>
+            <if test="userFirstName != null">
+                AND `user_first_name`=#{userFirstName}
+            </if>
+            <if test="userLastName != null">
+                AND `user_last_name`=#{userLastName}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectMap" parameterType="Map" resultType="Map">
+        SELECT
+        <foreach collection="columns" item="cname" separator="," open="`" close="`">
+            ${cname}
+        </foreach>
+        FROM u_user
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="uuid != null">
+                AND `uuid`=#{uuid}
+            </if>
+            <if test="userType != null">
+                AND `user_type`=#{userType}
+            </if>
+            <if test="password != null">
+                AND `password`=#{password}
+            </if>
+            <if test="payPassword != null">
+                AND `pay_password`=#{payPassword}
+            </if>
+            <if test="pinNumber != null">
+                AND `pin_number`=#{pinNumber}
+            </if>
+            <if test="paymentState != null">
+                AND `payment_state`=#{paymentState}
+            </if>
+            <if test="cardState != null">
+                AND `card_state`=#{cardState}
+            </if>
+            <if test="installmentState != null">
+                AND `installment_state`=#{installmentState}
+            </if>
+            <if test="investState != null">
+                AND `invest_state`=#{investState}
+            </if>
+            <if test="phone != null">
+                AND `phone`=#{phone}
+            </if>
+            <if test="email != null">
+                AND `email`=#{email}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="role != null">
+                AND `role`=#{role}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="lat != null">
+                AND `lat`=#{lat}
+            </if>
+            <if test="lng != null">
+                AND `lng`=#{lng}
+            </if>
+            <if test="userState != null">
+                AND `user_state`=#{userState}
+            </if>
+            <if test="userCity != null">
+                AND `user_city`=#{userCity}
+            </if>
+            <if test="pushToken != null">
+                AND `push_token`=#{pushToken}
+            </if>
+            <if test="isInvestAgree != null">
+                AND `is_invest_agree`=#{isInvestAgree}
+            </if>
+            <if test="isCreditAgree != null">
+                AND `is_credit_agree`=#{isCreditAgree}
+            </if>
+            <if test="imeiNo != null">
+                AND `imei_no`=#{imeiNo}
+            </if>
+            <if test="splitAddInfoState != null">
+                AND `split_add_info_state`=#{splitAddInfoState}
+            </if>
+            <if test="firstDealState != null">
+                AND `first_deal_state`=#{firstDealState}
+            </if>
+            <if test="userFirstName != null">
+                AND `user_first_name`=#{userFirstName}
+            </if>
+            <if test="userLastName != null">
+                AND `user_last_name`=#{userLastName}
+            </if>
+            <if test="loginTime != null">
+                AND `login_time`=#{loginTime}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <!--统计相关查询-->
+    <select id="groupCount" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_user
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="uuid != null">
+                AND `uuid`=#{uuid}
+            </if>
+            <if test="userType != null">
+                AND `user_type`=#{userType}
+            </if>
+            <if test="password != null">
+                AND `password`=#{password}
+            </if>
+            <if test="payPassword != null">
+                AND `pay_password`=#{payPassword}
+            </if>
+            <if test="pinNumber != null">
+                AND `pin_number`=#{pinNumber}
+            </if>
+            <if test="paymentState != null">
+                AND `payment_state`=#{paymentState}
+            </if>
+            <if test="cardState != null">
+                AND `card_state`=#{cardState}
+            </if>
+            <if test="installmentState != null">
+                AND `installment_state`=#{installmentState}
+            </if>
+            <if test="investState != null">
+                AND `invest_state`=#{investState}
+            </if>
+            <if test="phone != null">
+                AND `phone`=#{phone}
+            </if>
+            <if test="email != null">
+                AND `email`=#{email}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="role != null">
+                AND `role`=#{role}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="lat != null">
+                AND `lat`=#{lat}
+            </if>
+            <if test="lng != null">
+                AND `lng`=#{lng}
+            </if>
+            <if test="userState != null">
+                AND `user_state`=#{userState}
+            </if>
+            <if test="userCity != null">
+                AND `user_city`=#{userCity}
+            </if>
+            <if test="pushToken != null">
+                AND `push_token`=#{pushToken}
+            </if>
+            <if test="isInvestAgree != null">
+                AND `is_invest_agree`=#{isInvestAgree}
+            </if>
+            <if test="isCreditAgree != null">
+                AND `is_credit_agree`=#{isCreditAgree}
+            </if>
+            <if test="imeiNo != null">
+                AND `imei_no`=#{imeiNo}
+            </if>
+            <if test="splitAddInfoState != null">
+                AND `split_add_info_state`=#{splitAddInfoState}
+            </if>
+            <if test="firstDealState != null">
+                AND `first_deal_state`=#{firstDealState}
+            </if>
+            <if test="userFirstName != null">
+                AND `user_first_name`=#{userFirstName}
+            </if>
+            <if test="userLastName != null">
+                AND `user_last_name`=#{userLastName}
+            </if>
+            <if test="loginTime != null">
+                AND `login_time`=#{loginTime}
+            </if>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+
+    <select id="sum" parameterType="Map" resultType="Double">
+        <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_user
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="uuid != null">
+                AND `uuid`=#{uuid}
+            </if>
+            <if test="userType != null">
+                AND `user_type`=#{userType}
+            </if>
+            <if test="password != null">
+                AND `password`=#{password}
+            </if>
+            <if test="payPassword != null">
+                AND `pay_password`=#{payPassword}
+            </if>
+            <if test="pinNumber != null">
+                AND `pin_number`=#{pinNumber}
+            </if>
+            <if test="paymentState != null">
+                AND `payment_state`=#{paymentState}
+            </if>
+            <if test="cardState != null">
+                AND `card_state`=#{cardState}
+            </if>
+            <if test="installmentState != null">
+                AND `installment_state`=#{installmentState}
+            </if>
+            <if test="investState != null">
+                AND `invest_state`=#{investState}
+            </if>
+            <if test="phone != null">
+                AND `phone`=#{phone}
+            </if>
+            <if test="email != null">
+                AND `email`=#{email}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="role != null">
+                AND `role`=#{role}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="lat != null">
+                AND `lat`=#{lat}
+            </if>
+            <if test="lng != null">
+                AND `lng`=#{lng}
+            </if>
+            <if test="userState != null">
+                AND `user_state`=#{userState}
+            </if>
+            <if test="userCity != null">
+                AND `user_city`=#{userCity}
+            </if>
+            <if test="pushToken != null">
+                AND `push_token`=#{pushToken}
+            </if>
+            <if test="isInvestAgree != null">
+                AND `is_invest_agree`=#{isInvestAgree}
+            </if>
+            <if test="isCreditAgree != null">
+                AND `is_credit_agree`=#{isCreditAgree}
+            </if>
+            <if test="imeiNo != null">
+                AND `imei_no`=#{imeiNo}
+            </if>
+            <if test="splitAddInfoState != null">
+                AND `split_add_info_state`=#{splitAddInfoState}
+            </if>
+            <if test="firstDealState != null">
+                AND `first_deal_state`=#{firstDealState}
+            </if>
+            <if test="userFirstName != null">
+                AND `user_first_name`=#{userFirstName}
+            </if>
+            <if test="userLastName != null">
+                AND `user_last_name`=#{userLastName}
+            </if>
+            <if test="loginTime != null">
+                AND `login_time`=#{loginTime}
+            </if>
+        </trim>
+    </select>
+
+    <select id="groupSum" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_user
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="uuid != null">
+                AND `uuid`=#{uuid}
+            </if>
+            <if test="userType != null">
+                AND `user_type`=#{userType}
+            </if>
+            <if test="password != null">
+                AND `password`=#{password}
+            </if>
+            <if test="payPassword != null">
+                AND `pay_password`=#{payPassword}
+            </if>
+            <if test="pinNumber != null">
+                AND `pin_number`=#{pinNumber}
+            </if>
+            <if test="paymentState != null">
+                AND `payment_state`=#{paymentState}
+            </if>
+            <if test="cardState != null">
+                AND `card_state`=#{cardState}
+            </if>
+            <if test="installmentState != null">
+                AND `installment_state`=#{installmentState}
+            </if>
+            <if test="investState != null">
+                AND `invest_state`=#{investState}
+            </if>
+            <if test="phone != null">
+                AND `phone`=#{phone}
+            </if>
+            <if test="email != null">
+                AND `email`=#{email}
+            </if>
+            <if test="merchantId != null">
+                AND `merchant_id`=#{merchantId}
+            </if>
+            <if test="role != null">
+                AND `role`=#{role}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="lat != null">
+                AND `lat`=#{lat}
+            </if>
+            <if test="lng != null">
+                AND `lng`=#{lng}
+            </if>
+            <if test="userState != null">
+                AND `user_state`=#{userState}
+            </if>
+            <if test="userCity != null">
+                AND `user_city`=#{userCity}
+            </if>
+            <if test="pushToken != null">
+                AND `push_token`=#{pushToken}
+            </if>
+            <if test="isInvestAgree != null">
+                AND `is_invest_agree`=#{isInvestAgree}
+            </if>
+            <if test="isCreditAgree != null">
+                AND `is_credit_agree`=#{isCreditAgree}
+            </if>
+            <if test="imeiNo != null">
+                AND `imei_no`=#{imeiNo}
+            </if>
+            <if test="splitAddInfoState != null">
+                AND `split_add_info_state`=#{splitAddInfoState}
+            </if>
+            <if test="firstDealState != null">
+                AND `first_deal_state`=#{firstDealState}
+            </if>
+            <if test="userFirstName != null">
+                AND `user_first_name`=#{userFirstName}
+            </if>
+            <if test="userLastName != null">
+                AND `user_last_name`=#{userLastName}
+            </if>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+<!--    修改手机号-->
+    <update id="updatePhone" parameterType="Map">
+      UPDATE u_user
+      SET `phone`=#{phone}
+      WHERE id = #{id}
+  </update>
+<!--     查询PINnumber-->
+    <select id="queryPinNumber" resultType="java.lang.String">
+        select pin_number
+        FROM u_user
+        WHERE u_user.id = #{id}
+    </select>
+<!--     updatePinNumber 修改pinNumber -->
+    <update id="updatePinNumber">
+      UPDATE u_user
+      SET `pin_number`=#{pinNumber}, `modified_by`=#{modifyUserId}, `modified_date`=#{modifyDate}
+      WHERE id = #{id}
+  </update>
+
+    <update id="updateEmail" parameterType="Map">
+        update u_user u set
+        <if test="modifiedDate != null">
+            u.modified_date = #{modifiedDate},
+        </if>
+        <if test="modifiedBy != null">
+            u.modified_by = #{modifiedBy},
+        </if>
+        <if test="ip != null">
+            u.ip = #{ip},
+        </if>
+        u.email = LOWER(#{email})
+        where u.email = LOWER(#{oldEmail}) and u.user_type = #{userType}
+        <![CDATA[and u.status>=0]]>
+    </update>
+
+    <update id="updateRegister" parameterType="long">
+        update u_user set invitation_to_register = invitation_to_register + 1, modified_date = unix_timestamp() where id = #{id}
+    </update>
+
+    <update id="updateConsumption" parameterType="long">
+        update u_user set invite_consumption = invite_consumption + 1, modified_date = unix_timestamp() where id = #{id}
+    </update>
+
+    <update id="updateWalletGrandTotal" >
+        update u_user set
+        <if test="expectAmount != null">
+            expect_amount = expect_amount + #{expectAmount},
+        </if>
+        <if test="actualAmount != null">
+            actual_amount = actual_amount + #{actualAmount},
+        </if>
+        modified_date = unix_timestamp() where id = #{id}
+    </update>
+
+  <select id="walletFriendsInvitedCount" resultType="int" parameterType="java.util.Map">
+      SELECT COUNT(DISTINCT id) FROM u_user WHERE 1=1 and first_deal_state = 0
+      <if test="inviterId != null">
+          AND inviter_id = #{inviterId}
+      </if>
+  </select>
+
+  <select id="walletFriendsInvitedList"  resultMap="userDTOMap" parameterType="java.util.Map">
+      SELECT * FROM u_user WHERE 1=1 and first_deal_state = 0
+      <if test="inviterId != null">
+          AND inviter_id = #{inviterId}
+      </if>
+      ORDER BY created_date DESC
+      <if test="pc != null">
+          LIMIT ${pc.startIndex}, ${pc.pageSize}
+      </if>
+  </select>
+
+    <select id="walletFriendsPurchaseCount" resultType="int" parameterType="java.util.Map">
+
+      SELECT
+          count(*)
+      FROM
+          uwallet_pay.u_marketing_flow f
+          LEFT JOIN u_user u ON u.id = f.user_id
+      WHERE
+          f.state = 1
+          AND f.`status` = 1 and u.`status` = 1
+          and f.direction = 0 and f.trans_type = 19
+          AND u.inviter_id = #{inviterId}
+          and (f.marketing_manage_id is null or f.marketing_manage_id not  in (620846989825331200,625123077544005632))
+          and u.first_deal_state = 1
+
+</select>
+
+    <select id="walletFriendsPurchaseList"  resultType="com.alibaba.fastjson.JSONObject" parameterType="java.util.Map">
+        SELECT
+        f.flow_id,
+        CONCAT( '$', f.amount ) AS info,
+        CONCAT( u.user_first_name, ' ', u.user_last_name ) AS name,
+        pf.pay_user_id AS userId
+        FROM
+        u_marketing_flow f
+        LEFT JOIN u_qr_pay_flow pf ON pf.id = f.flow_id
+        LEFT JOIN u_user u ON u.id = pf.pay_user_id
+        WHERE
+        f.user_id = #{inviterId}
+        and (f.marketing_manage_id is null or f.marketing_manage_id not  in (620846989825331200,625123077544005632))
+        AND f.direction = 0
+        AND f.state = 1
+        AND f.trans_type = 20
+        ORDER BY
+        f.created_date DESC
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <update id="updateFirstDealState" parameterType="long">
+        update u_user set first_deal_state = 1, modified_date = unix_timestamp() where id = #{id} and first_deal_state = 0
+    </update>
+<!--select s.*,CONCAT(u.user_last_name,u.user_first_name) userName from
+        (SELECT m.amount,f.pay_user_id,m.created_date
+        FROM `u_marketing_flow` m
+        left join u_user u on u.id=m.user_id
+        left join u_qr_pay_flow f on f.id=m.flow_id
+        WHERE m.user_id=#{id} and m.direction=0 and m.trans_type=20 and m.state in(1,3)) s
+        left join u_user u on u.id=s.pay_user_id-->
+    <select id="getReceived" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+        m.amount,
+        f.pay_user_id,
+        m.created_date,
+        uu.user_last_name lastName,
+        uu.user_first_name firstName
+        FROM
+        `u_marketing_flow` m
+        LEFT JOIN u_user u ON u.id = m.user_id
+        LEFT JOIN u_qr_pay_flow f ON f.id = m.flow_id
+        left join u_user uu on uu.id=f.pay_user_id
+        WHERE
+        m.user_id = #{id}
+        <if test="start != null and end != null">
+            and m.created_date BETWEEN #{start} AND #{ end}
+        </if>
+        AND m.status = 1
+        AND m.marketing_manage_id is not null
+        AND m.direction = 0
+        AND m.trans_type = 20
+        AND m.state = 1
+        ORDER BY m.created_date
+    </select>
+    <select id="verifyCardState" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT c.id,c.credit_amount creditAmount FROM uwallet_credit.u_user c WHERE c.id = #{userId} AND STATUS = 1
+    </select>
+    <select id="countCard" resultType="java.lang.Integer">
+     SELECT count(id) FROM uwallet_account.u_card
+        WHERE account_id = (SELECT id FROM uwallet_account.u_account WHERE user_id= #{userId} and status = 1)
+       AND `type` = 1
+       AND `status` =1;
+    </select>
+
+
+    <update id="updateInviteId" parameterType="long">
+        update u_user set inviter_id = #{inviteId}, modified_date = unix_timestamp() where id = #{userId}
+    </update>
+    <select id="findUserList" resultType="com.uwallet.pay.main.model.dto.UserListDTO">
+        SELECT
+        u1.id,
+        u1.user_first_name,
+        u1.user_last_name,
+        u1.phone,
+        (
+        CASE
+        WHEN ua.driver_licence IS NOT NULL
+        AND ua.driver_licence <![CDATA[ <> ]]> '' THEN
+        1
+        WHEN ua.passport IS NOT NULL
+        AND ua.passport <![CDATA[ <> ]]> '' THEN
+        0
+        WHEN ua.medicare IS NOT NULL
+        AND ua.medicare <![CDATA[ <> ]]> '' THEN
+        2
+        ELSE
+        4
+        END
+        ) idType,
+        u1.email,
+        ua.birth,
+        u1.created_date,
+        u2.credit_amount,
+        u2.available_credit,
+        u2.credit_amount - u2.available_credit + IFNULL(SUM(cf.amount),0) AS useAmount,
+        (
+        CASE
+        WHEN u2.state IN (20,31,11)
+        AND u1.card_state IN (1) THEN
+        2
+        WHEN (u2.state NOT IN (20, 31, 11) or u2.state is null)
+        AND u1.card_state =1 THEN
+        0
+        WHEN u2.state IN (20,31,11)
+        AND u1.card_state =0 THEN
+        1
+        ELSE
+        3
+        END
+        ) AS payState,
+        u1.installment_state,
+        u1.payment_state,
+        u2.user_repay_fail_times,
+        u1.invitation_to_register,
+        u1.phone_model,
+        uv.version,
+        u1.mobile_model,
+        u1.phone_system
+        FROM
+        uwallet_pay.u_user u1
+        LEFT JOIN uwallet_credit.u_user u2 ON u1.id = u2.user_id LEFT JOIN uwallet_account.u_user ua on ua.user_id=u1.id
+        LEFT JOIN uwallet_credit.u_overdue_fee cf on cf.user_id =u1.id and cf.state in (0,2) and cf.`status`=1
+        LEFT JOIN uwallet_pay.u_app_version uv on uv.id=u1.app_version_id
+        WHERE
+        u1.`status` = 1 and u1.user_type=10
+        <if test="lastName!=null and lastName!='' ">
+            and  u1.user_last_name like concat('%',#{lastName},'%')
+        </if>
+        <if test="firstName!=null and firstName!='' ">
+            and  u1.user_first_name like concat('%',#{firstName},'%')
+        </if>
+        <if test="phone!=null and phone != '' ">
+            and u1.phone like CONCAT('%',#{phone},'%')
+        </if>
+        <if test="payType!=null and payType == 0 and payType!=''">
+            and (u2.state NOT IN (20, 31, 11) or u2.state is null) AND u1.card_state = 1
+        </if>
+        <if test="payType!=null and payType == 1 and payType!=''">
+            and  u2.state IN (20,31,11) AND u1.card_state = 0
+        </if>
+        <if test="payType!=null and payType == 2 and payType!=''">
+            and  u2.state IN (20,31,11) AND u1.card_state =1
+        </if>
+        <if test="payType!=null and payType == 3 and payType!=''">
+            and (u2.state NOT IN (20, 31, 11) or u2.state is null)  and  u1.card_state=0
+        </if>
+        <if test="email!=null and email !=''">
+            and u1.email like concat('%',#{email},'%')
+        </if>
+        <if test="start != null and end != null and start != ''and end !=''">
+            and u1.created_date BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="userType!=null and userType==0 and userType!=''">
+            and u1.inviter_id is not null
+        </if>
+        <if test="userType!=null and userType==1 and userType!=''">
+            and u1.inviter_id is null
+        </if>
+        <if test="idType!=null and idType==0 and idType!='' ">
+            and ua.passport is not null AND ua.passport <![CDATA[ <> ]]> ''
+        </if>
+        <if test="idType!=null and idType==1 and idType!='' ">
+            and ua.driver_licence is not null AND ua.driver_licence <![CDATA[ <> ]]> ''
+        </if>
+        <if test="idType!=null and idType==2 and idType!=''">
+            and ua.medicare is not null AND ua.medicare <![CDATA[ <> ]]> ''
+        </if>
+        <if test="birth!=null and birth!=''">
+            AND ua.birth=#{birth}
+        </if>
+        <if test="useState!=null and useState==0 and useState!=''">
+            and u2.state in (20,31)
+        </if>
+        <if test="useState !=null and useState==1 and useState!=''">
+            and u2.state = 11
+        </if>
+        <if test="state!=null and state!=''">
+            and ua.state=#{state}
+        </if>
+        <if test="city!=null and city!=''">
+            and ua.city=#{city}
+        </if>
+        <if test="phoneSystem!=null and phoneSystem!=''">
+            and u1.phone_system=#{phoneSystem}
+        </if>
+        GROUP BY u1.id
+        ORDER BY u1.created_date DESC
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+    <select id="countUserList" resultType="java.lang.Long">
+        SELECT
+        u1.id
+        FROM
+        uwallet_pay.u_user u1
+        LEFT JOIN uwallet_credit.u_user u2 ON u1.id = u2.user_id LEFT JOIN uwallet_account.u_user ua on ua.user_id=u1.id
+        LEFT JOIN uwallet_credit.u_overdue_fee cf on cf.user_id =u1.id and cf.state in (0,2) and cf.`status`=1
+        WHERE
+        u1.`status` = 1 and u1.user_type=10
+        <if test="lastName!=null and lastName!='' ">
+            and  u1.user_last_name like concat('%',#{lastName},'%')
+        </if>
+        <if test="firstName!=null and firstName!='' ">
+          and  u1.user_first_name like concat('%',#{firstName},'%')
+        </if>
+        <if test="phone!=null and phone != '' ">
+            and u1.phone like CONCAT('%',#{phone},'%')
+        </if>
+        <if test="payType!=null and payType == 0 and payType!=''">
+            and (u2.state NOT IN (20, 31, 11) or u2.state is null) AND u1.card_state = 1
+        </if>
+        <if test="payType!=null and payType == 1 and payType!=''">
+            and  u2.state IN (20,31,11) AND u1.card_state =0
+        </if>
+        <if test="payType!=null and payType == 2 and payType!=''">
+            and  u2.state IN (20,31,11) AND u1.card_state =1
+        </if>
+        <if test="payType!=null and payType == 3 and payType!=''">
+            and (u2.state NOT IN (20, 31, 11) or u2.state is null)  and  u1.card_state =0
+        </if>
+        <if test="email!=null and email !=''">
+            and u1.email like concat('%',#{email},'%')
+        </if>
+        <if test="start != null and end != null and start != ''and end !=''">
+            and u1.created_date BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="userType!=null and userType==0 and userType!=''">
+            and u1.inviter_id is not null
+        </if>
+        <if test="userType!=null and userType==1 and userType!=''">
+            and u1.inviter_id is null
+        </if>
+        <if test="idType!=null and idType==0 and idType!=''">
+            and ua.passport is not null AND ua.passport <![CDATA[ <> ]]> ''
+        </if>
+        <if test="idType!=null and idType==1 and  idType!=''">
+            and ua.driver_licence is not null AND ua.driver_licence <![CDATA[ <> ]]> ''
+        </if>
+        <if test="idType!=null and idType==2 and idType!=''">
+            and ua.medicare is not null AND ua.medicare <![CDATA[ <> ]]> ''
+        </if>
+        <if test="birth!=null and birth!=''">
+            AND ua.birth=#{birth}
+        </if>
+        <if test="useState!=null and useState==0 and useState!=''">
+            and u2.state in (20,31)
+        </if>
+        <if test="useState!=null and useState==1 and useState!=''">
+            and u2.state = 11
+        </if>
+        <if test="state!=null and state!=''">
+            and ua.state=#{state}
+        </if>
+        <if test="city!=null and city!=''">
+            and ua.city=#{city}
+        </if>
+        <if test="phoneSystem!=null and phoneSystem!=''">
+            and u1.phone_system=#{phoneSystem}
+        </if>
+        GROUP BY u1.id
+    </select>
+
+
+
+    <select id="getUserDetailRepayListById" resultType="com.uwallet.pay.main.model.dto.UserDetailsRepayListDTO">
+        SELECT
+                DISTINCT
+                r.id,
+                r.period_sort AS periodSort,
+                r.should_pay_amount as shouldPayAmout,
+                (
+                    CASE
+                    WHEN r.state = 1 THEN
+                        CONCAT('Paid on ',FROM_UNIXTIME(
+                            r.expect_repay_time / 1000,
+                            '%d/%m/%y'
+                        ))
+                    ELSE
+                        CONCAT('due ', FROM_UNIXTIME(
+                            r.expect_repay_time / 1000,
+                            '%d/%m/%y'
+                        ))  end
+                ) AS expectRepayTime,
+                r.truely_repay_amount as truelyPayPrincipal,
+                pwf.card_no as cardNo,
+                pwf.card_cc_type as cardType,
+                r.state,
+                r.truely_overdue_days overdueDays,
+                case when r.state=0 then '40' else rr.repay_type end as repayType,
+                (
+                CASE
+                        WHEN r.state = 1 THEN
+                        '0'
+                        WHEN r.truely_overdue_days > 0 THEN
+                        '1'
+                        WHEN CURRENT_TIMESTAMP () > r.expect_repay_time THEN
+                        '2' ELSE ''
+                    END
+                ) AS overdueStatus,
+                FROM_UNIXTIME( r.truely_repay_time / 1000, '%H:%i:%s %d-%m-%Y' ) AS truelyRepayTime
+            FROM
+                uwallet_credit.u_repay r
+                LEFT JOIN uwallet_credit.u_repay_record rr ON rr.repay_id = r.id and r.state in (1,3,4) and rr.repay_status=1
+                LEFT JOIN uwallet_pay.u_withhold_flow pwf ON pwf.flow_id = rr.transaction_id and r.state = 1
+            WHERE
+                r.borrow_id = #{borrowId}
+                AND r.`status` = 1 GROUP BY r.id
+    </select>
+
+    <select id="inviteUserCount" resultType="com.uwallet.pay.main.model.dto.UserDTO">
+        SELECT
+            pu.*
+        FROM
+            uwallet_pay.u_user pu
+        <if test="operationType != null and operationType != 1">
+            LEFT JOIN uwallet_pay.u_qr_pay_flow pf ON pf.pay_user_id = pu.id
+        </if>
+        WHERE
+            pu.`status` = 1
+        <if test="operationType != null and operationType == 1 and userId != null">
+            AND pu.inviter_id =  #{userId}
+        </if>
+        <if test="operationType != null and operationType == 2 and userId != null">
+            AND pf.`status` = 1  AND pu.inviter_id =  #{userId} AND pf.id is not null
+        </if>
+        <if test="operationType != null and operationType == 3 and userId != null">
+              AND pu.inviter_id =  #{userId} AND pf.id is NULL
+        </if>
+        GROUP BY pu.id
+    </select>
+
+
+    <select id="inviteUserList" resultType="com.uwallet.pay.main.model.dto.UserDetailInviteUserDTO">
+        SELECT
+            pf.created_date  payTime,
+            IFNULL(pf.pay_amount,0)+IFNULL(pf.tip_amount,0)+IFNULL(pf.donation_amount,0) payAmount,
+            pu.id,
+            pu.user_first_name firstName,
+            pu.user_last_name lastName,
+            au.sex,
+            (
+            CASE
+
+            WHEN au.driver_licence IS NOT NULL THEN
+            '1'
+            WHEN au.passport IS NOT NULL THEN
+            '0'
+            WHEN au.medicare IS NOT NULL THEN
+            '2' ELSE '3'
+            END
+            ) AS idType,
+            (
+            CASE
+            WHEN au.driver_licence IS NOT NULL THEN
+            au.driver_licence
+            WHEN au.passport IS NOT NULL THEN
+            au.passport
+            WHEN au.medicare IS NOT NULL THEN
+            au.medicare ELSE ''
+            END
+            ) AS idNumber,
+            pu.phone,
+            au.birth,
+            pu.email,
+            FROM_UNIXTIME( pu.created_date / 1000, '%H:%i:%s %d/%m/%y') as registrationTime,
+            au.apt_suite_etc streetNumber,
+            au.address streetName,
+            au.city suburb,
+            ps.en_name as state,
+            au.postcode
+        FROM
+            uwallet_pay.u_user pu
+        LEFT JOIN uwallet_account.u_user au ON pu.id = au.user_id
+        LEFT JOIN uwallet_pay.u_static_data ps on au.state is not null and ps.`code` = 'merchantState' and ps.`value` = au.state
+        <if test="operationType != null and operationType != 1">
+            LEFT JOIN uwallet_pay.u_qr_pay_flow pf ON pf.pay_user_id = pu.id and pf.state in (1,31)
+        </if>
+        WHERE
+            pu.`status` = 1
+            AND au.`status` = 1
+        <if test="operationType != null and operationType == 1 and userId != null">
+            AND pu.inviter_id =  #{userId}
+        </if>
+        <if test="operationType != null and operationType == 2 and userId != null">
+            AND pf.`status` = 1 AND pu.inviter_id =  #{userId} AND pf.id is not null
+        </if>
+        <if test="operationType != null and operationType == 3 and userId != null">
+             AND pu.inviter_id =  #{userId} AND pf.id is NULL
+        </if>
+        GROUP BY pu.id
+        ORDER BY pu.created_date DESC
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="usedPayoMoneyCount" resultType="java.lang.Integer">
+        SELECT
+            count(*)
+        FROM
+            u_marketing_flow mf
+        WHERE
+             mf.direction = 1
+            AND mf.user_id = #{userId}
+    </select>
+
+    <select id="usedPayoMoneyList" resultType="com.uwallet.pay.main.model.dto.UserDetailUsedPayoMoneyDTO">
+        SELECT
+            pf.trans_no transNo,
+            m.practical_name merchantName,
+            pf.red_envelope_amount payoMoney,
+            pf.state orderState,
+            FROM_UNIXTIME( pf.created_date / 1000, '%H:%i:%s %d/%m/%y' ) AS paidTime,
+            mf.flow_id flowId,
+            wf.error_message AS errorMessage
+        FROM
+            u_marketing_flow mf
+        LEFT JOIN uwallet_pay.u_qr_pay_flow pf ON pf.id = mf.flow_id
+        LEFT JOIN uwallet_pay.u_merchant m ON m.id = pf.merchant_id
+        LEFT JOIN uwallet_pay.u_withhold_flow wf ON wf.flow_id=pf.id
+        WHERE
+            pf.`status` = 1 and m.`status` = 1
+            AND mf.`direction` = 1
+            AND mf.user_id = #{userId}
+        ORDER BY mf.created_date DESC
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+
+
+    <select id="repaymentHistoryCount" resultType="com.uwallet.pay.main.model.dto.UserDetailRepaymentHistoryDTO">
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        ctd.id,
+        ctd.transaction_amount AS repayAmount,
+        ctd.transaction_charge AS charge,
+        ctd.charge_rate AS chargeRate,
+        ctd.transaction_type AS repaymentType,
+        ctd.transaction_status AS repaymentStatus,
+        rr.pay_type AS payType,
+        rr.bankcard_number AS bankCardNumber,
+        rr.bankcard_code cardId,
+        pwf.error_message,
+        pwf.card_cc_type AS cardCcType,
+        FROM_UNIXTIME( ctd.created_date / 1000, '%H:%i:%s %d/%m/%y' ) AS repaymentTimeStr,
+        ctd.created_date AS repaymentTime
+        FROM
+        uwallet_credit.u_repay_record rr
+        LEFT JOIN uwallet_credit.u_transaction_detail ctd ON rr.transaction_id = ctd.id
+        LEFT JOIN uwallet_credit.u_borrow b ON b.id = rr.borrow_id
+        LEFT JOIN uwallet_credit.u_repay rp ON rp.id = rr.repay_id
+        LEFT JOIN uwallet_pay.u_withhold_flow pwf ON pwf.flow_id = ctd.id
+        WHERE
+        b.user_id = #{userId}
+        AND rp.period_sort != 1
+        AND rr.`status` = 1
+        AND b.`status` = 1
+        AND ctd.`status` = 1
+        AND pwf.`status` = 1
+        <if test="start != null and end != null">
+            AND ctd.`created_date` BETWEEN #{start} AND #{end}
+        </if>
+        GROUP BY
+        ctd.id
+
+        union all
+        SELECT
+        ctd.id,
+        ctd.transaction_amount AS repayAmount,
+        ctd.transaction_charge AS charge,
+        ctd.charge_rate AS chargeRate,
+        ctd.transaction_type AS repaymentType,
+        ctd.transaction_status AS repaymentStatus,
+        cof.pay_type AS payType,
+        cof.bankcard_number AS bankCardNumber,
+        cof.bankcard_code cardId,
+        pwf.error_message,
+        pwf.card_cc_type AS cardCcType,
+        FROM_UNIXTIME(
+        ctd.created_date / 1000,
+        '%H:%i:%s %d/%m/%y'
+        ) AS repaymentTimeStr,
+        cof.created_date AS repaymentTime
+        FROM
+        uwallet_credit.u_overdue_fee_record cof
+        LEFT JOIN uwallet_credit.u_transaction_detail ctd ON ctd.id = cof.transaction_id
+        LEFT JOIN uwallet_credit.u_overdue_fee cov on cov.id=cof.overdue_fee_id
+        LEFT JOIN uwallet_pay.u_withhold_flow pwf ON pwf.flow_id = ctd.id
+        WHERE cov.user_id=#{userId}
+        <if test="start != null and end != null">
+        AND cof.`created_date` BETWEEN #{start} AND #{end}
+        </if>
+         ) t1
+        GROUP BY id
+
+    </select>
+
+    <select id="repaymentHistoryList" resultType="com.uwallet.pay.main.model.dto.UserDetailRepaymentHistoryDTO">
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        ctd.id,
+        ctd.transaction_amount AS repayAmount,
+        ctd.transaction_charge AS charge,
+        ctd.charge_rate AS chargeRate,
+        ctd.transaction_type AS repaymentType,
+        ctd.transaction_status AS repaymentStatus,
+        rr.pay_type AS payType,
+        rr.bankcard_number AS bankCardNumber,
+        rr.bankcard_code cardId,
+        pwf.error_message,
+        pwf.card_cc_type AS cardCcType,
+        FROM_UNIXTIME( ctd.created_date / 1000, '%H:%i:%s %d/%m/%y' ) AS repaymentTimeStr,
+        ctd.created_date AS repaymentTime
+        FROM
+        uwallet_credit.u_repay_record rr
+        LEFT JOIN uwallet_credit.u_transaction_detail ctd ON rr.transaction_id = ctd.id
+        LEFT JOIN uwallet_credit.u_borrow b ON b.id = rr.borrow_id
+        LEFT JOIN uwallet_credit.u_repay rp ON rp.id = rr.repay_id
+        LEFT JOIN uwallet_pay.u_withhold_flow pwf ON pwf.flow_id = ctd.id
+        WHERE
+        b.user_id = #{userId}
+        AND rp.period_sort != 1
+        AND rr.`status` = 1
+        AND b.`status` = 1
+        AND ctd.`status` = 1
+        AND pwf.`status` = 1
+        <if test="start != null and end != null">
+            AND ctd.`created_date` BETWEEN #{start} AND #{end}
+        </if>
+        GROUP BY
+        ctd.id
+        union all
+        SELECT
+        ctd.id,
+        ctd.transaction_amount AS repayAmount,
+        ctd.transaction_charge AS charge,
+        ctd.charge_rate AS chargeRate,
+        ctd.transaction_type AS repaymentType,
+        ctd.transaction_status AS repaymentStatus,
+        cof.pay_type AS payType,
+        cof.bankcard_number AS bankCardNumber,
+        cof.bankcard_code cardId,
+        pwf.error_message,
+        pwf.card_cc_type AS cardCcType,
+        FROM_UNIXTIME(
+        ctd.created_date / 1000,
+        '%H:%i:%s %d/%m/%y'
+        ) AS repaymentTimeStr,
+        cof.created_date AS repaymentTime
+        FROM
+        uwallet_credit.u_overdue_fee_record cof
+        LEFT JOIN uwallet_credit.u_transaction_detail ctd ON ctd.id = cof.transaction_id
+        LEFT JOIN uwallet_credit.u_overdue_fee cov on cov.id=cof.overdue_fee_id
+        LEFT JOIN uwallet_pay.u_withhold_flow pwf ON pwf.flow_id = ctd.id
+        WHERE cov.user_id=#{userId}
+        <if test="start != null and end != null">
+            AND cof.`created_date` BETWEEN #{start} AND #{end}
+        </if>
+         ) t1  GROUP BY id ORDER BY
+        repaymentTime DESC
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+
+    </select>
+
+
+    <select id="repaymentHistoryDetailCount" resultType="Long">
+        SELECT
+            count(*)
+        FROM
+            (
+                SELECT
+                    cr.id
+                FROM
+                    uwallet_credit.u_repay_record crr
+                    LEFT JOIN uwallet_credit.u_repay cr ON cr.id = crr.repay_id
+                WHERE
+                    crr.`status` = 1
+                    AND crr.transaction_id = #{transactionId}
+                UNION ALL
+                SELECT
+                    cofr.id
+                FROM
+                    uwallet_credit.u_repay_record crr
+                    LEFT JOIN uwallet_credit.u_overdue_fee_record cofr ON cofr.transaction_id = crr.transaction_id
+                WHERE
+                    crr.`status` = 1
+                    AND cofr.`status` = 1
+                    AND crr.transaction_id = #{transactionId} GROUP BY id
+                UNION ALL
+	            SELECT id FROM uwallet_credit.u_overdue_fee_record where transaction_id=#{transactionId} and  `status`=1
+            ) t1 GROUP BY id
+    </select>
+
+    <select id="repaymentHistoryDetailList" resultType="com.uwallet.pay.main.model.dto.UserDetailRepaymentHistoryDetailDTO">
+        SELECT
+            *
+        FROM
+            (
+                SELECT
+                    crr.id,
+                    pf.trans_no AS transNo,
+                    cb.merchant_name AS merchantName,
+                    '1' AS orderType,
+                    FROM_UNIXTIME( pf.created_date / 1000, '%H:%i:%s %d/%m/%y' ) AS transactionTime,
+                    cb.period_quantity periodQuantity,
+                    cr.period_sort periodSort,
+                    case when crr.repay_status=0 then cr.should_pay_amount else 0.00 end repayAmount,
+                    crr.repay_type repayType,
+                    cr.truely_overdue_days overdueDays,
+                    crr.created_date createdDate
+                FROM
+                    uwallet_credit.u_repay_record crr
+                    LEFT JOIN uwallet_credit.u_repay cr ON cr.id = crr.repay_id
+                    LEFT JOIN uwallet_credit.u_borrow cb ON cb.id = cr.borrow_id
+                    LEFT JOIN uwallet_pay.u_qr_pay_flow pf ON pf.credit_order_no = cb.id
+                WHERE
+                    crr.`status` = 1
+                    AND cr.`status` = 1
+                    AND cb.`status` = 1
+                    AND pf.`status` = 1
+                    AND crr.transaction_id = #{transactionId}
+                UNION ALL
+                SELECT
+                    crr.id,
+                    cof.`code` transNo,
+                    '--' merchantName,
+                    '2' AS orderType,
+                    '--' transactionTime,
+                    '--' periodQuantity,
+                    '--' periodSort,
+                    case when cof.state=2 then cof.amount else 0.00 end repayAmount,
+                    crr.repay_type repayType,
+                    '--' overdueDays,
+                    crr.created_date createdDate
+                FROM
+                    uwallet_credit.u_repay_record crr
+                    LEFT JOIN uwallet_credit.u_overdue_fee_record cofr ON cofr.transaction_id = crr.transaction_id
+                    LEFT JOIN uwallet_credit.u_overdue_fee cof ON cof.id = cofr.overdue_fee_id
+                WHERE
+                    crr.`status` = 1
+                    AND cofr.`status` = 1
+                    AND cof.`status` = 1
+                    AND crr.transaction_id = #{transactionId} GROUP BY id
+                    UNION ALL
+                    SELECT
+                    ofr.id,
+                    cof.`code` transNo,
+                    '--' merchantName,
+                    '2' AS orderType,
+                    '--' transactionTime,
+                    '--' periodQuantity,
+                    '--' periodSort,
+                    case when cof.state=2 then cof.amount else 0.00 end repayAmount,
+                    ofr.repay_type repayType,
+                    '--' overdueDays,
+                    ofr.created_date createdDate
+                    FROM
+                    uwallet_credit.u_overdue_fee_record ofr
+                    LEFT JOIN uwallet_credit.u_overdue_fee cof ON cof.id = ofr.overdue_fee_id
+                    WHERE
+                    transaction_id = #{transactionId}
+                    AND cof.`status` = 1
+        ) t1 GROUP BY id
+        ORDER BY
+            t1.createdDate DESC
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+
+    <select id="userDetailRepayDateCount" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        cr.expect_repay_time
+        FROM
+        uwallet_credit.u_repay cr
+        LEFT JOIN uwallet_credit.u_borrow b ON cr.borrow_id = b.id
+        WHERE
+        b.user_id = #{userId}
+        AND cr.`status` = 1
+        AND b.`status` = 1
+        AND cr.state != 1
+        <if test="start != null and end != null">
+            AND cr.`expect_repay_time` BETWEEN #{start} AND #{end}
+        </if>
+        GROUP BY
+        cr.expect_repay_time UNION ALL
+        SELECT
+        expect_repay_time
+        FROM
+        uwallet_credit.u_overdue_fee
+        WHERE
+        user_id = #{userId}
+        AND `status` = 1
+        AND state != 1
+        <if test="start != null and end != null">
+            AND `expect_repay_time` BETWEEN #{start} AND #{end}
+        </if>
+        GROUP BY
+        expect_repay_time
+        ) t1
+        GROUP BY
+        t1.expect_repay_time
+        ) t2
+    </select>
+
+    <select id="userDetailRepayDateList" resultType="Long">
+        SELECT
+            *
+        FROM
+        (
+            SELECT
+                cr.expect_repay_time
+            FROM
+                uwallet_credit.u_repay cr
+            LEFT JOIN uwallet_credit.u_borrow b ON cr.borrow_id = b.id
+            WHERE
+                b.user_id = #{userId}
+                AND cr.`status` = 1
+                AND b.`status` = 1
+                AND cr.state not in (1,3,4)
+                AND b.user_id = #{userId}
+                <if test="start != null and end != null">
+                    AND cr.`expect_repay_time` BETWEEN #{start} AND #{end}
+                </if>
+            GROUP BY
+                cr.expect_repay_time
+            UNION ALL
+            SELECT
+                expect_repay_time
+            FROM
+                uwallet_credit.u_overdue_fee
+            WHERE
+                user_id = #{userId}
+                AND `status` = 1
+                AND state != 1
+                <if test="start != null and end != null">
+                    AND `expect_repay_time` BETWEEN #{start} AND #{end}
+                </if>
+            GROUP BY expect_repay_time
+        ) t1
+        GROUP BY t1.expect_repay_time
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+
+    <select id="userRepaymentDetailByDate" resultType="com.uwallet.pay.main.model.dto.UserDetailRepaymentDetailDTO">
+        SELECT
+            pf.id flowId,
+            cb.id borrowId,
+            cr.id repayId,
+            pf.trans_no transNo,
+            cb.merchant_name merchantName,
+            1 AS orderType,
+            cr.should_pay_amount shouldPayAmt,
+            cr.period_sort AS periodSort,
+            cr.truely_overdue_days overdueDays,
+            ( CASE WHEN cr.truely_overdue_days > 0 THEN 1 ELSE 0 END ) overdueStatus,
+            cb.created_date bcd,
+            cb.created_date createdDate
+        FROM
+            uwallet_credit.u_repay cr
+            LEFT JOIN uwallet_credit.u_borrow cb ON cb.id = cr.borrow_id
+            LEFT JOIN uwallet_pay.u_qr_pay_flow pf ON pf.credit_order_no = cb.id
+            LEFT JOIN uwallet_pay.u_merchant pm ON pm.id = pf.merchant_id
+        WHERE
+            cb.user_id = #{userId}
+            AND cr.expect_repay_time = #{expectRepayTime}
+            AND cr.`status` = 1
+            AND cb.`status` = 1
+            AND pf.`status` = 1
+            and cr.`state` != 1
+        UNION ALL
+        SELECT
+            f.id flowId,
+            f.id borrowId,
+            f.id repayId,
+            f.`code` transNo,
+            '--' merchantName,
+            2 AS orderType,
+            f.amount shouldPayAmt,
+            '--' AS periodSort,
+            0 overdueDays,
+            0 overdueStatus,
+            f.created_date bcd,
+            f.created_date createdDate
+        FROM
+            uwallet_credit.u_overdue_fee f
+        WHERE
+            f.user_id = #{userId}
+            AND expect_repay_time = #{expectRepayTime}
+            AND f.`status` = 1
+            AND f.state != 1
+            order by bcd desc
+    </select>
+
+
+    <select id="userListBySendMail" parameterType="Map" resultMap="userDTOMap">
+        SELECT
+            id,
+            email,
+            user_first_name,
+            user_last_name,
+            created_date,
+            push_token
+        FROM
+            u_user
+        WHERE
+            status = 1
+            AND created_date BETWEEN #{start} AND #{end}
+            <if test="firstDealState != null">
+                AND `first_deal_state` = #{firstDealState}
+            </if>
+            <if test="pushToken != null">
+                AND `push_token` is not null AND `push_token` != ''
+            </if>
+            <if test="userId != null">
+                AND  id = #{userId}
+            </if>
+        ORDER BY
+            created_date desc
+    </select>
+
+
+    <update id="updateUserAgreementState" parameterType="long">
+        UPDATE u_user
+        SET read_agreement_state = 1,
+            modified_date = unix_timestamp()
+        WHERE
+            id = #{id}
+            and read_agreement_state != 1
+        LIMIT 1
+    </update>
+
+
+
+    <update id="updateUserCreditCardAgreementState" parameterType="long">
+        UPDATE u_user
+        SET credit_card_agreement_state = 1,
+            modified_date = unix_timestamp()
+        WHERE
+            id = #{id}
+            and credit_card_agreement_state != 1
+        LIMIT 1
+    </update>
+
+
+
+    <select id="balanceGreaterThan0UserList" resultType="com.uwallet.pay.main.model.dto.UserDTO">
+        SELECT user_id id from uwallet_pay.u_marketing_flow where direction = 0 and marketing_manage_id is null  and `status` = 1 and state = 1 and amount > 0
+        and user_id = #{id} group by user_id
+    </select>
+
+
+    <select id="getAllNotSplitUser" resultType="com.uwallet.pay.main.model.dto.UserDTO">
+        SELECT
+            u.id, asa.balance
+        FROM
+            uwallet_pay.u_user u
+        LEFT JOIN uwallet_account.u_account aa ON u.id = aa.user_id
+            LEFT JOIN uwallet_account.u_sub_account asa ON asa.account_id = aa.id
+            AND asa.type = 0
+        WHERE
+            u.`status` = 1
+            AND u.split_red_envelope_state = 0
+            AND asa.balance > 0
+            AND u.user_type = 10
+    </select>
+
+
+    <update id="updateBalance" parameterType="long">
+        UPDATE uwallet_account.u_sub_account sb left join uwallet_account.u_account ua on ua.id = sb.account_id and type = 0
+        SET sb.balance = 0
+        WHERE
+            ua.user_id  = #{id}
+    </update>
+
+    <update id="updateSplitRedState" parameterType="long">
+        UPDATE uwallet_pay.u_user set split_red_envelope_state = 1 where id = #{id}
+    </update>
+
+    <update id="updateUserSplitState">
+        UPDATE u_user u
+        SET u.split_red_envelope_state = #{state}
+        WHERE u.id  = #{id}
+        and u.split_red_envelope_state = #{orgState}
+    </update>
+
+
+    <select id="sendEmailToAllUser" parameterType="Map" resultMap="userDTOMap">
+        SELECT
+            *
+        FROM
+            (
+            SELECT
+                id,
+                user_first_name,
+                user_last_name,
+                email
+            FROM
+                u_user
+            WHERE
+                `status` = 1
+                AND email IS NOT NULL
+                AND email != ''
+                AND user_first_name IS NOT NULL
+                AND user_last_name IS NOT NULL
+                AND user_last_name != ''
+                AND user_first_name != ''
+                and created_date  &lt; 1640589755000
+            ORDER BY
+                created_date DESC
+            ) t1
+        GROUP BY
+            email
+        LIMIT ${p}, ${s}
+
+    </select>
+
+    <select id="queryAllMarketingManagement" resultType="com.uwallet.pay.main.model.dto.MarketingManagementDTO">
+        SELECT
+            id,
+            CODE,
+            amount,
+            number,
+            total_amount,
+            receive_number as receiveNumber,
+            used_number,
+            created_date
+        FROM
+            u_marketing_management
+        WHERE
+            `status` = 1
+            AND created_date &lt; 1640228400000
+            AND id NOT IN ( 620846989825331200, 625123077544005632 )
+            and code is not null  and code != ''
+        ORDER BY
+            created_date ASC
+    </select>
+
+    <select id="countMarketingReceiveNumberByCode" resultType="int" parameterType="String">
+        SELECT count(*) from uwallet_pay.u_marketing_flow where direction = 0 and code = #{code} and state = 1 and `status` = 1
+    </select>
+    <select id="findOneUserAppInfoById" resultType="com.uwallet.pay.main.model.dto.UserDTO">
+         select ua.version appVersionStr,u.* from u_user u left join u_app_version ua on ua.id=u.app_version_id  where u.id=#{userId}
+    </select>
+    <select id="findUserOverdueOrders" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT * from uwallet_credit.u_borrow where user_id=#{userId} and state=20 and `status`=1;
+    </select>
+
+    <update id="updateReceiverNumber">
+        UPDATE uwallet_pay.u_marketing_management
+        SET receive_number = #{number}
+        WHERE
+            id  = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.ActionDAO">
+
+    <resultMap id="actionMap" type="com.uwallet.pay.main.model.entity.Action">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+        <result property="enName" jdbcType="VARCHAR" column="en_name"/>
+        <result property="flag" jdbcType="VARCHAR" column="flag"/>
+        <result property="appAction" jdbcType="TINYINT" column="app_action"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+        <result property="url" jdbcType="VARCHAR" column="url"/>
+        <result property="icon" jdbcType="VARCHAR" column="icon"/>
+        <result property="parentId" jdbcType="BIGINT" column="parent_id"/>
+        <result property="type" jdbcType="TINYINT" column="type"/>
+    </resultMap>
+
+    <resultMap id="Maps" type="com.uwallet.pay.main.model.dto.ActionOnlyDTO">
+        <id property="menu_id" jdbcType="BIGINT" column="id"/>
+        <result property="identification" jdbcType="VARCHAR" column="flag"/>
+        <result property="path" jdbcType="VARCHAR" column="url"/>
+        <result property="icon" jdbcType="VARCHAR" column="icon"/>
+        <result property="type" jdbcType="BIGINT" column="type"/>
+        <result property="parent_id" jdbcType="BIGINT" column="parent_id"/>
+    </resultMap>
+
+    <resultMap id="actionTree" type="com.uwallet.pay.main.model.dto.ActionOnlyDTO">
+        <id property="menu_id" jdbcType="BIGINT" column="id"/>
+        <result property="title" jdbcType="VARCHAR" column="en_name"/>
+        <result property="identification" jdbcType="VARCHAR" column="flag"/>
+        <result property="path" jdbcType="VARCHAR" column="url"/>
+        <result property="icon" jdbcType="VARCHAR" column="icon"/>
+        <result property="type" jdbcType="BIGINT" column="type"/>
+        <result property="parent_id" jdbcType="BIGINT" column="parent_id"/>
+    </resultMap>
+
+    <resultMap id="actionDTOMap" type="com.uwallet.pay.main.model.dto.ActionDTO">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="name" jdbcType="VARCHAR" column="name"/>
+        <result property="enName" jdbcType="VARCHAR" column="en_name"/>
+        <result property="flag" jdbcType="VARCHAR" column="flag"/>
+        <result property="appAction" jdbcType="TINYINT" column="app_action"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+        <result property="url" jdbcType="VARCHAR" column="url"/>
+        <result property="icon" jdbcType="VARCHAR" column="icon"/>
+        <result property="parentId" jdbcType="BIGINT" column="parent_id"/>
+        <result property="type" jdbcType="TINYINT" column="type"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.Action">
+    INSERT INTO u_action (
+        `id`,
+        `name`,
+        `en_name`,
+        `flag`,
+        `app_action`,
+        `modified_by`,
+        `modified_date`,
+        `created_by`,
+        `created_date`,
+        `status`,
+        `ip`,
+        `url`,
+        `icon`,
+        `parent_id`,
+        `type`
+    ) VALUES (
+        #{id},
+        #{name},
+        #{enName},
+        #{flag},
+        #{appAction},
+        #{modifiedBy},
+        #{modifiedDate},
+        #{createdBy},
+        #{createdDate},
+        #{status},
+        #{ip},
+        #{url},
+        #{icon},
+        #{parentId},
+        #{type}
+    )
+  </insert>
+
+    <insert id="insertList" parameterType="List">
+        INSERT INTO u_action (
+        `id`,
+        `name`,
+        `en_name`,
+        `flag`,
+        `app_action`,
+        `modified_by`,
+        `modified_date`,
+        `created_by`,
+        `created_date`,
+        `status`,
+        `ip`,
+        `url`,
+        `icon`,
+        `parent_id`,
+        `type`
+        ) VALUES
+        <foreach collection="list" item="data" separator=",">
+            (
+            #{data.id},
+            #{data.name},
+            #{data.enName},
+            #{data.flag},
+            #{data.appAction},
+            #{data.modifiedBy},
+            #{data.modifiedDate},
+            #{data.createdBy},
+            #{data.createdDate},
+            #{data.status},
+            #{data.ip},
+            #{data.url},
+            #{data.icon},
+            #{data.parentId},
+            #{data.type}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.uwallet.pay.main.model.entity.Action">
+        UPDATE u_action
+        <set>
+            <if test="id != null">
+                `id`=#{id},
+            </if>
+            <if test="name != null">
+                `name`=#{name},
+            </if>
+            <if test="enName != null">
+                `en_name`=#{enName},
+            </if>
+            <if test="flag != null">
+                `flag`=#{flag},
+            </if>
+            <if test="appAction != null">
+                `app_action`=#{appAction},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="createdBy != null">
+                `created_by`=#{createdBy},
+            </if>
+            <if test="createdDate != null">
+                `created_date`=#{createdDate},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+            <if test="url != null">
+                `url`=#{url},
+            </if>
+            <if test="icon != null">
+                `icon`=#{icon},
+            </if>
+            <if test="parentId != null">
+                `parent_id`=#{parentId},
+            </if>
+            <if test="type != null">
+                `type`=#{type},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <choose>
+                <when test="status != null ">AND status = #{status.value}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            AND id = #{id}
+        </trim>
+    </update>
+
+    <update id="delete" parameterType="Map">
+      UPDATE u_action
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+    <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_action
+      WHERE id = #{id}
+  </delete>
+
+    <select id="count" parameterType="Map" resultType="Integer">
+        <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_action
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="enName != null">
+                AND `en_name`=#{enName},
+            </if>
+            <if test="flag != null">
+                AND `flag`=#{flag}
+            </if>
+            <if test="appAction != null">
+                AND `app_action`=#{appAction}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">And status = #{status}</when>
+                <otherwise><![CDATA[And status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="url != null">
+                AND `url`=#{url}
+            </if>
+            <if test="icon != null">
+                AND `icon`=#{icon}
+            </if>
+            <if test="parentId != null">
+                AND `parent_id`=#{parentId}
+            </if>
+            <if test="type != null">
+                AND `type`=#{type}
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultMap="actionMap">
+        <![CDATA[
+            SELECT * FROM u_action
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="enName != null">
+                AND `en_name`=#{enName},
+            </if>
+            <if test="flag != null">
+                AND `flag`=#{flag}
+            </if>
+            <if test="appAction != null">
+                AND `app_action`=#{appAction}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="url != null">
+                AND `url`=#{url}
+            </if>
+            <if test="icon != null">
+                AND `icon`=#{icon}
+            </if>
+            <if test="parentId != null">
+                AND `parent_id`=#{parentId}
+            </if>
+            <if test="type != null">
+                AND `type`=#{type}
+            </if>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="selectOneDTO" parameterType="Map" resultMap="actionDTOMap">
+        <![CDATA[
+            SELECT * FROM u_action
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="enName != null">
+                AND `en_name`=#{enName},
+            </if>
+            <if test="flag != null">
+                AND `flag`=#{flag}
+            </if>
+            <if test="appAction != null">
+                AND `app_action`=#{appAction}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="url != null">
+                AND `url`=#{url}
+            </if>
+            <if test="icon != null">
+                AND `icon`=#{icon}
+            </if>
+            <if test="parentId != null">
+                AND `parent_id`=#{parentId}
+            </if>
+            <if test="type != null">
+                AND `type`=#{type}
+            </if>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="select" parameterType="Map" resultMap="actionMap">
+        <![CDATA[
+            SELECT * FROM u_action
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="enName != null">
+                AND `en_name`=#{enName},
+            </if>
+            <if test="flag != null">
+                AND `flag`=#{flag}
+            </if>
+            <if test="appAction != null">
+                AND `app_action`=#{appAction}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="url != null">
+                AND `url`=#{url}
+            </if>
+            <if test="icon != null">
+                AND `icon`=#{icon}
+            </if>
+            <if test="parentId != null">
+                AND `parent_id`=#{parentId}
+            </if>
+            <if test="type != null">
+                AND `type`=#{type}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectDTO" parameterType="Map" resultMap="actionDTOMap">
+        <![CDATA[
+            SELECT * FROM u_action
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="enName != null">
+                AND `en_name`=#{enName},
+            </if>
+            <if test="flag != null">
+                AND `flag`=#{flag}
+            </if>
+            <if test="appAction != null">
+                AND `app_action`=#{appAction}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="url != null">
+                AND `url`=#{url}
+            </if>
+            <if test="icon != null">
+                AND `icon`=#{icon}
+            </if>
+            <if test="parentId != null">
+                AND `parent_id`=#{parentId}
+            </if>
+            <if test="type != null">
+                AND `type`=#{type}
+            </if>
+            <if test="appAction != null">
+                AND `app_action`=#{appAction}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="findAction" parameterType="String" resultType="String">
+	select
+	a.flag
+	from u_action a
+	LEFT JOIN u_role_action b
+	on a.id=b.action_id and b.`status` >0
+	LEFT JOIN u_role e
+	on b.role_id=e.id and e.`status` >0
+    LEFT JOIN u_admin_role c
+    on e.id=c.role_id and c.`status` >0
+    LEFT JOIN u_admin d
+	on c.admin_id=d.id and d.`status` >0
+    WHERE d.user_name=#{value} and a.type=2 and a.`status` >0 and a.`app_action` = 0
+	</select>
+
+    <select id="findMenuAction" parameterType="String" resultType="String">
+	select
+	a.flag
+	from u_action a
+	LEFT JOIN u_role_action b
+	on a.id=b.action_id and b.`status` >0
+	LEFT JOIN u_role e
+	on b.role_id=e.id and e.`status` >0
+    LEFT JOIN u_admin_role c
+    on e.id=c.role_id and c.`status` >0
+    LEFT JOIN u_admin d
+	on c.admin_id=d.id and d.`status` >0
+    WHERE d.user_name=#{value} and a.type!=2 and a.`status` >0 and a.`app_action` = 0
+	</select>
+
+
+    <select id="selectMap" parameterType="Map" resultType="Map">
+        SELECT
+        <foreach collection="columns" item="cname" separator="," open="`" close="`">
+            ${cname}
+        </foreach>
+        FROM u_action
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="enName != null">
+                AND `en_name`=#{enName},
+            </if>
+            <if test="flag != null">
+                AND `flag`=#{flag}
+            </if>
+            <if test="appAction != null">
+                AND `app_action`=#{appAction}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="url != null">
+                AND `url`=#{url}
+            </if>
+            <if test="icon != null">
+                AND `icon`=#{icon}
+            </if>
+            <if test="parentId != null">
+                AND `parent_id`=#{parentId}
+            </if>
+            <if test="type != null">
+                AND `type`=#{type}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <!--统计相关查询-->
+    <select id="groupCount" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_action
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="enName != null">
+                AND `en_name`=#{enName},
+            </if>
+            <if test="flag != null">
+                AND `flag`=#{flag}
+            </if>
+            <if test="appAction != null">
+                AND `app_action`=#{appAction}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="url != null">
+                AND `url`=#{url}
+            </if>
+            <if test="icon != null">
+                AND `icon`=#{icon}
+            </if>
+            <if test="parentId != null">
+                AND `parent_id`=#{parentId}
+            </if>
+            <if test="type != null">
+                AND `type`=#{type}
+            </if>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+    <select id="sum" parameterType="Map" resultType="Double">
+        <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_action
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="enName != null">
+                AND `en_name`=#{enName},
+            </if>
+            <if test="flag != null">
+                AND `flag`=#{flag}
+            </if>
+            <if test="appAction != null">
+                AND `app_action`=#{appAction}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="url != null">
+                AND `url`=#{url}
+            </if>
+            <if test="icon != null">
+                AND `icon`=#{icon}
+            </if>
+            <if test="parentId != null">
+                AND `parent_id`=#{parentId}
+            </if>
+            <if test="type != null">
+                AND `type`=#{type}
+            </if>
+        </trim>
+    </select>
+
+    <select id="groupSum" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_action
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="enName != null">
+                AND `en_name`=#{enName},
+            </if>
+            <if test="flag != null">
+                AND `flag`=#{flag}
+            </if>
+            <if test="appAction != null">
+                AND `app_action`=#{appAction}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="url != null">
+                AND `url`=#{url}
+            </if>
+            <if test="icon != null">
+                AND `icon`=#{icon}
+            </if>
+            <if test="parentId != null">
+                AND `parent_id`=#{parentId}
+            </if>
+            <if test="type != null">
+                AND `type`=#{type}
+            </if>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+    <select id="actionByActionId" parameterType="Map" resultMap="Maps">
+        <![CDATA[
+            SELECT * FROM u_action
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND `id`=#{id}
+            </if>
+            <if test="name != null">
+                AND `name`=#{name}
+            </if>
+            <if test="enName != null">
+                AND `en_name`=#{enName},
+            </if>
+            <if test="flag != null">
+                AND `flag`=#{flag}
+            </if>
+            <if test="appAction != null">
+                AND `app_action`=#{appAction}
+            </if>
+            <if test="modifiedBy != null">
+                AND `modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND `modified_date`=#{modifiedDate}
+            </if>
+            <if test="createdBy != null">
+                AND `created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND `created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND `ip`=#{ip}
+            </if>
+            <if test="url != null">
+                AND `url`=#{url}
+            </if>
+            <if test="icon != null">
+                AND `icon`=#{icon}
+            </if>
+            <if test="parentId != null">
+                AND `parent_id`=#{parentId}
+            </if>
+            <if test="type != null">
+                AND `type`=#{type}
+            </if>
+        </trim>
+    </select>
+    <select id="actionTree" parameterType="Map" resultMap="actionTree">
+        <![CDATA[
+        SELECT * FROM u_action where status > 0 and app_action = 0 order by id asc
+        ]]>
+  </select>
+</mapper>

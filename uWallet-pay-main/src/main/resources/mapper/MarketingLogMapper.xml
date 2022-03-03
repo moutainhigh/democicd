@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.MarketingLogDAO">
+
+  <resultMap id="marketingLogMap" type="com.uwallet.pay.main.model.entity.MarketingLog">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="userId" jdbcType="BIGINT" column="user_id"/>
+    <result property="amount" jdbcType="DECIMAL" column="amount"/>
+    <result property="userNameList" jdbcType="VARCHAR" column="user_name_list"/>
+    <result property="time" jdbcType="BIGINT" column="time"/>
+    <result property="isShow" jdbcType="TINYINT" column="is_show"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+  </resultMap>
+
+  <resultMap id="marketingLogDTOMap" type="com.uwallet.pay.main.model.dto.MarketingLogDTO" extends="marketingLogMap"></resultMap>
+
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="userId != null">
+          AND `user_id`=#{userId}
+        </if>
+        <if test="amount != null">
+          AND `amount`=#{amount}
+        </if>
+        <if test="userNameList != null">
+          AND `user_name_list`=#{userNameList}
+        </if>
+        <if test="time != null">
+          AND `time`=#{time}
+        </if>
+        <if test="isShow != null">
+          AND `is_show`=#{isShow}
+        </if>
+        <choose>
+          <when test="status != null">AND status = #{status}</when>
+          <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="modifiedBy != null">
+          AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+          AND `modified_date`=#{modifiedDate}
+        </if>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+  </sql>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.MarketingLog">
+    INSERT INTO u_marketing_log (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="userId != null">
+            ,`user_id`
+        </if>
+        <if test="amount != null">
+            ,`amount`
+        </if>
+        <if test="userNameList != null">
+            ,`user_name_list`
+        </if>
+        <if test="time != null">
+            ,`time`
+        </if>
+        <if test="isShow != null">
+            ,`is_show`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="userId != null">
+              ,#{userId}
+        </if>
+        <if test="amount != null">
+              ,#{amount}
+        </if>
+        <if test="userNameList != null">
+              ,#{userNameList}
+        </if>
+        <if test="time != null">
+              ,#{time}
+        </if>
+        <if test="isShow != null">
+              ,#{isShow}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+        <if test="modifiedBy != null">
+              ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+              ,#{modifiedDate}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_marketing_log (
+        `id`,
+        `user_id`,
+        `amount`,
+        `user_name_list`,
+        `time`,
+        `is_show`,
+        `status`,
+        `modified_by`,
+        `modified_date`,
+        `created_by`,
+        `created_date`,
+        `ip`
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.userId},
+        #{data.amount},
+        #{data.userNameList},
+        #{data.time},
+        #{data.isShow},
+        #{data.status},
+        #{data.modifiedBy},
+        #{data.modifiedDate},
+        #{data.createdBy},
+        #{data.createdDate},
+        #{data.ip}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.MarketingLog">
+    UPDATE u_marketing_log
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="userId != null">
+          `user_id`=#{userId},
+        </if>
+        <if test="amount != null">
+          `amount`=#{amount},
+        </if>
+        <if test="userNameList != null">
+          `user_name_list`=#{userNameList},
+        </if>
+        <if test="time != null">
+          `time`=#{time},
+        </if>
+        <if test="isShow != null">
+          `is_show`=#{isShow},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+        <if test="modifiedBy != null">
+          `modified_by`=#{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+          `modified_date`=#{modifiedDate},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_marketing_log
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+  <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_marketing_log
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_marketing_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="marketingLogMap">
+    <![CDATA[
+            SELECT * FROM u_marketing_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="marketingLogDTOMap">
+    <![CDATA[
+            SELECT * FROM u_marketing_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="marketingLogMap">
+    <![CDATA[
+            SELECT * FROM u_marketing_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="marketingLogDTOMap">
+    <![CDATA[
+            SELECT * FROM u_marketing_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_marketing_log
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_marketing_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_marketing_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_marketing_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+    <select id="findMaxTime" resultType="com.uwallet.pay.main.model.dto.MarketingLogDTO">
+    select * from u_marketing_log  where is_show= #{isShow}
+        <if test="userId != null">
+           and `user_id`=#{userId}
+        </if>
+     ORDER BY  time DESC limit 0,1
+    </select>
+</mapper>

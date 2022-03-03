@@ -1,0 +1,1615 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.WithholdFlowDAO">
+
+    <resultMap id="withholdFlowMap" type="com.uwallet.pay.main.model.entity.WithholdFlow">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="userId" jdbcType="BIGINT" column="user_id"/>
+        <result property="gatewayMerchantId" jdbcType="VARCHAR" column="gateway_merchant_id"/>
+        <result property="gatewayMerchantPassword" jdbcType="VARCHAR" column="gateway_merchant_password"/>
+        <result property="system" jdbcType="VARCHAR" column="system"/>
+        <result property="flowId" jdbcType="BIGINT" column="flow_id"/>
+        <result property="gatewayId" jdbcType="BIGINT" column="gateway_id"/>
+        <result property="accountType" jdbcType="TINYINT" column="account_type"/>
+        <result property="orderAmount" jdbcType="DECIMAL" column="order_amount"/>
+        <result property="transAmount" jdbcType="DECIMAL" column="trans_amount"/>
+        <result property="charge" jdbcType="DECIMAL" column="charge"/>
+        <result property="fee" jdbcType="DECIMAL" column="fee"/>
+        <result property="ordreNo" jdbcType="VARCHAR" column="ordre_no"/>
+        <result property="omiPayOrderNo" jdbcType="VARCHAR" column="omi_pay_order_no"/>
+        <result property="lpsTransactionId" jdbcType="VARCHAR" column="lps_transaction_id"/>
+        <result property="transType" jdbcType="TINYINT" column="trans_type"/>
+        <result property="state" jdbcType="TINYINT" column="state"/>
+        <result property="currency" jdbcType="VARCHAR" column="currency"/>
+        <result property="returnCode" jdbcType="VARCHAR" column="return_code"/>
+        <result property="returnMessage" jdbcType="VARCHAR" column="return_message"/>
+        <result property="merchantIpaddress" jdbcType="VARCHAR" column="merchant_ipaddress"/>
+        <result property="customerFirstname" jdbcType="VARCHAR" column="customer_firstname"/>
+        <result property="customerMiddlename" jdbcType="VARCHAR" column="customer_middlename"/>
+        <result property="customerLastname" jdbcType="VARCHAR" column="customer_lastname"/>
+        <result property="customerPhone" jdbcType="VARCHAR" column="customer_phone"/>
+        <result property="customerEmail" jdbcType="VARCHAR" column="customer_email"/>
+        <result property="customerIpaddress" jdbcType="VARCHAR" column="customer_ipaddress"/>
+        <result property="billFirstname" jdbcType="VARCHAR" column="bill_firstname"/>
+        <result property="billMiddlename" jdbcType="VARCHAR" column="bill_middlename"/>
+        <result property="billLastname" jdbcType="VARCHAR" column="bill_lastname"/>
+        <result property="billAddress1" jdbcType="VARCHAR" column="bill_address1"/>
+        <result property="billAddress2" jdbcType="VARCHAR" column="bill_address2"/>
+        <result property="billCity" jdbcType="VARCHAR" column="bill_city"/>
+        <result property="billCountry" jdbcType="VARCHAR" column="bill_country"/>
+        <result property="billState" jdbcType="VARCHAR" column="bill_state"/>
+        <result property="billZip" jdbcType="VARCHAR" column="bill_zip"/>
+        <result property="crdstrgToken" jdbcType="VARCHAR" column="crdstrg_token"/>
+        <result property="uniqueReference" jdbcType="VARCHAR" column="unique_reference"/>
+        <result property="customerCcCvc" jdbcType="VARCHAR" column="customer_cc_cvc"/>
+        <result property="settlementState" jdbcType="TINYINT" column="settlement_state"/>
+        <result property="settlementTime" jdbcType="BIGINT" column="settlement_time"/>
+        <result property="remark" jdbcType="VARCHAR" column="remark"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+        <result property="checkState" jdbcType="TINYINT" column="check_state"/>
+        <result property="checkTime" jdbcType="BIGINT" column="check_time"/>
+        <result property="splitNo" jdbcType="VARCHAR" column="split_no"/>
+        <result property="splitContactId" jdbcType="VARCHAR" column="split_contact_id"/>
+        <result property="feeRate" jdbcType="DECIMAL" column="fee_rate"/>
+        <result property="feeType" jdbcType="TINYINT" column="fee_type"/>
+        <result property="cardNo" jdbcType="VARCHAR" column="card_no"/>
+        <result property="cardCcType" jdbcType="VARCHAR" column="card_cc_type"/>
+        <result property="errorMessage" jdbcType="VARCHAR" column="error_message"/>
+        <result property="stripeUrl" jdbcType="VARCHAR" column="stripe_url"/>
+        <result property="stripeId" jdbcType="VARCHAR" column="stripe_id"/>
+        <result property="stripeClientSecret" jdbcType="VARCHAR" column="stripe_client_secret"/>
+    </resultMap>
+
+    <resultMap id="withholdFlowDTOMap" type="com.uwallet.pay.main.model.dto.WithholdFlowDTO" extends="withholdFlowMap"></resultMap>
+
+    <!--通用查询条件-->
+    <sql id="basicParams">
+        <if test="id != null">
+            AND `id`=#{id}
+        </if>
+        <if test="userId != null">
+            AND `user_id`=#{userId}
+        </if>
+        <if test="gatewayMerchantId != null">
+            AND `gateway_merchant_id`=#{gatewayMerchantId}
+        </if>
+        <if test="gatewayMerchantPassword != null">
+            AND `gateway_merchant_password`=#{gatewayMerchantPassword}
+        </if>
+        <if test="system != null">
+            AND `system`=#{system}
+        </if>
+        <if test="flowId != null">
+            AND `flow_id`=#{flowId}
+        </if>
+        <if test="gatewayId != null">
+            AND `gateway_id`=#{gatewayId}
+        </if>
+        <if test="accountType != null">
+            AND `account_type`=#{accountType}
+        </if>
+        <if test="orderAmount != null">
+            AND `order_amount`=#{orderAmount}
+        </if>
+        <if test="transAmount != null">
+            AND `trans_amount`=#{transAmount}
+        </if>
+        <if test="charge != null">
+            AND `charge`=#{charge}
+        </if>
+        <if test="fee != null">
+            AND `fee`=#{fee}
+        </if>
+        <if test="ordreNo != null">
+            AND `ordre_no`=#{ordreNo}
+        </if>
+        <if test="omiPayOrderNo != null">
+            AND `omi_pay_order_no`=#{omiPayOrderNo}
+        </if>
+        <if test="lpsTransactionId != null">
+            AND `lps_transaction_id`=#{lpsTransactionId}
+        </if>
+        <if test="transType != null">
+            AND `trans_type`=#{transType}
+        </if>
+        <if test="state != null">
+            AND `state`=#{state}
+        </if>
+        <if test="currency != null">
+            AND `currency`=#{currency}
+        </if>
+        <if test="returnCode != null">
+            AND `return_code`=#{returnCode}
+        </if>
+        <if test="returnMessage != null">
+            AND `return_message`=#{returnMessage}
+        </if>
+        <if test="merchantIpaddress != null">
+            AND `merchant_ipaddress`=#{merchantIpaddress}
+        </if>
+        <if test="customerFirstname != null">
+            AND `customer_firstname`=#{customerFirstname}
+        </if>
+        <if test="customerMiddlename != null">
+            AND `customer_middlename`=#{customerMiddlename}
+        </if>
+        <if test="customerLastname != null">
+            AND `customer_lastname`=#{customerLastname}
+        </if>
+        <if test="customerPhone != null">
+            AND `customer_phone`=#{customerPhone}
+        </if>
+        <if test="customerEmail != null">
+            AND `customer_email`=#{customerEmail}
+        </if>
+        <if test="customerIpaddress != null">
+            AND `customer_ipaddress`=#{customerIpaddress}
+        </if>
+        <if test="billFirstname != null">
+            AND `bill_firstname`=#{billFirstname}
+        </if>
+        <if test="billMiddlename != null">
+            AND `bill_middlename`=#{billMiddlename}
+        </if>
+        <if test="billLastname != null">
+            AND `bill_lastname`=#{billLastname}
+        </if>
+        <if test="billAddress1 != null">
+            AND `bill_address1`=#{billAddress1}
+        </if>
+        <if test="billAddress2 != null">
+            AND `bill_address2`=#{billAddress2}
+        </if>
+        <if test="billCity != null">
+            AND `bill_city`=#{billCity}
+        </if>
+        <if test="billCountry != null">
+            AND `bill_country`=#{billCountry}
+        </if>
+        <if test="billState != null">
+            AND `bill_state`=#{billState}
+        </if>
+        <if test="billZip != null">
+            AND `bill_zip`=#{billZip}
+        </if>
+        <if test="crdstrgToken != null">
+            AND `crdstrg_token`=#{crdstrgToken}
+        </if>
+        <if test="uniqueReference != null">
+            AND `unique_reference`=#{uniqueReference}
+        </if>
+        <if test="customerCcCvc != null">
+            AND `customer_cc_cvc`=#{customerCcCvc}
+        </if>
+        <if test="settlementState != null">
+            AND `settlement_state`=#{settlementState}
+        </if>
+        <if test="settlementTime != null">
+            AND `settlement_time`=#{settlementTime}
+        </if>
+        <if test="remark != null">
+            AND `remark`=#{remark}
+        </if>
+        <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+        </if>
+        <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+            AND `ip`=#{ip}
+        </if>
+        <if test="checkState != null">
+            AND `check_state`=#{checkState}
+        </if>
+        <if test="checkTime != null">
+            AND `check_time`=#{checkTime}
+        </if>
+        <if test="splitNo != null">
+            AND `split_no`=#{splitNo}
+        </if>
+        <if test="splitContactId != null">
+            AND `split_contact_id`=#{splitContactId}
+        </if>
+        <if test="feeRate != null">
+            AND `fee_rate`=#{feeRate}
+        </if>
+        <if test="feeType != null">
+            AND `fee_type`=#{feeType}
+        </if>
+        <if test="cardNo != null">
+            AND `card_no`=#{cardNo}
+        </if>
+        <if test="cardCcType != null">
+            AND `card_cc_type`=#{cardCcType}
+        </if>
+        <if test="errorMessage != null">
+            AND `error_message`=#{errorMessage}
+        </if>
+        <if test="stripeUrl != null">
+            AND `stripe_url`=#{stripeUrl}
+        </if>
+        <if test="stripeId != null">
+            AND `stripe_id`=#{stripeId}
+        </if>
+        <if test="stripeClientSecret != null">
+            AND `stripe_client_secret`=#{stripeClientSecret}
+        </if>
+    </sql>
+
+    <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.WithholdFlow">
+        INSERT INTO u_withhold_flow (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="userId != null">
+            ,`user_id`
+        </if>
+        <if test="gatewayMerchantId != null">
+            ,`gateway_merchant_id`
+        </if>
+        <if test="gatewayMerchantPassword != null">
+            ,`gateway_merchant_password`
+        </if>
+        <if test="system != null">
+            ,`system`
+        </if>
+        <if test="flowId != null">
+            ,`flow_id`
+        </if>
+        <if test="gatewayId != null">
+            ,`gateway_id`
+        </if>
+        <if test="accountType != null">
+            ,`account_type`
+        </if>
+        <if test="orderAmount != null">
+            ,`order_amount`
+        </if>
+        <if test="transAmount != null">
+            ,`trans_amount`
+        </if>
+        <if test="charge != null">
+            ,`charge`
+        </if>
+        <if test="fee != null">
+            ,`fee`
+        </if>
+        <if test="ordreNo != null">
+            ,`ordre_no`
+        </if>
+        <if test="omiPayOrderNo != null">
+            ,`omi_pay_order_no`
+        </if>
+        <if test="lpsTransactionId != null">
+            ,`lps_transaction_id`
+        </if>
+        <if test="transType != null">
+            ,`trans_type`
+        </if>
+        <if test="state != null">
+            ,`state`
+        </if>
+        <if test="currency != null">
+            ,`currency`
+        </if>
+        <if test="returnCode != null">
+            ,`return_code`
+        </if>
+        <if test="returnMessage != null">
+            ,`return_message`
+        </if>
+        <if test="merchantIpaddress != null">
+            ,`merchant_ipaddress`
+        </if>
+        <if test="customerFirstname != null">
+            ,`customer_firstname`
+        </if>
+        <if test="customerMiddlename != null">
+            ,`customer_middlename`
+        </if>
+        <if test="customerLastname != null">
+            ,`customer_lastname`
+        </if>
+        <if test="customerPhone != null">
+            ,`customer_phone`
+        </if>
+        <if test="customerEmail != null">
+            ,`customer_email`
+        </if>
+        <if test="customerIpaddress != null">
+            ,`customer_ipaddress`
+        </if>
+        <if test="billFirstname != null">
+            ,`bill_firstname`
+        </if>
+        <if test="billMiddlename != null">
+            ,`bill_middlename`
+        </if>
+        <if test="billLastname != null">
+            ,`bill_lastname`
+        </if>
+        <if test="billAddress1 != null">
+            ,`bill_address1`
+        </if>
+        <if test="billAddress2 != null">
+            ,`bill_address2`
+        </if>
+        <if test="billCity != null">
+            ,`bill_city`
+        </if>
+        <if test="billCountry != null">
+            ,`bill_country`
+        </if>
+        <if test="billState != null">
+            ,`bill_state`
+        </if>
+        <if test="billZip != null">
+            ,`bill_zip`
+        </if>
+        <if test="crdstrgToken != null">
+            ,`crdstrg_token`
+        </if>
+        <if test="uniqueReference != null">
+            ,`unique_reference`
+        </if>
+        <if test="customerCcCvc != null">
+            ,`customer_cc_cvc`
+        </if>
+        <if test="settlementState != null">
+            ,`settlement_state`
+        </if>
+        <if test="settlementTime != null">
+            ,`settlement_time`
+        </if>
+        <if test="remark != null">
+            ,`remark`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+        <if test="checkState != null">
+            ,`check_state`
+        </if>
+        <if test="checkTime != null">
+            ,`check_time`
+        </if>
+        <if test="splitNo != null">
+            ,`split_no`
+        </if>
+        <if test="splitContactId != null">
+            ,`split_contact_id`
+        </if>
+        <if test="feeRate != null">
+            ,`fee_rate`
+        </if>
+        <if test="feeType != null">
+            ,`fee_type`
+        </if>
+        <if test="cardNo != null">
+            ,`card_no`
+        </if>
+        <if test="cardCcType != null">
+            ,`card_cc_type`
+        </if>
+        <if test="errorMessage != null">
+            ,`error_message`
+        </if>
+        <if test="stripeUrl != null">
+            ,`stripe_url`
+        </if>
+        <if test="stripeId != null">
+            ,`stripe_id`
+        </if>
+        <if test="stripeClientSecret != null">
+            ,`stripe_client_secret`
+        </if>
+        ) VALUES (
+        <if test="id != null">
+            #{id}
+        </if>
+        <if test="userId != null">
+            ,#{userId}
+        </if>
+        <if test="gatewayMerchantId != null">
+            ,#{gatewayMerchantId}
+        </if>
+        <if test="gatewayMerchantPassword != null">
+            ,#{gatewayMerchantPassword}
+        </if>
+        <if test="system != null">
+            ,#{system}
+        </if>
+        <if test="flowId != null">
+            ,#{flowId}
+        </if>
+        <if test="gatewayId != null">
+            ,#{gatewayId}
+        </if>
+        <if test="accountType != null">
+            ,#{accountType}
+        </if>
+        <if test="orderAmount != null">
+            ,#{orderAmount}
+        </if>
+        <if test="transAmount != null">
+            ,#{transAmount}
+        </if>
+        <if test="charge != null">
+            ,#{charge}
+        </if>
+        <if test="fee != null">
+            ,#{fee}
+        </if>
+        <if test="ordreNo != null">
+            ,#{ordreNo}
+        </if>
+        <if test="omiPayOrderNo != null">
+            ,#{omiPayOrderNo}
+        </if>
+        <if test="lpsTransactionId != null">
+            ,#{lpsTransactionId}
+        </if>
+        <if test="transType != null">
+            ,#{transType}
+        </if>
+        <if test="state != null">
+            ,#{state}
+        </if>
+        <if test="currency != null">
+            ,#{currency}
+        </if>
+        <if test="returnCode != null">
+            ,#{returnCode}
+        </if>
+        <if test="returnMessage != null">
+            ,#{returnMessage}
+        </if>
+        <if test="merchantIpaddress != null">
+            ,#{merchantIpaddress}
+        </if>
+        <if test="customerFirstname != null">
+            ,#{customerFirstname}
+        </if>
+        <if test="customerMiddlename != null">
+            ,#{customerMiddlename}
+        </if>
+        <if test="customerLastname != null">
+            ,#{customerLastname}
+        </if>
+        <if test="customerPhone != null">
+            ,#{customerPhone}
+        </if>
+        <if test="customerEmail != null">
+            ,#{customerEmail}
+        </if>
+        <if test="customerIpaddress != null">
+            ,#{customerIpaddress}
+        </if>
+        <if test="billFirstname != null">
+            ,#{billFirstname}
+        </if>
+        <if test="billMiddlename != null">
+            ,#{billMiddlename}
+        </if>
+        <if test="billLastname != null">
+            ,#{billLastname}
+        </if>
+        <if test="billAddress1 != null">
+            ,#{billAddress1}
+        </if>
+        <if test="billAddress2 != null">
+            ,#{billAddress2}
+        </if>
+        <if test="billCity != null">
+            ,#{billCity}
+        </if>
+        <if test="billCountry != null">
+            ,#{billCountry}
+        </if>
+        <if test="billState != null">
+            ,#{billState}
+        </if>
+        <if test="billZip != null">
+            ,#{billZip}
+        </if>
+        <if test="crdstrgToken != null">
+            ,#{crdstrgToken}
+        </if>
+        <if test="uniqueReference != null">
+            ,#{uniqueReference}
+        </if>
+        <if test="customerCcCvc != null">
+            ,#{customerCcCvc}
+        </if>
+        <if test="settlementState != null">
+            ,#{settlementState}
+        </if>
+        <if test="settlementTime != null">
+            ,#{settlementTime}
+        </if>
+        <if test="remark != null">
+            ,#{remark}
+        </if>
+        <if test="createdBy != null">
+            ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+            ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+            ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+            ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+            ,#{status}
+        </if>
+        <if test="ip != null">
+            ,#{ip}
+        </if>
+        <if test="checkState != null">
+            ,#{checkState}
+        </if>
+        <if test="checkTime != null">
+            ,#{checkTime}
+        </if>
+        <if test="splitNo != null">
+            ,#{splitNo}
+        </if>
+        <if test="splitContactId != null">
+            ,#{splitContactId}
+        </if>
+        <if test="feeRate != null">
+            ,#{feeRate}
+        </if>
+        <if test="feeType != null">
+            ,#{feeType}
+        </if>
+        <if test="cardNo != null">
+            ,#{cardNo}
+        </if>
+        <if test="cardCcType != null">
+            ,#{cardCcType}
+        </if>
+        <if test="errorMessage != null">
+            ,#{errorMessage}
+        </if>
+        <if test="stripeUrl != null">
+            ,#{stripeUrl}
+        </if>
+        <if test="stripeId != null">
+            ,#{stripeId}
+        </if>
+        <if test="stripeClientSecret != null">
+            ,#{stripeClientSecret}
+        </if>
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="List">
+        INSERT INTO u_withhold_flow (
+        `id`,
+        `user_id`,
+        `gateway_merchant_id`,
+        `gateway_merchant_password`,
+        `system`,
+        `flow_id`,
+        `gateway_id`,
+        `account_type`,
+        `order_amount`,
+        `trans_amount`,
+        `charge`,
+        `fee`,
+        `ordre_no`,
+        `omi_pay_order_no`,
+        `lps_transaction_id`,
+        `trans_type`,
+        `state`,
+        `currency`,
+        `return_code`,
+        `return_message`,
+        `merchant_ipaddress`,
+        `customer_firstname`,
+        `customer_middlename`,
+        `customer_lastname`,
+        `customer_phone`,
+        `customer_email`,
+        `customer_ipaddress`,
+        `bill_firstname`,
+        `bill_middlename`,
+        `bill_lastname`,
+        `bill_address1`,
+        `bill_address2`,
+        `bill_city`,
+        `bill_country`,
+        `bill_state`,
+        `bill_zip`,
+        `crdstrg_token`,
+        `unique_reference`,
+        `customer_cc_cvc`,
+        `settlement_state`,
+        `settlement_time`,
+        `remark`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`,
+        `check_state`,
+        `check_time`,
+        `split_no`,
+        `split_contact_id`,
+        `fee_rate`,
+        `fee_type`,
+        `card_no`,
+        `card_cc_type`,
+        `error_message`,
+        `stripe_url`,
+        `stripe_id`,
+        `stripe_client_secret`
+        ) VALUES
+        <foreach collection="list" item="data" separator=",">
+            (
+            #{data.id},
+            #{data.userId},
+            #{data.gatewayMerchantId},
+            #{data.gatewayMerchantPassword},
+            #{data.system},
+            #{data.flowId},
+            #{data.gatewayId},
+            #{data.accountType},
+            #{data.orderAmount},
+            #{data.transAmount},
+            #{data.charge},
+            #{data.fee},
+            #{data.ordreNo},
+            #{data.omiPayOrderNo},
+            #{data.lpsTransactionId},
+            #{data.transType},
+            #{data.state},
+            #{data.currency},
+            #{data.returnCode},
+            #{data.returnMessage},
+            #{data.merchantIpaddress},
+            #{data.customerFirstname},
+            #{data.customerMiddlename},
+            #{data.customerLastname},
+            #{data.customerPhone},
+            #{data.customerEmail},
+            #{data.customerIpaddress},
+            #{data.billFirstname},
+            #{data.billMiddlename},
+            #{data.billLastname},
+            #{data.billAddress1},
+            #{data.billAddress2},
+            #{data.billCity},
+            #{data.billCountry},
+            #{data.billState},
+            #{data.billZip},
+            #{data.crdstrgToken},
+            #{data.uniqueReference},
+            #{data.customerCcCvc},
+            #{data.settlementState},
+            #{data.settlementTime},
+            #{data.remark},
+            #{data.createdBy},
+            #{data.createdDate},
+            #{data.modifiedBy},
+            #{data.modifiedDate},
+            #{data.status},
+            #{data.ip},
+            #{data.checkState},
+            #{data.checkTime},
+            #{data.splitNo},
+            #{data.splitContactId},
+            #{data.feeRate},
+            #{data.feeType},
+            #{data.cardNo},
+            #{data.cardCcType},
+            #{data.errorMessage},
+            #{data.stripeUrl},
+            #{data.stripeId},
+            #{data.stripeClientSecret}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.uwallet.pay.main.model.entity.WithholdFlow">
+        UPDATE u_withhold_flow
+        <set>
+            <if test="id != null">
+                `id`=#{id},
+            </if>
+            <if test="userId != null">
+                `user_id`=#{userId},
+            </if>
+            <if test="gatewayMerchantId != null">
+                `gateway_merchant_id`=#{gatewayMerchantId},
+            </if>
+            <if test="gatewayMerchantPassword != null">
+                `gateway_merchant_password`=#{gatewayMerchantPassword},
+            </if>
+            <if test="system != null">
+                `system`=#{system},
+            </if>
+            <if test="flowId != null">
+                `flow_id`=#{flowId},
+            </if>
+            <if test="gatewayId != null">
+                `gateway_id`=#{gatewayId},
+            </if>
+            <if test="accountType != null">
+                `account_type`=#{accountType},
+            </if>
+            <if test="orderAmount != null">
+                `order_amount`=#{orderAmount},
+            </if>
+            <if test="transAmount != null">
+                `trans_amount`=#{transAmount},
+            </if>
+            <if test="charge != null">
+                `charge`=#{charge},
+            </if>
+            <if test="fee != null">
+                `fee`=#{fee},
+            </if>
+            <if test="ordreNo != null">
+                `ordre_no`=#{ordreNo},
+            </if>
+            <if test="omiPayOrderNo != null">
+                `omi_pay_order_no`=#{omiPayOrderNo},
+            </if>
+            <if test="lpsTransactionId != null">
+                `lps_transaction_id`=#{lpsTransactionId},
+            </if>
+            <if test="transType != null">
+                `trans_type`=#{transType},
+            </if>
+            <if test="state != null">
+                `state`=#{state},
+            </if>
+            <if test="currency != null">
+                `currency`=#{currency},
+            </if>
+            <if test="returnCode != null">
+                `return_code`=#{returnCode},
+            </if>
+            <if test="returnMessage != null">
+                `return_message`=#{returnMessage},
+            </if>
+            <if test="merchantIpaddress != null">
+                `merchant_ipaddress`=#{merchantIpaddress},
+            </if>
+            <if test="customerFirstname != null">
+                `customer_firstname`=#{customerFirstname},
+            </if>
+            <if test="customerMiddlename != null">
+                `customer_middlename`=#{customerMiddlename},
+            </if>
+            <if test="customerLastname != null">
+                `customer_lastname`=#{customerLastname},
+            </if>
+            <if test="customerPhone != null">
+                `customer_phone`=#{customerPhone},
+            </if>
+            <if test="customerEmail != null">
+                `customer_email`=#{customerEmail},
+            </if>
+            <if test="customerIpaddress != null">
+                `customer_ipaddress`=#{customerIpaddress},
+            </if>
+            <if test="billFirstname != null">
+                `bill_firstname`=#{billFirstname},
+            </if>
+            <if test="billMiddlename != null">
+                `bill_middlename`=#{billMiddlename},
+            </if>
+            <if test="billLastname != null">
+                `bill_lastname`=#{billLastname},
+            </if>
+            <if test="billAddress1 != null">
+                `bill_address1`=#{billAddress1},
+            </if>
+            <if test="billAddress2 != null">
+                `bill_address2`=#{billAddress2},
+            </if>
+            <if test="billCity != null">
+                `bill_city`=#{billCity},
+            </if>
+            <if test="billCountry != null">
+                `bill_country`=#{billCountry},
+            </if>
+            <if test="billState != null">
+                `bill_state`=#{billState},
+            </if>
+            <if test="billZip != null">
+                `bill_zip`=#{billZip},
+            </if>
+            <if test="crdstrgToken != null">
+                `crdstrg_token`=#{crdstrgToken},
+            </if>
+            <if test="uniqueReference != null">
+                `unique_reference`=#{uniqueReference},
+            </if>
+            <if test="customerCcCvc != null">
+                `customer_cc_cvc`=#{customerCcCvc},
+            </if>
+            <if test="settlementState != null">
+                `settlement_state`=#{settlementState},
+            </if>
+            <if test="settlementTime != null">
+                `settlement_time`=#{settlementTime},
+            </if>
+            <if test="remark != null">
+                `remark`=#{remark},
+            </if>
+            <if test="createdBy != null">
+                `created_by`=#{createdBy},
+            </if>
+            <if test="createdDate != null">
+                `created_date`=#{createdDate},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+            <if test="checkState != null">
+                `check_state`=#{checkState},
+            </if>
+            <if test="checkTime != null">
+                `check_time`=#{checkTime},
+            </if>
+            <if test="splitNo != null">
+                `split_no`=#{splitNo},
+            </if>
+            <if test="splitContactId != null">
+                `split_contact_id`=#{splitContactId},
+            </if>
+            <if test="feeRate != null">
+                `fee_rate`=#{feeRate},
+            </if>
+            <if test="feeType != null">
+                `fee_type`=#{feeType},
+            </if>
+            <if test="cardNo != null">
+                `card_no`=#{cardNo},
+            </if>
+            <if test="cardCcType != null">
+                `card_cc_type`=#{cardCcType},
+            </if>
+            <if test="errorMessage != null">
+                `error_message`=#{errorMessage},
+            </if>
+            <if test="stripeUrl != null">
+                `stripe_url`=#{stripeUrl},
+            </if>
+            <if test="stripeId != null">
+                `stripe_id`=#{stripeId},
+            </if>
+            <if test="stripeClientSecret != null">
+                `stripe_client_secret`=#{stripeClientSecret},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <choose>
+                <when test="status != null ">AND status = #{status.value}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            AND id = #{id}
+        </trim>
+    </update>
+
+    <update id="delete" parameterType="Map">
+      UPDATE u_withhold_flow
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+    <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_withhold_flow
+      WHERE id = #{id}
+  </delete>
+
+    <select id="count" parameterType="Map" resultType="Integer">
+        <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_withhold_flow
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultMap="withholdFlowMap">
+        <![CDATA[
+            SELECT * FROM u_withhold_flow
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="selectOneDTO" parameterType="Map" resultMap="withholdFlowDTOMap">
+        <![CDATA[
+            SELECT * FROM u_withhold_flow
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="select" parameterType="Map" resultMap="withholdFlowMap">
+        <![CDATA[
+            SELECT * FROM u_withhold_flow
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectDTO" parameterType="Map" resultMap="withholdFlowDTOMap">
+        <![CDATA[
+            SELECT * FROM u_withhold_flow
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectMap" parameterType="Map" resultType="Map">
+        SELECT
+        <foreach collection="columns" item="cname" separator="," open="`" close="`">
+            ${cname}
+        </foreach>
+        FROM u_withhold_flow
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <!--统计相关查询-->
+    <select id="groupCount" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_withhold_flow
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+    <select id="sum" parameterType="Map" resultType="Double">
+        <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_withhold_flow
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+    </select>
+
+    <select id="groupSum" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_withhold_flow
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+    <select id="countWithholdFlowList" parameterType="Map" resultType="Integer">
+        <![CDATA[
+            SELECT COUNT(DISTINCT a.id) FROM u_withhold_flow a
+            LEFT JOIN u_gateway b
+            ON a.gateway_id = b.id and b.status>0
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND a.`id`=#{id}
+            </if>
+            <if test="userId != null">
+                AND a.`user_id`=#{userId}
+            </if>
+            <if test="gatewayMerchantId != null">
+                AND a.`gateway_merchant_id`=#{gatewayMerchantId}
+            </if>
+            <if test="gatewayMerchantPassword != null">
+                AND a.`gateway_merchant_password`=#{gatewayMerchantPassword}
+            </if>
+            <if test="system != null">
+                AND a.`system`=#{system}
+            </if>
+            <if test="flowId != null">
+                AND a.`flow_id`=#{flowId}
+            </if>
+            <if test="accountType != null">
+                AND a.`account_type`=#{accountType}
+            </if>
+            <if test="gatewayId != null">
+                AND a.`gateway_id`=#{gatewayId}
+            </if>
+            <if test="transAmount != null">
+                AND a.`trans_amount`=#{transAmount}
+            </if>
+            <if test="charge != null">
+                AND a.`charge`=#{charge}
+            </if>
+            <if test="fee != null">
+                AND `fee`=#{fee}
+            </if>
+            <if test="ordreNo != null">
+                AND a.`ordre_no`=#{ordreNo}
+            </if>
+            <if test="transType != null">
+                AND a.`trans_type`=#{transType}
+            </if>
+            <if test="state != null">
+                AND a.`state`=#{state}
+            </if>
+            <if test="currency != null">
+                AND a.`currency`=#{currency}
+            </if>
+            <if test="returnCode != null">
+                AND a.`return_code`=#{returnCode}
+            </if>
+            <if test="returnMessage != null">
+                AND a.`return_message`=#{returnMessage}
+            </if>
+            <if test="merchantIpaddress != null">
+                AND a.`merchant_ipaddress`=#{merchantIpaddress}
+            </if>
+            <if test="customerFirstname != null">
+                AND a.`customer_firstname`=#{customerFirstname}
+            </if>
+            <if test="customerMiddlename != null">
+                AND a.`customer_middlename`=#{customerMiddlename}
+            </if>
+            <if test="customerLastname != null">
+                AND a.`customer_lastname`=#{customerLastname}
+            </if>
+            <if test="customerPhone != null">
+                AND a.`customer_phone`=#{customerPhone}
+            </if>
+            <if test="customerEmail != null">
+                AND a.`customer_email`=#{customerEmail}
+            </if>
+            <if test="customerIpaddress != null">
+                AND a.`customer_ipaddress`=#{customerIpaddress}
+            </if>
+            <if test="billFirstname != null">
+                AND a.`bill_firstname`=#{billFirstname}
+            </if>
+            <if test="billMiddlename != null">
+                AND a.`bill_middlename`=#{billMiddlename}
+            </if>
+            <if test="billLastname != null">
+                AND a.`bill_lastname`=#{billLastname}
+            </if>
+            <if test="billAddress1 != null">
+                AND a.`bill_address1`=#{billAddress1}
+            </if>
+            <if test="billAddress2 != null">
+                AND a.`bill_address2`=#{billAddress2}
+            </if>
+            <if test="billCity != null">
+                AND a.`bill_city`=#{billCity}
+            </if>
+            <if test="billCountry != null">
+                AND a.`bill_country`=#{billCountry}
+            </if>
+            <if test="billState != null">
+                AND a.`bill_state`=#{billState}
+            </if>
+            <if test="billZip != null">
+                AND a.`bill_zip`=#{billZip}
+            </if>
+            <if test="crdstrgToken != null">
+                AND a.`crdstrg_token`=#{crdstrgToken}
+            </if>
+            <if test="customerCcCvc != null">
+                AND a.`customer_cc_cvc`=#{customerCcCvc}
+            </if>
+            <if test="remark != null">
+                AND a.`remark`=#{remark}
+            </if>
+            <if test="checkState != null">
+                AND `check_state`=#{checkState}
+            </if>
+            <if test="checkTime != null">
+                AND `check_time`=#{checkTime}
+            </if>
+            <if test="omiPayOrderNo != null">
+                AND a.`omi_pay_order_no`=#{omiPayOrderNo}
+            </if>
+            <if test="lpsTransactionId != null">
+                AND `lps_transaction_id`=#{lpsTransactionId}
+            </if>
+            <if test="createdBy != null">
+                AND a.`created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND a.`created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND a.`modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND a.`modified_date`=#{modifiedDate}
+            </if>
+            <if test="splitNo != null">
+                AND a.`split_no`=#{splitNo}
+            </if>
+            <if test="feeRate != null">
+                AND `fee_rate`=#{feeRate}
+            </if>
+            <if test="feeType != null">
+                AND `fee_type`=#{feeType}
+            </if>
+            <if test="cardNo != null">
+                AND `card_no`=#{cardNo}
+            </if>
+            <if test="cardCcType != null">
+                AND `card_cc_type`=#{cardCcType}
+            </if>
+            <choose>
+                <when test="status != null">And a.status = #{status}</when>
+                <otherwise><![CDATA[And a.status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND a.`ip`=#{ip}
+            </if>
+        </trim>
+    </select>
+    <select id="withholdFlowList" parameterType="Map" resultMap="withholdFlowDTOMap">
+        <![CDATA[
+            SELECT a.*,b.channel_name FROM u_withhold_flow a
+            LEFT JOIN u_gateway b
+            ON a.gateway_id = b.id and b.status>0
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="id != null">
+                AND a.`id`=#{id}
+            </if>
+            <if test="userId != null">
+                AND a.`user_id`=#{userId}
+            </if>
+            <if test="gatewayMerchantId != null">
+                AND a.`gateway_merchant_id`=#{gatewayMerchantId}
+            </if>
+            <if test="gatewayMerchantPassword != null">
+                AND a.`gateway_merchant_password`=#{gatewayMerchantPassword}
+            </if>
+            <if test="system != null">
+                AND a.`system`=#{system}
+            </if>
+            <if test="flowId != null">
+                AND a.`flow_id`=#{flowId}
+            </if>
+            <if test="accountType != null">
+                AND a.`account_type`=#{accountType}
+            </if>
+            <if test="gatewayId != null">
+                AND a.`gateway_id`=#{gatewayId}
+            </if>
+            <if test="transAmount != null">
+                AND a.`trans_amount`=#{transAmount}
+            </if>
+            <if test="charge != null">
+                AND a.`charge`=#{charge}
+            </if>
+            <if test="ordreNo != null">
+                AND a.`ordre_no`=#{ordreNo}
+            </if>
+            <if test="transType != null">
+                AND a.`trans_type`=#{transType}
+            </if>
+            <if test="state != null">
+                AND a.`state`=#{state}
+            </if>
+            <if test="currency != null">
+                AND a.`currency`=#{currency}
+            </if>
+            <if test="returnCode != null">
+                AND a.`return_code`=#{returnCode}
+            </if>
+            <if test="returnMessage != null">
+                AND a.`return_message`=#{returnMessage}
+            </if>
+            <if test="merchantIpaddress != null">
+                AND a.`merchant_ipaddress`=#{merchantIpaddress}
+            </if>
+            <if test="customerFirstname != null">
+                AND a.`customer_firstname`=#{customerFirstname}
+            </if>
+            <if test="customerMiddlename != null">
+                AND a.`customer_middlename`=#{customerMiddlename}
+            </if>
+            <if test="customerLastname != null">
+                AND a.`customer_lastname`=#{customerLastname}
+            </if>
+            <if test="customerPhone != null">
+                AND a.`customer_phone`=#{customerPhone}
+            </if>
+            <if test="customerEmail != null">
+                AND a.`customer_email`=#{customerEmail}
+            </if>
+            <if test="customerIpaddress != null">
+                AND a.`customer_ipaddress`=#{customerIpaddress}
+            </if>
+            <if test="billFirstname != null">
+                AND a.`bill_firstname`=#{billFirstname}
+            </if>
+            <if test="billMiddlename != null">
+                AND a.`bill_middlename`=#{billMiddlename}
+            </if>
+            <if test="billLastname != null">
+                AND a.`bill_lastname`=#{billLastname}
+            </if>
+            <if test="billAddress1 != null">
+                AND a.`bill_address1`=#{billAddress1}
+            </if>
+            <if test="billAddress2 != null">
+                AND a.`bill_address2`=#{billAddress2}
+            </if>
+            <if test="billCity != null">
+                AND a.`bill_city`=#{billCity}
+            </if>
+            <if test="billCountry != null">
+                AND a.`bill_country`=#{billCountry}
+            </if>
+            <if test="billState != null">
+                AND a.`bill_state`=#{billState}
+            </if>
+            <if test="billZip != null">
+                AND a.`bill_zip`=#{billZip}
+            </if>
+            <if test="crdstrgToken != null">
+                AND a.`crdstrg_token`=#{crdstrgToken}
+            </if>
+            <if test="customerCcCvc != null">
+                AND a.`customer_cc_cvc`=#{customerCcCvc}
+            </if>
+            <if test="remark != null">
+                AND a.`remark`=#{remark}
+            </if>
+            <if test="checkState != null">
+                AND `check_state`=#{checkState}
+            </if>
+            <if test="checkTime != null">
+                AND `check_time`=#{checkTime}
+            </if>
+            <if test="omiPayOrderNo != null">
+                AND a.`omi_pay_order_no`=#{omiPayOrderNo}
+            </if>
+            <if test="lpsTransactionId != null">
+                AND a.`lps_transaction_id`=#{lpsTransactionId}
+            </if>
+            <if test="fee != null">
+                AND a.`fee`=#{fee}
+            </if>
+            <if test="createdBy != null">
+                AND a.`created_by`=#{createdBy}
+            </if>
+            <if test="start != null and end != null">
+                AND a.`created_date` BETWEEN #{start} AND #{ end}
+            </if>
+            <if test="modifiedBy != null">
+                AND a.`modified_by`=#{modifiedBy}
+            </if>
+            <if test="modifiedDate != null">
+                AND a.`modified_date`=#{modifiedDate}
+            </if>
+            <if test="feeRate != null">
+                AND `fee_rate`=#{feeRate}
+            </if>
+            <if test="feeType != null">
+                AND `fee_type`=#{feeType}
+            </if>
+            <if test="cardNo != null">
+                AND `card_no`=#{cardNo}
+            </if>
+            <if test="cardCcType != null">
+                AND `card_cc_type`=#{cardCcType}
+            </if>
+            <choose>
+                <when test="status != null">AND a.status = #{status}</when>
+                <otherwise><![CDATA[AND a.status > 0]]></otherwise>
+            </choose>
+            <if test="ip != null">
+                AND a.`ip`=#{ip}
+            </if>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                a.${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectResults" resultType="java.util.Map">
+        SELECT
+            flow_id flowId,
+            charge charge,
+            case when fee_rate is null then charge else fee_rate end feeRate,
+            case when fee_type is null then 0 else fee_type end feeType,
+            CASE state
+            WHEN 1 THEN 100200
+            WHEN 2 THEN 100400
+            ELSE 100300
+            END code
+            FROM u_withhold_flow
+        WHERE flow_id IN
+        <foreach collection="array" open="(" separator="," close=")" item="flowId">
+            #{flowId}
+        </foreach>
+    </select>
+    <select id="getOrderNoByTransId" resultType="java.lang.String">
+        SELECT IFNULL(`ordre_no`,'') from u_withhold_flow
+        WHERE `flow_id` = #{transactionId} and `status`=1
+    </select>
+
+    <update id="updateForConcurrency" parameterType="com.uwallet.pay.main.model.entity.WithholdFlow">
+        UPDATE u_withhold_flow
+        <set>
+            <if test="id != null">
+                `id`=#{id},
+            </if>
+            <if test="userId != null">
+                `user_id`=#{userId},
+            </if>
+            <if test="gatewayMerchantId != null">
+                `gateway_merchant_id`=#{gatewayMerchantId},
+            </if>
+            <if test="gatewayMerchantPassword != null">
+                `gateway_merchant_password`=#{gatewayMerchantPassword},
+            </if>
+            <if test="system != null">
+                `system`=#{system},
+            </if>
+            <if test="flowId != null">
+                `flow_id`=#{flowId},
+            </if>
+            <if test="accountType != null">
+                `account_type`=#{accountType},
+            </if>
+            <if test="gatewayId != null">
+                `gateway_id`=#{gatewayId},
+            </if>
+            <if test="orderAmount != null">
+                `order_amount`=#{orderAmount},
+            </if>
+            <if test="transAmount != null">
+                `trans_amount`=#{transAmount},
+            </if>
+            <if test="charge != null">
+                `charge`=#{charge},
+            </if>
+            <if test="fee != null">
+                `fee`=#{fee},
+            </if>
+            <if test="ordreNo != null">
+                `ordre_no`=#{ordreNo},
+            </if>
+            <if test="transType != null">
+                `trans_type`=#{transType},
+            </if>
+            <if test="state != null">
+                `state`=#{state},
+            </if>
+            <if test="currency != null">
+                `currency`=#{currency},
+            </if>
+            <if test="returnCode != null">
+                `return_code`=#{returnCode},
+            </if>
+            <if test="returnMessage != null">
+                `return_message`=#{returnMessage},
+            </if>
+            <if test="merchantIpaddress != null">
+                `merchant_ipaddress`=#{merchantIpaddress},
+            </if>
+            <if test="customerFirstname != null">
+                `customer_firstname`=#{customerFirstname},
+            </if>
+            <if test="customerMiddlename != null">
+                `customer_middlename`=#{customerMiddlename},
+            </if>
+            <if test="customerLastname != null">
+                `customer_lastname`=#{customerLastname},
+            </if>
+            <if test="customerPhone != null">
+                `customer_phone`=#{customerPhone},
+            </if>
+            <if test="customerEmail != null">
+                `customer_email`=#{customerEmail},
+            </if>
+            <if test="customerIpaddress != null">
+                `customer_ipaddress`=#{customerIpaddress},
+            </if>
+            <if test="billFirstname != null">
+                `bill_firstname`=#{billFirstname},
+            </if>
+            <if test="billMiddlename != null">
+                `bill_middlename`=#{billMiddlename},
+            </if>
+            <if test="billLastname != null">
+                `bill_lastname`=#{billLastname},
+            </if>
+            <if test="billAddress1 != null">
+                `bill_address1`=#{billAddress1},
+            </if>
+            <if test="billAddress2 != null">
+                `bill_address2`=#{billAddress2},
+            </if>
+            <if test="billCity != null">
+                `bill_city`=#{billCity},
+            </if>
+            <if test="billCountry != null">
+                `bill_country`=#{billCountry},
+            </if>
+            <if test="billState != null">
+                `bill_state`=#{billState},
+            </if>
+            <if test="billZip != null">
+                `bill_zip`=#{billZip},
+            </if>
+            <if test="crdstrgToken != null">
+                `crdstrg_token`=#{crdstrgToken},
+            </if>
+            <if test="customerCcCvc != null">
+                `customer_cc_cvc`=#{customerCcCvc},
+            </if>
+            <if test="remark != null">
+                `remark`=#{remark},
+            </if>
+            <if test="checkState != null">
+                `check_state`=#{checkState},
+            </if>
+            <if test="checkTime != null">
+                `check_time`=#{checkTime},
+            </if>
+            <if test="omiPayOrderNo != null">
+                `omi_pay_order_no`=#{omiPayOrderNo},
+            </if>
+            <if test="lpsTransactionId != null">
+                `lps_transaction_id`=#{lpsTransactionId},
+            </if>
+            <if test="createdBy != null">
+                `created_by`=#{createdBy},
+            </if>
+            <if test="createdDate != null">
+                `created_date`=#{createdDate},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+            <if test="uniqueReference != null">
+                `unique_reference`=#{uniqueReference},
+            </if>
+            <if test="splitNo != null">
+                `split_no`=#{splitNo},
+            </if>
+            <if test="splitContactId != null">
+                `split_contact_id`=#{splitContactId},
+            </if>
+            <if test="feeRate != null">
+                `fee_rate`=#{feeRate},
+            </if>
+            <if test="feeType != null">
+                `fee_type`=#{feeType},
+            </if>
+            <if test="errorMessage != null">
+                `error_message`=#{errorMessage},
+            </if>
+            <if test="stripeUrl != null">
+                `stripe_url`=#{stripeUrl},
+            </if>
+            <if test="stripeId != null">
+                `stripe_id`=#{stripeId},
+            </if>
+            <if test="stripeClientSecret != null">
+                `stripe_client_secret`=#{stripeClientSecret},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <choose>
+                <when test="status != null ">AND status = #{status.value}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            AND id = #{id} AND  state != #{state}
+        </trim>
+    </update>
+
+</mapper>

@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.CreditWebDAO">
+
+    <resultMap id="discountPackageInfoMap" type="com.uwallet.pay.main.model.dto.DiscountPackageInfoDTO">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="merchantName" column="practical_name"/>
+        <result property="state" column="state"/>
+        <result property="entityType" column="entity_type"/>
+        <result property="mainBusiness" column="main_business"/>
+        <result property="abn" column="ABN"/>
+        <result property="bsb" column="BSB"/>
+        <result property="accountNo" column="account_no"/>
+        <result property="accountName" column="account_name"/>
+        <result property="bankName" column="bank_name"/>
+        <association property="toBeSettled" column="{merchantId=id, settlementState = 0}" select="selectSettled"/>
+        <association property="settled" column="{merchantId=id, settlementState = 1}" select="selectSettled"/>
+        <association property="undelayed" column="{merchantId=id, settlementDelay = 0, settlementState = 0}" select="selectSettled"/>
+        <association property="delayed" column="{merchantId=id, settlementDelay = 1, settlementState = 0}" select="selectSettled"/>
+        <association property="total" column="{merchantId=id, state = 1}" select="selectSettled"/>
+    </resultMap>
+
+    <resultMap id="settlementInfoMap" type="com.uwallet.pay.main.model.dto.SettlementInfoDTO">
+        <id property="flowId" column="flowId"/>
+        <result property="merchantId" column="merchantId"/>
+        <result property="merchantName" column="merchantName"/>
+        <result property="entityType" column="entityType"/>
+        <result property="mainBusiness" column="mainBusiness"/>
+        <result property="abn" column="ABN"/>
+        <result property="clearNumber" column="clearNumber"/>
+        <result property="clearAmount" column="clearAmount"/>
+        <result property="state" column="state"/>
+        <result property="createdDate" column="createdDate"/>
+    </resultMap>
+
+    <resultMap id="merchantWholeSalesFlowInfoMap" type="com.uwallet.pay.main.model.dto.MerchantWholeSalesFlowInfoDTO">
+        <id property="id" column="id"/>
+        <result property="settlementAmount" column="settlement_amount"/>
+        <result property="settlementTime" column="settlement_time"/>
+        <result property="settlementState" column="settlement_state"/>
+        <result property="settlementDelay" column="settlement_delay"/>
+        <result property="merchantId" column="merchant_id"/>
+        <result property="merchantName" column="practical_name"/>
+        <result property="bsb" column="BSB"/>
+        <result property="accountNo" column="account_no"/>
+        <result property="accountName" column="account_name"/>
+        <result property="bankName" column="bank_name"/>
+    </resultMap>
+
+    <select id="searchMerchantList" parameterType="Map" resultMap="discountPackageInfoMap">
+        SELECT
+        DISTINCT
+        um.id,
+        um.user_id,
+        um.practical_name,
+        um.entity_type,
+        um.main_business,
+        um.ABN,
+        um.BSB,
+        CONCAT('**** **** ', RIGHT(um.account_no, 4)) account_no,
+        um.account_name,
+        um.bank_name,
+        um.state,
+        1,
+        0
+        FROM
+        u_merchant um
+        LEFT JOIN u_whole_sales_flow uwsf ON um.id = uwsf.merchant_id
+        AND uwsf.`status` = 1
+        WHERE
+        uwsf.settlement_state = 0
+        AND um.`status` = 1
+        AND uwsf.`approve_state` IN (1, 3)
+        <if test="merchantName != null">
+            AND um.practical_name LIKE CONCAT('%', #{merchantName}, '%')
+        </if>
+        <if test="abn != null">
+            AND um.ABN LIKE CONCAT('%', #{abn}, '%')
+        </if>
+        <if test="entityType != null">
+            AND um.entity_type = #{entityType}
+        </if>
+        <if test="mainBusiness != null">
+            AND um.main_business = #{mainBusiness}
+        </if>
+        <if test="merchantId != null">
+            AND um.id = #{merchantId}
+        </if>
+        <if test="state != null">
+            AND um.state = #{state}
+        </if>
+        <if test="settlementDelay != null">
+            AND uwsf.settlement_delay = #{settlementDelay}
+        </if>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="searchMerchantListCount" parameterType="Map" resultType="java.lang.Integer">
+        SELECT
+        COUNT(DISTINCT um.id)
+        FROM
+        u_merchant um
+        LEFT JOIN u_whole_sales_flow uwsf ON um.id = uwsf.merchant_id
+        AND uwsf.`status` = 1
+        WHERE
+        uwsf.settlement_state = 0
+        AND um.`status` = 1
+        AND uwsf.`approve_state` IN (1, 3)
+        <if test="merchantName != null">
+            AND um.practical_name LIKE CONCAT('%', #{merchantName}, '%')
+        </if>
+        <if test="abn != null">
+            AND um.ABN LIKE CONCAT('%', #{abn}, '%')
+        </if>
+        <if test="entityType != null">
+            AND um.entity_type = #{entityType}
+        </if>
+        <if test="mainBusiness != null">
+            AND um.main_business = #{mainBusiness}
+        </if>
+        <if test="state != null">
+            AND um.state = #{state}
+        </if>
+        <if test="merchantId != null">
+            AND um.id = #{merchantId}
+        </if>
+        <if test="settlementDelay != null">
+            AND uwsf.settlement_delay = #{settlementDelay}
+        </if>
+    </select>
+
+    <!--  查询处理中的整体出售订单  -->
+    <select id="selectSettled" parameterType="Map" resultType="com.uwallet.pay.main.model.dto.SettledInfoDTO">
+        SELECT
+        COUNT( DISTINCT id ) number,
+        IFNULL(SUM(settlement_amount), 0) amount
+        FROM
+        u_whole_sales_flow
+        WHERE
+        `status` = 1
+        AND `approve_state` IN (1, 3)
+        AND merchant_id = #{merchantId}
+        <if test="settlementState != null">
+            AND settlement_state = #{settlementState}
+        </if>
+        <if test="settlementDelay != null">
+            AND settlement_delay = #{settlementDelay}
+        </if>
+    </select>
+
+    <update id="updateWholeSalesFlow" parameterType="Map">
+        UPDATE u_whole_sales_flow SET settlement_time = #{settlementTime},
+        <if test="batchId != null">
+            `batch_id`=#{batchId},
+        </if>
+         <if test="settlementState == 1">
+             approve_state = 3,
+         </if>
+         settlement_state = #{settlementState}, modified_date = #{modifiedDate} WHERE merchant_id IN (${ids}) AND settlement_delay = 0 AND settlement_state = 0 AND `status` = 1
+    </update>
+
+    <select id="searchSettlementInfo" parameterType="Map" resultMap="settlementInfoMap">
+        SELECT
+        ucd.id flowId,
+        um.id merchantId,
+        um.practical_name merchantName,
+        um.entity_type entityType,
+        um.main_business mainBusiness,
+        um.ABN,
+        ucd.clear_number clearNumber,
+        ucd.clear_amount clearAmount,
+        ucd.state,
+        ucd.created_date createdDate
+        FROM
+        u_clear_detail ucd
+        LEFT JOIN u_merchant um ON um.id = ucd.merchant_id AND um.status = 1
+        LEFT JOIN u_clear_batch ucb ON ucd.clear_batch_id = ucb.id AND ucb.status = 1
+        WHERE ucd.status = 1
+        AND ucb.clear_type = #{clearType}
+        <if test="merchantName != null">
+            AND um.practical_name LIKE CONCAT('%', #{merchantName}, '%')
+        </if>
+        <if test="abn != null">
+            AND um.ABN LIKE CONCAT('%', #{abn}, '%')
+        </if>
+        <if test="entityType != null">
+            AND um.entity_type = #{entityType}
+        </if>
+        <if test="mainBusiness != null">
+            AND um.main_business = #{mainBusiness}
+        </if>
+        <if test="settledState != null">
+            AND ucd.state = #{settledState}
+        </if>
+        <if test="start != null and end != null">
+            AND ucd.`created_date` BETWEEN #{start} AND #{end}
+        </if>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="searchSettlementInfoCount" parameterType="Map" resultType="java.lang.Integer">
+        SELECT
+        COUNT(DISTINCT ucd.id)
+        FROM
+        u_clear_detail ucd
+        LEFT JOIN u_merchant um ON um.id = ucd.merchant_id AND um.status = 1
+        LEFT JOIN u_clear_batch ucb ON ucd.clear_batch_id = ucb.id AND ucb.status = 1
+        WHERE ucd.status = 1
+        AND ucb.clear_type = #{clearType}
+        <if test="merchantName != null">
+            AND um.practical_name LIKE CONCAT('%', #{merchantName}, '%')
+        </if>
+        <if test="abn != null">
+            AND um.ABN LIKE CONCAT('%', #{abn}, '%')
+        </if>
+        <if test="entityType != null">
+            AND um.entity_type = #{entityType}
+        </if>
+        <if test="mainBusiness != null">
+            AND um.main_business = #{mainBusiness}
+        </if>
+        <if test="settledState != null">
+            AND ucd.state = #{settledState}
+        </if>
+        <if test="start != null and end != null">
+            AND ucd.`created_date` BETWEEN #{start} AND #{end}
+        </if>
+    </select>
+
+    <update id="updateClearFlowDetail" parameterType="Map">
+        UPDATE u_clear_flow_detail
+        <set>
+            <if test="id != null">
+                `id`=#{id},
+            </if>
+            <if test="clearBatchId != null">
+                `clear_batch_id`=#{clearBatchId},
+            </if>
+            <if test="flowId != null">
+                `flow_id`=#{flowId},
+            </if>
+            <if test="recUserId != null">
+                `rec_user_id`=#{recUserId},
+            </if>
+            <if test="clearAmount != null">
+                `clear_amount`=#{clearAmount},
+            </if>
+            <if test="transAmount != null">
+                `trans_amount`=#{transAmount},
+            </if>
+            <if test="transType != null">
+                `trans_type`=#{transType},
+            </if>
+            <if test="state != null">
+                `state`=#{state},
+            </if>
+            <if test="createdBy != null">
+                `created_by`=#{createdBy},
+            </if>
+            <if test="createdDate != null">
+                `created_date`=#{createdDate},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+            <if test="borrowAmount != null">
+                `borrow_amount`=#{borrowAmount},
+            </if>
+        </set>
+        WHERE status = 1 AND flow_id IN (${flowIds})
+    </update>
+
+    <update id="updateWholeSalesFlowInfo" parameterType="Map">
+        UPDATE u_whole_sales_flow SET settlement_state = #{settlementState}, settlement_time = NULL,
+         <if test="approveState != null">
+             approve_state = #{approveState},
+         </if>
+         modified_date = #{modifiedDate} WHERE status = 1 AND id IN (
+            SELECT whole_sales_flow_id FROM u_whole_sales_flow_and_clear_detail WHERE clear_detail_id = #{flowId} AND status = 1
+        )
+    </update>
+
+    <select id="searchMerchantWholeSalesFlowInfo" parameterType="Map" resultMap="merchantWholeSalesFlowInfoMap">
+        SELECT
+        uwsf.id,
+        uwsf.settlement_amount,
+        uwsf.settlement_time,
+        uwsf.settlement_state,
+        uwsf.settlement_delay,
+        uwsf.merchant_id,
+        um.practical_name,
+        um.BSB,
+        CONCAT('**** **** ', RIGHT(um.account_no, 4)) account_no,
+        um.account_name,
+        um.bank_name
+        FROM u_whole_sales_flow uwsf
+        LEFT JOIN u_merchant um ON uwsf.merchant_id = um.id AND um.status = 1
+        WHERE uwsf.status = 1
+        AND uwsf.`approve_state` IN (1, 3)
+        <if test="merchantId != null">
+            AND uwsf.merchant_id = #{merchantId}
+        </if>
+        <if test="settlementState">
+            AND uwsf.settlement_state = #{settlementState}
+        </if>
+        <if test="settlementDelay">
+            AND uwsf.settlement_delay = #{settlementDelay}
+        </if>
+        <if test="flowId != null">
+            AND EXISTS (
+            SELECT * FROM u_whole_sales_flow_and_clear_detail uwsfacd WHERE uwsfacd.clear_detail_id = #{flowId} AND uwsfacd.status = 1 AND uwsfacd.whole_sales_flow_id = uwsf.id
+            )
+        </if>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="searchMerchantWholeSalesFlowInfoCount" parameterType="Map" resultType="java.lang.Integer">
+        SELECT
+        COUNT(DISTINCT uwsf.id)
+        FROM u_whole_sales_flow uwsf
+        LEFT JOIN u_merchant um ON uwsf.merchant_id = um.id AND um.status = 1
+        WHERE uwsf.status = 1
+        AND uwsf.`approve_state` IN (1, 3)
+        <if test="merchantId != null">
+            AND uwsf.merchant_id = #{merchantId}
+        </if>
+        <if test="settlementState != null">
+            AND uwsf.settlement_state = #{settlementState}
+        </if>
+        <if test="settlementDelay != null">
+            AND uwsf.settlement_delay = #{settlementDelay}
+        </if>
+        <if test="flowId != null">
+            AND EXISTS (
+            SELECT * FROM u_whole_sales_flow_and_clear_detail uwsfacd WHERE uwsfacd.clear_detail_id = #{flowId} AND uwsfacd.status = 1 AND uwsfacd.whole_sales_flow_id = uwsf.id
+            )
+        </if>
+    </select>
+
+    <update id="updateSettlementDelay" parameterType="Map" >
+        UPDATE u_whole_sales_flow SET settlement_delay = #{settlementDelay}, modified_date = #{modifiedDate} WHERE id IN (${ids}) AND status = 1
+    </update>
+
+
+</mapper>

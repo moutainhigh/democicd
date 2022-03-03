@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.MerchantUpdateLogDAO">
+
+  <resultMap id="merchantUpdateLogMap" type="com.uwallet.pay.main.model.entity.MerchantUpdateLog">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="merchantId" jdbcType="BIGINT" column="merchant_id"/>
+    <result property="onUpdate" jdbcType="VARCHAR" column="on_update"/>
+    <result property="afterUpdate" jdbcType="VARCHAR" column="after_update"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="TIMESTAMP" column="created_date"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+    <result property="updateType" jdbcType="TINYINT" column="update_type"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+  </resultMap>
+
+  <resultMap id="merchantUpdateLogDTOMap" type="com.uwallet.pay.main.model.dto.MerchantUpdateLogDTO" extends="merchantUpdateLogMap"></resultMap>
+
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="merchantId != null">
+          AND `merchant_id`=#{merchantId}
+        </if>
+        <if test="onUpdate != null">
+          AND `on_update`=#{onUpdate}
+        </if>
+        <if test="afterUpdate != null">
+          AND `after_update`=#{afterUpdate}
+        </if>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+        <if test="updateType != null">
+          AND `update_type`=#{updateType}
+        </if>
+        <choose>
+          <when test="status != null">AND status = #{status}</when>
+          <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+  </sql>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.MerchantUpdateLog">
+    INSERT INTO u_merchant_update_log (
+        <if test="id != null">
+            `id` 
+        </if>
+        <if test="merchantId != null">
+            ,`merchant_id` 
+        </if>
+        <if test="onUpdate != null">
+            ,`on_update` 
+        </if>
+        <if test="afterUpdate != null">
+            ,`after_update` 
+        </if>
+        <if test="createdBy != null">
+            ,`created_by` 
+        </if>
+        <if test="createdDate != null">
+            ,`created_date` 
+        </if>
+        <if test="ip != null">
+            ,`ip` 
+        </if>
+        <if test="updateType != null">
+            ,`update_type` 
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="merchantId != null">
+              ,#{merchantId}
+        </if>
+        <if test="onUpdate != null">
+              ,#{onUpdate}
+        </if>
+        <if test="afterUpdate != null">
+              ,#{afterUpdate}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+        <if test="updateType != null">
+              ,#{updateType}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_merchant_update_log (
+        `id`,
+        `merchant_id`,
+        `on_update`,
+        `after_update`,
+        `created_by`,
+        `created_date`,
+        `ip`,
+        `update_type`,
+        `status`
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.merchantId},
+        #{data.onUpdate},
+        #{data.afterUpdate},
+        #{data.createdBy},
+        #{data.createdDate},
+        #{data.ip},
+        #{data.updateType},
+        #{data.status}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.MerchantUpdateLog">
+    UPDATE u_merchant_update_log
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="merchantId != null">
+          `merchant_id`=#{merchantId},
+        </if>
+        <if test="onUpdate != null">
+          `on_update`=#{onUpdate},
+        </if>
+        <if test="afterUpdate != null">
+          `after_update`=#{afterUpdate},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+        <if test="updateType != null">
+          `update_type`=#{updateType},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_merchant_update_log
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+  <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_merchant_update_log
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_merchant_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="merchantUpdateLogMap">
+    <![CDATA[
+            SELECT * FROM u_merchant_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="merchantUpdateLogDTOMap">
+    <![CDATA[
+            SELECT * FROM u_merchant_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="merchantUpdateLogMap">
+    <![CDATA[
+            SELECT * FROM u_merchant_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="merchantUpdateLogDTOMap">
+    <![CDATA[
+            SELECT * FROM u_merchant_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_merchant_update_log
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_merchant_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_merchant_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_merchant_update_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+</mapper>

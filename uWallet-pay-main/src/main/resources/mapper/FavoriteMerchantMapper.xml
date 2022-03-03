@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.FavoriteMerchantDAO">
+
+  <resultMap id="favoriteMerchantMap" type="com.uwallet.pay.main.model.entity.FavoriteMerchant">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="userId" jdbcType="BIGINT" column="user_id"/>
+    <result property="merchantId" jdbcType="BIGINT" column="merchant_id"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+  </resultMap>
+
+  <resultMap id="favoriteMerchantDTOMap" type="com.uwallet.pay.main.model.dto.FavoriteMerchantDTO" extends="favoriteMerchantMap"></resultMap>
+
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="userId != null">
+          AND `user_id`=#{userId}
+        </if>
+        <if test="merchantId != null">
+          AND `merchant_id`=#{merchantId}
+        </if>
+        <if test="modifiedBy != null">
+          AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+          AND `modified_date`=#{modifiedDate}
+        </if>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <choose>
+          <when test="status != null">AND status = #{status}</when>
+          <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+  </sql>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.FavoriteMerchant">
+    INSERT INTO u_favorite_merchant (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="userId != null">
+            ,`user_id`
+        </if>
+        <if test="merchantId != null">
+            ,`merchant_id`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="userId != null">
+              ,#{userId}
+        </if>
+        <if test="merchantId != null">
+              ,#{merchantId}
+        </if>
+        <if test="modifiedBy != null">
+              ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+              ,#{modifiedDate}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_favorite_merchant (
+        `id`,
+        `user_id`,
+        `merchant_id`,
+        `modified_by`,
+        `modified_date`,
+        `created_by`,
+        `created_date`,
+        `status`,
+        `ip`
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.userId},
+        #{data.merchantId},
+        #{data.modifiedBy},
+        #{data.modifiedDate},
+        #{data.createdBy},
+        #{data.createdDate},
+        #{data.status},
+        #{data.ip}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.FavoriteMerchant">
+    UPDATE u_favorite_merchant
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="userId != null">
+          `user_id`=#{userId},
+        </if>
+        <if test="merchantId != null">
+          `merchant_id`=#{merchantId},
+        </if>
+        <if test="modifiedBy != null">
+          `modified_by`=#{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+          `modified_date`=#{modifiedDate},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_favorite_merchant
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+    <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_favorite_merchant
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_favorite_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="favoriteMerchantMap">
+    <![CDATA[
+            SELECT * FROM u_favorite_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="favoriteMerchantDTOMap">
+    <![CDATA[
+            SELECT * FROM u_favorite_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="favoriteMerchantMap">
+    <![CDATA[
+            SELECT * FROM u_favorite_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="favoriteMerchantDTOMap">
+    <![CDATA[
+            SELECT * FROM u_favorite_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+    <select id="findListWithMerchantInfo" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+        m.id merchantId,
+        m.have_whole_sell as haveWholeSell,
+        m.is_available as isAvailable,
+        m.practical_name as tradingName,
+        m.keyword,
+        m.lng,
+        m.lat,
+        m.marketing_discount marketingDiscount,
+        m.extra_discount_period extraDiscountPeriod,
+        m.extra_discount as extraDiscount,
+        m.base_pay_rate basePayRate,
+        m.base_rate baseRate,
+        m.logo_url logoUrl,
+        m.categories,
+        s.en_name as categoriesStr
+
+        FROM u_favorite_merchant f
+        left join u_merchant m on m.id = f.merchant_id
+        left join (select `value`,`en_name` from u_static_data where `code`= 'merchantCategories' and `status`=1) s
+        on s.`value` = m.categories
+
+        where f.user_id = #{userId}
+        AND f.`status` = 1
+        AND m.`status` = 1
+        and m.is_available = 1
+        order by f.modified_date desc
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_favorite_merchant
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_favorite_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_favorite_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_favorite_merchant
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+    <delete id="hardDelete" >
+      DELETE FROM u_favorite_merchant
+      WHERE `user_id` = #{userId}
+      and  `merchant_id`=#{merchantId}
+      and `status` = 1
+  </delete>
+    <select id="countFavorite" resultType="java.lang.Integer">
+         SELECT COUNT(f.id)
+
+         FROM u_favorite_merchant f
+         LEFT JOIN u_merchant m ON f.merchant_id = m.id
+         WHERE f.`status` = 1
+         AND m.`status` = 1
+         AND m.is_available = 1
+         AND f.user_id = #{userId};
+    </select>
+
+</mapper>

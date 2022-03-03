@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.TagDAO">
+
+  <resultMap id="tagMap" type="com.uwallet.pay.main.model.entity.Tag">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="parentId" jdbcType="BIGINT" column="parent_id"/>
+    <result property="cnName" jdbcType="VARCHAR" column="cn_name"/>
+    <result property="enValue" jdbcType="VARCHAR" column="en_value"/>
+    <result property="popular" jdbcType="DECIMAL" column="popular"/>
+    <result property="showState" jdbcType="TINYINT" column="show_state"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+  </resultMap>
+
+  <resultMap id="tagDTOMap" type="com.uwallet.pay.main.model.dto.TagDTO" extends="tagMap"></resultMap>
+
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="parentId != null">
+          AND `parent_id`=#{parentId}
+        </if>
+        <if test="cnName != null">
+          AND `cn_name`=#{cnName}
+        </if>
+        <if test="enValue != null">
+          AND `en_value`=#{enValue}
+        </if>
+        <if test="popular != null">
+          AND `popular`=#{popular}
+        </if>
+        <if test="showState != null">
+          AND `show_state`=#{showState}
+        </if>
+        <if test="modifiedBy != null">
+          AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+          AND `modified_date`=#{modifiedDate}
+        </if>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <choose>
+          <when test="status != null">AND status = #{status}</when>
+          <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+  </sql>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.Tag">
+    INSERT INTO u_tag (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="parentId != null">
+            ,`parent_id`
+        </if>
+        <if test="cnName != null">
+            ,`cn_name`
+        </if>
+        <if test="enValue != null">
+            ,`en_value`
+        </if>
+        <if test="popular != null">
+            ,`popular`
+        </if>
+        <if test="showState != null">
+            ,`show_state`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="parentId != null">
+              ,#{parentId}
+        </if>
+        <if test="cnName != null">
+              ,#{cnName}
+        </if>
+        <if test="enValue != null">
+              ,#{enValue}
+        </if>
+        <if test="popular != null">
+              ,#{popular}
+        </if>
+        <if test="showState != null">
+              ,#{showState}
+        </if>
+        <if test="modifiedBy != null">
+              ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+              ,#{modifiedDate}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_tag (
+        `id`,
+        `parent_id`,
+        `cn_name`,
+        `en_value`,
+        `popular`,
+        `show_state`,
+        `modified_by`,
+        `modified_date`,
+        `created_by`,
+        `created_date`,
+        `status`,
+        `ip`
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.parentId},
+        #{data.cnName},
+        #{data.enValue},
+        #{data.popular},
+        #{data.showState},
+        #{data.modifiedBy},
+        #{data.modifiedDate},
+        #{data.createdBy},
+        #{data.createdDate},
+        #{data.status},
+        #{data.ip}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.Tag">
+    UPDATE u_tag
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="parentId != null">
+          `parent_id`=#{parentId},
+        </if>
+        <if test="cnName != null">
+          `cn_name`=#{cnName},
+        </if>
+        <if test="enValue != null">
+          `en_value`=#{enValue},
+        </if>
+        <if test="popular != null">
+          `popular`=#{popular},
+        </if>
+        <if test="showState != null">
+          `show_state`=#{showState},
+        </if>
+        <if test="modifiedBy != null">
+          `modified_by`=#{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+          `modified_date`=#{modifiedDate},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_tag
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+    <update id="updateTagPopular" parameterType="Map">
+        UPDATE u_tag SET
+        popular = (popular +1),
+        modified_by= #{adminId},
+        modified_date=#{time},
+        ip = #{ip}
+        WHERE
+        ( en_value = #{keyword} OR cn_name = #{keyword} )
+        AND `status`=1
+
+    </update>
+
+    <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_tag
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_tag
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="tagMap">
+    <![CDATA[
+            SELECT * FROM u_tag
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="tagDTOMap">
+    <![CDATA[
+            SELECT * FROM u_tag
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="tagMap">
+    <![CDATA[
+            SELECT * FROM u_tag
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="tagDTOMap">
+    <![CDATA[
+            SELECT * FROM u_tag
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_tag
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_tag
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_tag
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_tag
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+    <select id="getTop10Tags" resultType="java.lang.String">
+        SELECT en_value FROM u_tag where `show_state` = 1 and `status`=1
+        <if test="mark != null">
+        ORDER BY popular DESC,modified_date DESC LIMIT 10
+        </if>
+    </select>
+    <select id="matchTags" resultType="java.lang.String">
+        SELECT
+               `en_value`
+        FROM u_tag
+        WHERE
+        `en_value` LIKE CONCAT( #{value}, '%' )
+        AND `STATUS` = 1
+    </select>
+
+</mapper>

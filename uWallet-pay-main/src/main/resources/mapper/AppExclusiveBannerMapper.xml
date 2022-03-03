@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.AppExclusiveBannerDAO">
+
+    <resultMap id="appExclusiveBannerMap" type="com.uwallet.pay.main.model.entity.AppExclusiveBanner">
+        <id property="id" jdbcType="BIGINT" column="id"/>
+        <result property="displayType" jdbcType="TINYINT" column="display_type"/>
+        <result property="displayOrder" jdbcType="SMALLINT" column="display_order"/>
+        <result property="title" jdbcType="VARCHAR" column="title"/>
+        <result property="subTitle" jdbcType="VARCHAR" column="sub_title"/>
+        <result property="imageUrl" jdbcType="VARCHAR" column="image_url"/>
+        <result property="limitTimes" jdbcType="INTEGER" column="limit_times"/>
+        <result property="redirectType" jdbcType="TINYINT" column="redirect_type"/>
+        <result property="redirectH5LinkAddress" jdbcType="VARCHAR" column="redirect_h5_link_address"/>
+        <result property="redirectAppLinkType" jdbcType="TINYINT" column="redirect_app_link_type"/>
+        <result property="redirectCustomizedDisplayType" jdbcType="TINYINT" column="redirect_customized_display_type"/>
+        <result property="redirectCustomizedTitle" jdbcType="VARCHAR" column="redirect_customized_title"/>
+        <result property="redirectCustomizedImageUrl" jdbcType="VARCHAR" column="redirect_customized_image_url"/>
+        <result property="redirectCustomizedContent" jdbcType="VARCHAR" column="redirect_customized_content"/>
+        <result property="turnOffEffectStatus" jdbcType="TINYINT" column="turn_off_effect_status"/>
+        <result property="turnOffTextDisplay" jdbcType="VARCHAR" column="turn_off_text_display"/>
+        <result property="state" jdbcType="TINYINT" column="state"/>
+        <result property="remark" jdbcType="VARCHAR" column="remark"/>
+        <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+        <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+        <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+        <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+        <result property="status" jdbcType="TINYINT" column="status"/>
+        <result property="ip" jdbcType="VARCHAR" column="ip"/>
+        <result property="turnOffRedirectType" jdbcType="TINYINT" column="turn_off_redirect_type"/>
+        <result property="turnOffRedirectH5Link" jdbcType="VARCHAR" column="turn_off_redirect_h5_link"/>
+        <result property="turnOffRedirectAppLinkType" jdbcType="TINYINT" column="turn_off_redirect_app_link_type"/>
+    </resultMap>
+
+    <resultMap id="appExclusiveBannerDTOMap" type="com.uwallet.pay.main.model.dto.AppExclusiveBannerDTO" extends="appExclusiveBannerMap">
+        <result property="userName" jdbcType="VARCHAR" column="real_name"/>
+    </resultMap>
+
+    <!--通用查询条件-->
+    <sql id="basicParams">
+        <if test="id != null">
+            AND `id`=#{id}
+        </if>
+        <if test="displayType != null">
+            AND `display_type`=#{displayType}
+        </if>
+        <if test="displayOrder != null">
+            AND `display_order`=#{displayOrder}
+        </if>
+        <if test="title != null">
+            AND `title`=#{title}
+        </if>
+        <if test="subTitle != null">
+            AND `sub_title`=#{subTitle}
+        </if>
+        <if test="imageUrl != null">
+            AND `image_url`=#{imageUrl}
+        </if>
+        <if test="limitTimes != null">
+            AND `limit_times`=#{limitTimes}
+        </if>
+        <if test="redirectType != null">
+            AND `redirect_type`=#{redirectType}
+        </if>
+        <if test="redirectH5LinkAddress != null">
+            AND `redirect_h5_link_address`=#{redirectH5LinkAddress}
+        </if>
+        <if test="redirectAppLinkType != null">
+            AND `redirect_app_link_type`=#{redirectAppLinkType}
+        </if>
+        <if test="redirectCustomizedDisplayType != null">
+            AND `redirect_customized_display_type`=#{redirectCustomizedDisplayType}
+        </if>
+        <if test="redirectCustomizedTitle != null">
+            AND `redirect_customized_title`=#{redirectCustomizedTitle}
+        </if>
+        <if test="redirectCustomizedImageUrl != null">
+            AND `redirect_customized_image_url`=#{redirectCustomizedImageUrl}
+        </if>
+        <if test="redirectCustomizedContent != null">
+            AND `redirect_customized_content`=#{redirectCustomizedContent}
+        </if>
+        <if test="turnOffEffectStatus != null">
+            AND `turn_off_effect_status`=#{turnOffEffectStatus}
+        </if>
+        <if test="turnOffTextDisplay != null">
+            AND `turn_off_text_display`=#{turnOffTextDisplay}
+        </if>
+        <if test="state != null">
+            AND `state`=#{state}
+        </if>
+        <if test="remark != null">
+            AND `remark`=#{remark}
+        </if>
+        <if test="createdBy != null">
+            AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="modifiedBy != null">
+            AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+            AND `modified_date`=#{modifiedDate}
+        </if>
+        <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+            AND `ip`=#{ip}
+        </if>
+        <if test="turnOffRedirectType != null">
+            AND `turn_off_redirect_type`=#{turnOffRedirectType}
+        </if>
+        <if test="turnOffRedirectH5Link != null">
+            AND `turn_off_redirect_h5_link`=#{turnOffRedirectH5Link}
+        </if>
+        <if test="turnOffRedirectAppLinkType != null">
+            AND `turn_off_redirect_app_link_type`=#{turnOffRedirectAppLinkType}
+        </if>
+    </sql>
+
+    <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.AppExclusiveBanner">
+        INSERT INTO u_app_exclusive_banner (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="displayType != null">
+            ,`display_type`
+        </if>
+        <if test="displayOrder != null">
+            ,`display_order`
+        </if>
+        <if test="title != null">
+            ,`title`
+        </if>
+        <if test="subTitle != null">
+            ,`sub_title`
+        </if>
+        <if test="imageUrl != null">
+            ,`image_url`
+        </if>
+        <if test="limitTimes != null">
+            ,`limit_times`
+        </if>
+        <if test="redirectType != null">
+            ,`redirect_type`
+        </if>
+        <if test="redirectH5LinkAddress != null">
+            ,`redirect_h5_link_address`
+        </if>
+        <if test="redirectAppLinkType != null">
+            ,`redirect_app_link_type`
+        </if>
+        <if test="redirectCustomizedDisplayType != null">
+            ,`redirect_customized_display_type`
+        </if>
+        <if test="redirectCustomizedTitle != null">
+            ,`redirect_customized_title`
+        </if>
+        <if test="redirectCustomizedImageUrl != null">
+            ,`redirect_customized_image_url`
+        </if>
+        <if test="redirectCustomizedContent != null">
+            ,`redirect_customized_content`
+        </if>
+        <if test="turnOffEffectStatus != null">
+            ,`turn_off_effect_status`
+        </if>
+        <if test="turnOffTextDisplay != null">
+            ,`turn_off_text_display`
+        </if>
+        <if test="state != null">
+            ,`state`
+        </if>
+        <if test="remark != null">
+            ,`remark`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+        <if test="turnOffRedirectType != null">
+            ,`turn_off_redirect_type`
+        </if>
+        <if test="turnOffRedirectH5Link != null">
+            ,`turn_off_redirect_h5_link`
+        </if>
+        <if test="turnOffRedirectAppLinkType != null">
+            ,`turn_off_redirect_app_link_type`
+        </if>
+        ) VALUES (
+        <if test="id != null">
+            #{id}
+        </if>
+        <if test="displayType != null">
+            ,#{displayType}
+        </if>
+        <if test="displayOrder != null">
+            ,#{displayOrder}
+        </if>
+        <if test="title != null">
+            ,#{title}
+        </if>
+        <if test="subTitle != null">
+            ,#{subTitle}
+        </if>
+        <if test="imageUrl != null">
+            ,#{imageUrl}
+        </if>
+        <if test="limitTimes != null">
+            ,#{limitTimes}
+        </if>
+        <if test="redirectType != null">
+            ,#{redirectType}
+        </if>
+        <if test="redirectH5LinkAddress != null">
+            ,#{redirectH5LinkAddress}
+        </if>
+        <if test="redirectAppLinkType != null">
+            ,#{redirectAppLinkType}
+        </if>
+        <if test="redirectCustomizedDisplayType != null">
+            ,#{redirectCustomizedDisplayType}
+        </if>
+        <if test="redirectCustomizedTitle != null">
+            ,#{redirectCustomizedTitle}
+        </if>
+        <if test="redirectCustomizedImageUrl != null">
+            ,#{redirectCustomizedImageUrl}
+        </if>
+        <if test="redirectCustomizedContent != null">
+            ,#{redirectCustomizedContent}
+        </if>
+        <if test="turnOffEffectStatus != null">
+            ,#{turnOffEffectStatus}
+        </if>
+        <if test="turnOffTextDisplay != null">
+            ,#{turnOffTextDisplay}
+        </if>
+        <if test="state != null">
+            ,#{state}
+        </if>
+        <if test="remark != null">
+            ,#{remark}
+        </if>
+        <if test="createdBy != null">
+            ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+            ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+            ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+            ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+            ,#{status}
+        </if>
+        <if test="ip != null">
+            ,#{ip}
+        </if>
+        <if test="turnOffRedirectType != null">
+            ,#{turnOffRedirectType}
+        </if>
+        <if test="turnOffRedirectH5Link != null">
+            ,#{turnOffRedirectH5Link}
+        </if>
+        <if test="turnOffRedirectAppLinkType != null">
+            ,#{turnOffRedirectAppLinkType}
+        </if>
+        )
+    </insert>
+
+    <insert id="insertList" parameterType="List">
+        INSERT INTO u_app_exclusive_banner (
+        `id`,
+        `display_type`,
+        `display_order`,
+        `title`,
+        `sub_title`,
+        `image_url`,
+        `limit_times`,
+        `redirect_type`,
+        `redirect_h5_link_address`,
+        `redirect_app_link_type`,
+        `redirect_customized_display_type`,
+        `redirect_customized_title`,
+        `redirect_customized_image_url`,
+        `redirect_customized_content`,
+        `turn_off_effect_status`,
+        `turn_off_text_display`,
+        `state`,
+        `remark`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`,
+        `turn_off_redirect_type`,
+        `turn_off_redirect_h5_link`,
+        `turn_off_redirect_app_link_type`
+        ) VALUES
+        <foreach collection="list" item="data" separator=",">
+            (
+            #{data.id},
+            #{data.displayType},
+            #{data.displayOrder},
+            #{data.title},
+            #{data.subTitle},
+            #{data.imageUrl},
+            #{data.limitTimes},
+            #{data.redirectType},
+            #{data.redirectH5LinkAddress},
+            #{data.redirectAppLinkType},
+            #{data.redirectCustomizedDisplayType},
+            #{data.redirectCustomizedTitle},
+            #{data.redirectCustomizedImageUrl},
+            #{data.redirectCustomizedContent},
+            #{data.turnOffEffectStatus},
+            #{data.turnOffTextDisplay},
+            #{data.state},
+            #{data.remark},
+            #{data.createdBy},
+            #{data.createdDate},
+            #{data.modifiedBy},
+            #{data.modifiedDate},
+            #{data.status},
+            #{data.ip},
+            #{data.turnOffRedirectType},
+            #{data.turnOffRedirectH5Link},
+            #{data.turnOffRedirectAppLinkType}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.uwallet.pay.main.model.entity.AppExclusiveBanner">
+        UPDATE u_app_exclusive_banner
+        <set>
+            <if test="id != null">
+                `id`=#{id},
+            </if>
+            <if test="displayType != null">
+                `display_type`=#{displayType},
+            </if>
+            <if test="displayOrder != null">
+                `display_order`=#{displayOrder},
+            </if>
+            <if test="title != null">
+                `title`=#{title},
+            </if>
+            <if test="subTitle != null">
+                `sub_title`=#{subTitle},
+            </if>
+            <if test="imageUrl != null">
+                `image_url`=#{imageUrl},
+            </if>
+            <if test="limitTimes != null">
+                `limit_times`=#{limitTimes},
+            </if>
+            <if test="redirectType != null">
+                `redirect_type`=#{redirectType},
+            </if>
+            <if test="redirectH5LinkAddress != null">
+                `redirect_h5_link_address`=#{redirectH5LinkAddress},
+            </if>
+            <if test="redirectAppLinkType != null">
+                `redirect_app_link_type`=#{redirectAppLinkType},
+            </if>
+            <if test="redirectCustomizedDisplayType != null">
+                `redirect_customized_display_type`=#{redirectCustomizedDisplayType},
+            </if>
+            <if test="redirectCustomizedTitle != null">
+                `redirect_customized_title`=#{redirectCustomizedTitle},
+            </if>
+            <if test="redirectCustomizedImageUrl != null">
+                `redirect_customized_image_url`=#{redirectCustomizedImageUrl},
+            </if>
+            <if test="redirectCustomizedContent != null">
+                `redirect_customized_content`=#{redirectCustomizedContent},
+            </if>
+            <if test="turnOffEffectStatus != null">
+                `turn_off_effect_status`=#{turnOffEffectStatus},
+            </if>
+            <if test="turnOffTextDisplay != null">
+                `turn_off_text_display`=#{turnOffTextDisplay},
+            </if>
+            <if test="state != null">
+                `state`=#{state},
+            </if>
+            <if test="remark != null">
+                `remark`=#{remark},
+            </if>
+            <if test="createdBy != null">
+                `created_by`=#{createdBy},
+            </if>
+            <if test="createdDate != null">
+                `created_date`=#{createdDate},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+            <if test="turnOffRedirectType != null">
+                `turn_off_redirect_type`=#{turnOffRedirectType},
+            </if>
+            <if test="turnOffRedirectH5Link != null">
+                `turn_off_redirect_h5_link`=#{turnOffRedirectH5Link},
+            </if>
+            <if test="turnOffRedirectAppLinkType != null">
+                `turn_off_redirect_app_link_type`=#{turnOffRedirectAppLinkType},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <choose>
+                <when test="status != null ">AND status = #{status.value}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            AND id = #{id}
+        </trim>
+    </update>
+
+    <update id="delete" parameterType="Map">
+      UPDATE u_app_exclusive_banner
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+    <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_app_exclusive_banner
+      WHERE id = #{id}
+  </delete>
+
+    <select id="count" parameterType="Map" resultType="Integer">
+        <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_app_exclusive_banner
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+    </select>
+
+    <select id="selectOne" parameterType="Map" resultMap="appExclusiveBannerMap">
+        <![CDATA[
+            SELECT * FROM u_app_exclusive_banner
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="selectOneDTO" parameterType="Map" resultMap="appExclusiveBannerDTOMap">
+        <![CDATA[
+            SELECT * FROM u_app_exclusive_banner
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        LIMIT 1
+    </select>
+
+    <select id="select" parameterType="Map" resultMap="appExclusiveBannerMap">
+        <![CDATA[
+            SELECT * FROM u_app_exclusive_banner
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectDTO" parameterType="Map" resultMap="appExclusiveBannerDTOMap">
+        <![CDATA[
+            SELECT * FROM u_app_exclusive_banner
+        ]]>
+
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+
+    <select id="selectDTOByPage" parameterType="Map" resultMap="appExclusiveBannerDTOMap">
+        <![CDATA[
+            SELECT b.*, ua.real_name FROM u_app_exclusive_banner b
+        ]]>
+         LEFT JOIN u_admin ua on b.modified_by = ua.id
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <if test="displayType != null">
+                AND b.`display_type`=#{displayType}
+            </if>
+            <if test="displayOrder != null">
+                AND b.`display_order`=#{displayOrder}
+            </if>
+            <if test="redirectType != null">
+                AND b.`redirect_type`=#{redirectType}
+            </if>
+            <if test="state != null">
+                AND b.`state`=#{state}
+            </if>
+            <choose>
+                <when test="status != null">AND status = #{status}</when>
+                <otherwise><![CDATA[AND b.status > 0]]></otherwise>
+            </choose>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                b.${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="selectMap" parameterType="Map" resultType="Map">
+        SELECT
+        <foreach collection="columns" item="cname" separator="," open="`" close="`">
+            ${cname}
+        </foreach>
+        FROM u_app_exclusive_banner
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <!--统计相关查询-->
+    <select id="groupCount" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_app_exclusive_banner
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+    <select id="sum" parameterType="Map" resultType="Double">
+        <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_app_exclusive_banner
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+    </select>
+
+    <select id="groupSum" parameterType="Map" resultType="Map">
+        <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_app_exclusive_banner
+        ]]>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <!-- 通用条件引入 -->
+            <include refid="basicParams"/>
+        </trim>
+        GROUP BY `group`
+        ORDER BY `group` ASC
+    </select>
+
+    <select id="listAppHomePageTopBanner" resultMap="appExclusiveBannerDTOMap">
+        SELECT
+            id,
+            display_order,
+            title,
+            sub_title,
+            image_url,
+            limit_times,
+            redirect_type,
+            redirect_h5_link_address,
+            redirect_app_link_type,
+            redirect_customized_display_type,
+            redirect_customized_title,
+            redirect_customized_image_url,
+            redirect_customized_content,
+            turn_off_effect_status,
+            turn_off_text_display,
+            turn_off_redirect_type,
+            turn_off_redirect_h5_link,
+            turn_off_redirect_app_link_type
+        FROM
+            u_app_exclusive_banner u
+        WHERE
+            u.state = 1 AND u.`status` = 1
+            AND u.display_type = #{type}
+        ORDER BY
+            display_order ASC
+        LIMIT 10
+    </select>
+
+
+    <select id="getMaxOrderByState" parameterType="Integer" resultType="Integer">
+        SELECT
+            MAX( display_order )
+        FROM
+            u_app_exclusive_banner
+        WHERE
+            state = #{state}
+            AND `status` = 1
+            AND display_type = #{displayType}
+    </select>
+
+
+    <update id="updateOthersOrder" >
+        UPDATE u_app_exclusive_banner
+        SET display_order = display_order - 1,
+        `modified_by` = #{modifiedBy},
+        `modified_date` = #{modifiedDate}
+        WHERE
+            display_order > #{order}
+            AND display_type = #{displayType}
+            AND state = #{state}
+            AND `status` = 1
+  </update>
+
+
+    <select id="getNextOrderBannerInfo" resultMap="appExclusiveBannerDTOMap">
+        SELECT
+            id,
+            display_order
+        FROM
+            u_app_exclusive_banner
+        WHERE
+            display_type = #{displayType}
+            AND state = 1
+            AND `status` = 1
+            AND display_order &gt; #{order}
+        ORDER BY
+            display_order ASC
+        LIMIT 1
+    </select>
+
+
+    <select id="getLastOrderBannerInfo" resultMap="appExclusiveBannerDTOMap">
+        SELECT
+            id,
+            display_order
+        FROM
+            u_app_exclusive_banner
+        WHERE
+            display_type = #{displayType}
+            AND state = 1
+            AND `status` = 1
+            AND display_order &lt;  #{order}
+        ORDER BY
+            display_order DESC
+        LIMIT 1
+    </select>
+
+
+    <select id="getLimitsCountByUpdate" resultType="int">
+        SELECT
+            count(*)
+        FROM
+            u_app_exclusive_banner
+        WHERE
+            display_type = #{displayType}
+            AND state = 1
+            AND `status` = 1
+            AND limit_times = #{limit}
+            and id != #{id}
+    </select>
+
+
+</mapper>

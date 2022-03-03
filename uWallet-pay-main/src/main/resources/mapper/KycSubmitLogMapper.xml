@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.KycSubmitLogDAO">
+
+  <resultMap id="kycSubmitLogMap" type="com.uwallet.pay.main.model.entity.KycSubmitLog">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="kycData" jdbcType="VARCHAR" column="kyc_data"/>
+    <result property="userId" jdbcType="BIGINT" column="user_id"/>
+    <result property="isRequest" jdbcType="TINYINT" column="is_request"/>
+    <result property="accountSubmittedTimes" jdbcType="INTEGER" column="account_submitted_times"/>
+    <result property="phone" jdbcType="VARCHAR" column="phone"/>
+    <result property="kycStatus" jdbcType="TINYINT" column="kyc_status"/>
+    <result property="isWatchlist" jdbcType="TINYINT" column="is_watchlist"/>
+    <result property="date" jdbcType="BIGINT" column="date"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+  </resultMap>
+
+  <resultMap id="kycSubmitLogDTOMap" type="com.uwallet.pay.main.model.dto.KycSubmitLogDTO" extends="kycSubmitLogMap"></resultMap>
+
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="kycData != null">
+          AND `kyc_data`=#{kycData}
+        </if>
+        <if test="userId != null">
+          AND `user_id`=#{userId}
+        </if>
+        <if test="isRequest != null">
+          AND `is_request`=#{isRequest}
+        </if>
+        <if test="accountSubmittedTimes != null">
+          AND `account_submitted_times`=#{accountSubmittedTimes}
+        </if>
+        <if test="phone != null">
+          AND `phone`=#{phone}
+        </if>
+      <if test="customerAccount != null">
+          AND `phone` like concat('%',#{customerAccount},'%')
+      </if>
+      <if test="kycStatus != null">
+          AND `kyc_status`=#{kycStatus}
+        </if>
+        <if test="isWatchlist != null">
+          AND `is_watchlist`=#{isWatchlist}
+        </if>
+        <if test="date != null">
+          AND `date`=#{date}
+        </if>
+        <if test="modifiedBy != null">
+          AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+          AND `modified_date`=#{modifiedDate}
+        </if>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+          <if test="monthTime != null ">
+              AND from_unixtime(created_date/1000,'%Y%-%m') = from_unixtime(${monthTime}/1000,'%Y%-%m')
+          </if>
+        <choose>
+          <when test="status != null">AND status = #{status}</when>
+          <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+  </sql>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.KycSubmitLog">
+    INSERT INTO u_kyc_submit_log (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="kycData != null">
+            ,`kyc_data`
+        </if>
+        <if test="userId != null">
+            ,`user_id`
+        </if>
+        <if test="isRequest != null">
+            ,`is_request`
+        </if>
+        <if test="accountSubmittedTimes != null">
+            ,`account_submitted_times`
+        </if>
+        <if test="phone != null">
+            ,`phone`
+        </if>
+        <if test="kycStatus != null">
+            ,`kyc_status`
+        </if>
+        <if test="isWatchlist != null">
+            ,`is_watchlist`
+        </if>
+        <if test="date != null">
+            ,`date`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="kycData != null">
+              ,#{kycData}
+        </if>
+        <if test="userId != null">
+              ,#{userId}
+        </if>
+        <if test="isRequest != null">
+              ,#{isRequest}
+        </if>
+        <if test="accountSubmittedTimes != null">
+              ,#{accountSubmittedTimes}
+        </if>
+        <if test="phone != null">
+              ,#{phone}
+        </if>
+        <if test="kycStatus != null">
+              ,#{kycStatus}
+        </if>
+        <if test="isWatchlist != null">
+              ,#{isWatchlist}
+        </if>
+        <if test="date != null">
+              ,#{date}
+        </if>
+        <if test="modifiedBy != null">
+              ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+              ,#{modifiedDate}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_kyc_submit_log (
+        `id`,
+        `kyc_data`,
+        `user_id`,
+        `is_request`,
+        `account_submitted_times`,
+        `phone`,
+        `kyc_status`,
+        `is_watchlist`,
+        `date`,
+        `modified_by`,
+        `modified_date`,
+        `created_by`,
+        `created_date`,
+        `status`,
+        `ip`
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.kycData},
+        #{data.userId},
+        #{data.isRequest},
+        #{data.accountSubmittedTimes},
+        #{data.phone},
+        #{data.kycStatus},
+        #{data.isWatchlist},
+        #{data.date},
+        #{data.modifiedBy},
+        #{data.modifiedDate},
+        #{data.createdBy},
+        #{data.createdDate},
+        #{data.status},
+        #{data.ip}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.KycSubmitLog">
+    UPDATE u_kyc_submit_log
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="kycData != null">
+          `kyc_data`=#{kycData},
+        </if>
+        <if test="userId != null">
+          `user_id`=#{userId},
+        </if>
+        <if test="isRequest != null">
+          `is_request`=#{isRequest},
+        </if>
+        <if test="accountSubmittedTimes != null">
+          `account_submitted_times`=#{accountSubmittedTimes},
+        </if>
+        <if test="phone != null">
+          `phone`=#{phone},
+        </if>
+        <if test="kycStatus != null">
+          `kyc_status`=#{kycStatus},
+        </if>
+        <if test="isWatchlist != null">
+          `is_watchlist`=#{isWatchlist},
+        </if>
+        <if test="date != null">
+          `date`=#{date},
+        </if>
+        <if test="modifiedBy != null">
+          `modified_by`=#{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+          `modified_date`=#{modifiedDate},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_kyc_submit_log
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+  <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_kyc_submit_log
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_kyc_submit_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="kycSubmitLogMap">
+    <![CDATA[
+            SELECT * FROM u_kyc_submit_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="kycSubmitLogDTOMap">
+    <![CDATA[
+            SELECT * FROM u_kyc_submit_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="kycSubmitLogMap">
+    <![CDATA[
+            SELECT * FROM u_kyc_submit_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="kycSubmitLogDTOMap">
+    <![CDATA[
+            SELECT * FROM u_kyc_submit_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_kyc_submit_log
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_kyc_submit_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_kyc_submit_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_kyc_submit_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+    <update id="updateNew" parameterType="Map">
+        UPDATE u_kyc_submit_log
+        <set>
+            <if test="kycData != null">
+                `kyc_data`=#{kycData},
+            </if>
+            <if test="userId != null">
+                `user_id`=#{userId},
+            </if>
+            <if test="isRequest != null">
+                `is_request`=#{isRequest},
+            </if>
+            <if test="accountSubmittedTimes != null">
+                `account_submitted_times`=#{accountSubmittedTimes},
+            </if>
+            <if test="phone != null">
+                `phone`=#{phone},
+            </if>
+            <if test="kycStatus != null">
+                `kyc_status`=#{kycStatus},
+            </if>
+            <if test="isWatchlist != null">
+                `is_watchlist`=#{isWatchlist},
+            </if>
+            <if test="date != null">
+                `date`=#{date},
+            </if>
+            <if test="modifiedBy != null">
+                `modified_by`=#{modifiedBy},
+            </if>
+            <if test="modifiedDate != null">
+                `modified_date`=#{modifiedDate},
+            </if>
+            <if test="createdBy != null">
+                `created_by`=#{createdBy},
+            </if>
+            <if test="createdDate != null">
+                `created_date`=#{createdDate},
+            </if>
+            <if test="status != null">
+                `status`=#{status},
+            </if>
+            <if test="ip != null">
+                `ip`=#{ip},
+            </if>
+        </set>
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <choose>
+                <when test="status != null ">AND status = #{status.value}</when>
+                <otherwise><![CDATA[AND status > 0]]></otherwise>
+            </choose>
+            AND id = #{id}
+        </trim>
+    </update>
+
+    <select id="selectNoInDTO" parameterType="Map" resultMap="kycSubmitLogDTOMap">
+            SELECT * FROM u_kyc_submit_log where
+                ( `is_request`=#{isRequest}
+                or `kyc_status`=#{kycStatus}
+                or `is_request` IS NULL or `kyc_status` IS NULL)
+        <if test="start != null and end != null">
+            AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="monthTime != null ">
+            AND from_unixtime(created_date/1000,'%Y%-%m') = from_unixtime(${monthTime}/1000,'%Y%-%m')
+        </if>
+        <choose>
+            <when test="status != null">AND status = #{status}</when>
+            <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+    <select id="findLatelyLog" resultType="com.uwallet.pay.main.model.dto.KycSubmitLogDTO">
+        select * from u_kyc_submit_log where `status`=1
+        <if test="userId!=null">
+            and user_id=#{userId}
+        </if>
+         order by account_submitted_times desc limit 0,1
+    </select>
+    <insert id="insertNew" parameterType="com.uwallet.pay.main.model.entity.KycSubmitLog">
+    INSERT INTO u_kyc_submit_log (
+    <if test="id != null">
+        `id`
+    </if>
+    <if test="kycData != null">
+        ,`kyc_data`
+    </if>
+    <if test="userId != null">
+        ,`user_id`
+    </if>
+    <if test="isRequest != null">
+        ,`is_request`
+    </if>
+    <if test="accountSubmittedTimes != null and userId != null" >
+        ,`account_submitted_times`
+    </if>
+    <if test="phone != null">
+        ,`phone`
+    </if>
+    <if test="kycStatus != null">
+        ,`kyc_status`
+    </if>
+    <if test="isWatchlist != null">
+        ,`is_watchlist`
+    </if>
+    <if test="date != null">
+        ,`date`
+    </if>
+    <if test="modifiedBy != null">
+        ,`modified_by`
+    </if>
+    <if test="modifiedDate != null">
+        ,`modified_date`
+    </if>
+    <if test="createdBy != null">
+        ,`created_by`
+    </if>
+    <if test="createdDate != null">
+        ,`created_date`
+    </if>
+    <if test="status != null">
+        ,`status`
+    </if>
+    <if test="ip != null">
+        ,`ip`
+    </if>
+    ) VALUES (
+    <if test="id != null">
+        #{id}
+    </if>
+    <if test="kycData != null">
+        ,#{kycData}
+    </if>
+    <if test="userId != null">
+        ,#{userId}
+    </if>
+    <if test="isRequest != null">
+        ,#{isRequest}
+    </if>
+        -- mysql insert 不支持直接在语句中加入select，需要套一层外壳
+    <if test="accountSubmittedTimes != null and userId != null">
+        ,ifnull((select a.* from (SELECT MAX(account_submitted_times)+1
+         FROM u_kyc_submit_log WHERE `user_id`=#{userId} and `status`=1 )  a),1)
+    </if>
+    <if test="phone != null">
+        ,#{phone}
+    </if>
+    <if test="kycStatus != null">
+        ,#{kycStatus}
+    </if>
+    <if test="isWatchlist != null">
+        ,#{isWatchlist}
+    </if>
+    <if test="date != null">
+        ,#{date}
+    </if>
+    <if test="modifiedBy != null">
+        ,#{modifiedBy}
+    </if>
+    <if test="modifiedDate != null">
+        ,#{modifiedDate}
+    </if>
+    <if test="createdBy != null">
+        ,#{createdBy}
+    </if>
+    <if test="createdDate != null">
+        ,#{createdDate}
+    </if>
+    <if test="status != null">
+        ,#{status}
+    </if>
+    <if test="ip != null">
+        ,#{ip}
+    </if>
+    )
+</insert>
+
+    <update id="updateNewTow" parameterType="com.uwallet.pay.main.model.entity.KycSubmitLog">
+        UPDATE u_kyc_submit_log SET  `is_request`=#{isRequest}, `kyc_status`=#{kycStatus}, `is_watchlist`=#{isWatchlist}, `modified_by`=#{modifiedBy},
+         `modified_date`=#{modifiedDate}, `ip`=#{ip}
+        <if test="status != null">
+            ,`status`=#{status}
+        </if>
+         WHERE  id = #{id}
+    </update>
+</mapper>

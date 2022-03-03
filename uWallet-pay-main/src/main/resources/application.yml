@@ -1,0 +1,353 @@
+server:
+  port: 6010
+  type: local
+
+spring:
+  application:
+    name: uWallet-pay-main
+
+
+  # 配置文件上传的文件大小限制
+  servlet:
+    multipart:
+      # 上传文件总的最大值
+      max-request-size: 100MB
+      # 单个文件的最大值
+      max-file-size: 10MB
+
+  datasource:
+    driver-class-name : com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://103.149.26.226:3306/uwallet_pay?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: z3n66c7c24qlr2yt
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 50
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+  redis:
+    host: localhost
+    port: 6379
+    database: 1
+
+  # 模板引擎配置
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    mode: HTML5
+    check-template-location: true
+
+  # 测试环境上传文件总路径 /Users/aarons/Desktop/illion
+  basePath: D://
+
+  # app banner
+  appBannerPath: appBanner
+
+  # top deals
+  topDealsPath: topDeals
+
+  # ads
+  adsPath: ads
+
+  # app logo
+  appLogoPath: appLogo
+  # 对账文件上传路径
+  reconciliationFilePath: reconFile
+
+  # 商户简介图片
+  IntroductionPath: merchantIntroduction
+
+  # 证件上传
+  paperPath: paper
+
+  # 银行logo
+  bankLogo: bankLogo
+
+  #DocuSign存储合同文件地址
+  docuSignContractPath: docuSignContract
+
+  # 二维码下载路径
+  qrCodePath: D://QRCode//
+
+  # 二维码中的跳转路径
+  qrCodeUrl: https://qrcode.payo.com.au?qrCode=
+
+  #pos 方式生成二维码跳转路径
+  posQrCodeUrl: https://qrcode.payo.com.au?posNo=
+
+  #清算文件生成路径
+  clearFilePath : D://clearFile//
+
+  #csv临时文件路径
+  csvTempFilePath: D://csvTemp//
+
+  #nfc模板
+  nfcTemplateUrl: D://nfc_template.xlsx
+
+
+  # 类型校验
+  imgSuffix: jpg,png,jpeg,pdf,gif,jfif
+  fileSuffix: pdf,docx,xlsx,doc,xls,zip,ppt,pptx,txt
+
+  #连续5次手机号与密码不匹配时账户禁用时间(秒)
+  login-lock-time: 3600
+
+  #pushFirebase jsonPath文件路径
+  pushFirebaseFilePath: D:\pushFirebase\u-wallet-21198-firebase-adminsdk-u3f28-1349ad0a0d.json
+
+  #谷歌推送的控制台创建数据库路径
+  pushFirebaseUrl: https://uwalletpay.firebaseio.com
+
+  # pushFirebase jsonPath文件路径
+  pushFirebaseFilePathForMerchant: D:\pushFirebase\uwalletm-firebase-adminsdk-shvjz-4fe72222a2.json
+
+  # 谷歌推送的控制台创建数据库路径
+  pushFirebaseUrlForMerchant: https://uwalletm.firebaseio.com
+
+  #公告和banner  h5页面路径
+  adsContentUrl: /page/html/content.html?id=
+
+  # 理财协议地址
+  investAgreement: http://imagetest-image.loancloud.cn/h5/html/investAgreement.html
+
+  # 分期付协议地址
+  creditAgreement: http://imagetest-image.loancloud.cn/h5/html/Direct Debit Terms and Conditions.html
+
+  # 用户协议地址
+  customer: http://imagetest-image.loancloud.cn/h5/html/CustomersTermsAndConditions.html
+
+  #图片域名
+  imgRequestHost: http://imagetest-image.loancloud.cn/
+
+
+  #国际化配置
+  messages:
+    basename: i18n/messages
+
+
+#  profiles:
+#    active: prod
+
+google:
+
+  mapGeocodingAPI: https://maps.googleapis.com/maps/api/geocode/json?address=
+
+  mapGeoLocationAPI: https://maps.googleapis.com/maps/api/geocode/json?latlng=
+
+  mapGeocodingAPIKey: AIzaSyDV2B73Io1vf8EpvMSprvtOrfcLTOR_Ey8
+
+uWallet:
+
+  #邮箱类型
+  emailType: qq
+
+  #邮件发送邮箱
+  sysEmail: 2722806393@qq.com
+
+  #邮件发送邮箱密码
+  sysEmailPwd: tapplbtmeilrdeeb
+
+  # 账户系统访问地址
+#  account: http://accounttest-api.loancloud.cn
+  account: http://localhost:6060
+
+  # 分期付系统访问地址
+  credit: http://credittest-api.loancloud.cn
+
+  #风控
+  risk: http://risktest-api.loancloud.cn/riskEngine
+
+  # 数据系统访问地址
+  data: http://datatest-api.loancloud.cn
+
+  # 理财系统访问地址
+  invest: http://investtest-api.loancloud.cn
+
+  docusignCallback: http://paytest-api.loancloud.cn/docusignCallBack/callBack
+
+latpay:
+
+  #通过card bin获取卡类型详情
+  cardBinLookupUrl: https://l4p2s7p2r4o3c9e3ss.com/ManageRisk/binlookupv2.aspx
+
+  #绑卡
+  tieOnCardUrl: https://l4p2s7p2r4o3c9e3ss.com/ManageSCSS/ProcessRequest_SCSSMngServices.aspx
+
+  #交易
+  payUrl: https://l4p2s7p2r4o3c9e3ss.com/ProcessRequest/ProcessRequest.aspx
+
+  #交易状态查询
+  statusCheckUrl: https://l4p2s7p2r4o3c9e3ss.com/StatusCheck/AuthStatusCheck.aspx
+
+  #退款
+  refundUrl: https://lps-reports.com/refunds/refund.asp
+
+  #退款状态查询
+  refundStatusCheckUrl:
+
+  #账户支付url
+  accountPayUrl: https://l4p2s7p2r4o3c9e3ss.com/POS/POSProcessRequest/Checkoutnav.aspx
+
+  #账户支付状态查询
+  accountCheckUrl: https://l4p2s7p2r4o3c9e3ss.com/POS/POSProcessRequest/Authstatuscheck.aspx
+
+  #账户支付通知url
+  notifyUrl: https://paytest-api.uwallet.net.au/latPay/notify
+
+  #商户退款id
+  merchantRefundId: test_JSYCapital
+
+  #商户退款密码
+  merchantRefundPassword: R2hWWCXWRs
+
+  #请求ip
+  ip: 117.50.21.70
+
+  storieid: 001
+
+  deviceid: 01
+
+  terminalsecret: mJvY5Qwm
+
+
+omipay:
+
+  #商户编号
+  mNumber: 2192345
+
+  #密钥
+  secretKey: 8820c5dc8ef24afbabf93e695d840a66
+
+  #交易状态查询
+  statusCheckUrl: https://www.omipay.com.cn/omipay/api/v2/QueryOrder
+
+  #退款申请
+  refundApplyUrl: https://www.omipay.com.cn/omipay/api/v2/Refund
+
+  #退款状态查询
+  refundStatusCheckUrl: https://www.omipay.com.cn/omipay/api/v2/QueryRefund
+
+  #回调url
+  noticeUrl: https://
+
+  #结算账户BSB,格式 ***-***
+  bsb: 000-000
+
+  #结算账户号
+  accountNo: "012345678"
+
+  #结算账户名
+  accountName: accountName
+
+  #结算账户银行缩写
+  abbreviation: CBA
+
+  #APCA编码
+  apca: 1234
+
+#integraPay
+integraPay:
+
+  businessId: 2153
+
+  businessKey: 904FC19F-37ED-4A06-932A-FFF69F0192B5
+
+  accessUserName: 2153.1569
+
+  accessUserKey: 3668412b-b8a9-40a9-91c5-ec19dbe2021c
+
+split:
+
+  url: https://api.sandbox.split.cash
+
+  token: TQjjvuKb2GB46IRxsSDNSB6VBn6mklhuShr86EIqk5c
+
+  contractVersion: 1
+
+  secret: 3a6421063895223849fadd1a1456a5a750d00a0d7b1efcb23b2233e4c73ffcca
+
+aliyun:
+#  accessKeyId: LTAI4Fx4EWXR3dE7MMfqjzwY
+#
+#  accessSecret: QTQecFgPtdn80Qh2pyRpoNy5TdJraX
+  accessKeyId: LTAI4FvFsLZGPyuCzK6qhS5K
+
+  accessSecret: BSFNCFjKuGOZ1NP67x1veFufypfZ93
+
+# 钱包金额
+walletRegister: 10
+
+walletConsumption: 10
+
+docusignEmail: sales@uwallet.net.au
+
+engine:
+    # 支付系统
+    app-id: 1
+    # 分期付系统kyc
+    value: 3
+
+# 导出Excel的文件名
+export:
+  excel:
+    # 营销活动
+    marketingActivities: marketingActivities
+    # 商户详情
+    merchantDetails: merchantDetails
+
+mybatis:
+  type-aliases-package: com.uwallet.pay.main.model.entity
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    cache-enabled: true
+    #开启下划线转驼峰
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.uwallet.pay.main.dao: debug
+
+# api 返回支付页面
+apiOrder:
+  url: http://192.168.2.7:8080/
+
+illion:
+  institutions: https://test.bankstatements.com.au/api/v1
+  appKey: ZQCAXA874JA8JHGAUF9MXZDH3QZYP7K84FV27HDQ
+  referralCode: IJCP-1030-
+  # 账户回调地址
+  callback: http://datatest-api.loancloud.cn/bankStatements/customerInfo
+  # 最大天数
+  requestNumDays: 180
+  vsersion: 20170401
+  # 获取illion报告地址
+  fetchAll: https://test.bankstatements.com.au/api/v1/login_fetch_all
+
+redisTime:
+  # 验证码有效时间 15分钟
+  sendMessageCode: 900
+  # 发送验证码间隔时间 20秒
+  sendMessageTwo: 20
+h5Pay:
+  # h5跳转链接
+  AUTHORISE: http://pwptest-web.loancloud.cn/#/login?p=
+Stripe:
+  endpointSecret: whsec_5LQFhZX83FEU11Lz0jZwBzu0BAWRm8lp
+  3dsRedirectUrl: http://result-test.payo.loancloud.cc
+Braze:
+  brazeUrl: https://rest.iad-05.braze.com
+  brazeToken: 4d40ca2b-49a2-4942-823a-119e7471ff05
+  appleAppID: 287c4fc0-0eb5-407f-93ab-f268b9e143e7
+  androidAppID: 088db92f-1e91-4d5b-8c6b-2265b89968b5
+  3dsRedirectUrl: http://result-test.payo.loancloud
+  privateSecret: sk_test_51K90efAgx3Fd2j3edhhoySYxbHfvGl9f34MVNuTso05aFfLX8t5su3OXoIXjWDW6zMEgNpe54m5Cw87dmUq5iNQG00MTDR1BXL

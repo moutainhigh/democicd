@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>succeed</title>
+    <style>
+        *{margin: 0 ;padding: 0;}
+
+
+        /*    外边框*/
+        html,body{height: 100%}
+
+        /* periphery */
+        .periphery{width: 100%;height: 50%; position: relative;}
+
+        .frame1,.frame2{width: 100%;height:100%;margin: 0 auto;position: absolute;top: 20%;}
+        /*    底部*/
+        .footer{height: 80%;width: 100%;background-color: white;position: absolute;bottom: 0;border-radius: 40px 40px 0 0}
+        /*按钮*/
+        .footer .button{width: 100%;margin-bottom: 30%; background: #fff;}
+        .footer .button div{margin:  20% auto;text-align: center;}
+        .footer .button a{padding: 5px 0 5px 0;display: inline-block; width: 70%;height: 100%;background: #fff;font-size: 25px;border-radius: 30px;color: #FC6F29;margin: 0 auto;text-align: center;text-decoration: none;border: 1px solid #FC6F29;}
+        /*    图片*/
+        .footer .img{width: 100%;margin: 5% auto;text-align: center}
+        .footer .img img{width: 30%;margin: 0 auto;}
+        .footer .text{width: 80%;margin:0 auto;font-size: 20px;font-weight: 900;text-align: center;}
+
+    </style>
+</head>
+<body>
+<div class="periphery">
+    <!-- 成功 -->
+    <div class="frame1" id="demo1">
+        <!--        底部-->
+        <div class="footer">
+            <!--           按钮 -->
+            <div class="img">
+                <img src="/images/success.png">
+            </div>
+            <div class="text">
+                <span> Your information has been submitted  successfully .  </span>
+            </div>
+            <div class="button">
+                <div>
+                    <a href="javascript:returnApp();">Next</a>
+                </div>
+
+                <!--                <div>-->
+                <!--                    <a href="javascript:recalculationApp();">Continue to Authorize</a>-->
+                <!--                </div>-->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 失败 -->
+    <div class="frame2" id="demo2">
+        <!--        底部-->
+        <div class="footer">
+            <!--           按钮 -->
+            <div class="img">
+                <img src="/images/failed.png">
+            </div>
+            <div class="text">
+                <span>Sorry,  your application has been rejected, please try again</span>
+            </div>
+            <div class="button">
+                <div>
+                    <a href="javascript:returnApp();">Re-apply</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="merchantId" th:value="${referrerCode}">
+<input type="hidden" id="status" th:value="${status}">
+</body>
+
+<script>
+    var merchantId = document.getElementById("merchantId").value;
+    var status = document.getElementById("status").value;
+    if(status == "COMPLETE"){
+        //成功
+        document.getElementById("demo2").style.display="none";
+    } else {
+        //失败
+        document.getElementById("demo1").style.display="none";
+    }
+
+    function returnApp(){
+        var ua = navigator.userAgent.toLowerCase();
+
+        if(/iphone|ipad|ipod/i.test(ua)) {
+            // backApp(merchantId,status);
+            window.webkit.messageHandlers.backApp.postMessage({merchantId: merchantId, status: status});
+        } else if(/android/i.test(ua)) {
+            App.backApp(merchantId,status);
+        }
+    }
+
+    function recalculationApp(){
+        var ua = navigator.userAgent.toLowerCase();
+
+        if(/iphone|ipad|ipod/i.test(ua)) {
+            window.webkit.messageHandlers.backApp.postMessage({merchantId:""});
+            // backApp(merchantId,"");
+        } else if(/android/i.test(ua)) {
+            App.backApp(merchantId,"");
+        }
+    }
+
+
+</script>
+</html>

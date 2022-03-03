@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.ParametersConfigDAO">
+
+  <resultMap id="parametersConfigMap" type="com.uwallet.pay.main.model.entity.ParametersConfig">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="cardFailedMax" jdbcType="TINYINT" column="card_failed_max"/>
+    <result property="userCardFailedMax" jdbcType="TINYINT" column="user_card_failed_max"/>
+    <result property="discountRate" jdbcType="DECIMAL" column="discount_rate"/>
+    <result property="serviceCharge" jdbcType="DECIMAL" column="service_charge"/>
+    <result property="avoidCloseAmount" jdbcType="DECIMAL" column="avoid_close_amount"/>
+    <result property="merchantDiscountRatePlatformProportion" jdbcType="DECIMAL" column="merchant_discount_rate_platform_proportion"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+    <result property="extraDiscountPayPlatform" jdbcType="DECIMAL" column="extra_discount_pay_platform"/>
+    <result property="extraDiscountCreditPlatform" jdbcType="DECIMAL" column="extra_discount_credit_platform"/>
+    <result property="walletFavorable" jdbcType="TINYINT" column="wallet_favorable"/>
+    <result property="wholeSaleAmount" jdbcType="DECIMAL" column="whole_sale_amount"/>
+    <result property="validTime" jdbcType="TINYINT" column="valid_time"/>
+    <result property="refundsLimitDate" jdbcType="TINYINT" column="refunds_limit_date"/>
+  </resultMap>
+
+  <resultMap id="parametersConfigDTOMap" type="com.uwallet.pay.main.model.dto.ParametersConfigDTO" extends="parametersConfigMap"></resultMap>
+
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="cardFailedMax != null">
+          AND `card_failed_max`=#{cardFailedMax}
+        </if>
+        <if test="userCardFailedMax != null">
+          AND `user_card_failed_max`=#{userCardFailedMax}
+        </if>
+        <if test="discountRate != null">
+          AND `discount_rate`=#{discountRate}
+        </if>
+        <if test="serviceCharge != null">
+          AND `service_charge`=#{serviceCharge}
+        </if>
+        <if test="avoidCloseAmount != null">
+          AND `avoid_close_amount`=#{avoidCloseAmount}
+        </if>
+        <if test="merchantDiscountRatePlatformProportion != null">
+          AND `merchant_discount_rate_platform_proportion`=#{merchantDiscountRatePlatformProportion}
+        </if>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="modifiedBy != null">
+          AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+          AND `modified_date`=#{modifiedDate}
+        </if>
+        <choose>
+          <when test="status != null">AND status = #{status}</when>
+          <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+        <if test="extraDiscountPayPlatform != null">
+          AND `extra_discount_pay_platform`=#{extraDiscountPayPlatform}
+        </if>
+        <if test="extraDiscountCreditPlatform != null">
+          AND `extra_discount_credit_platform`=#{extraDiscountCreditPlatform}
+        </if>
+        <if test="walletFavorable != null">
+          AND `wallet_favorable`=#{walletFavorable}
+        </if>
+        <if test="wholeSaleAmount != null">
+          AND `whole_sale_amount`=#{wholeSaleAmount}
+        </if>
+        <if test="validTime != null">
+          AND `valid_time`=#{validTime}
+        </if>
+        <if test="refundsLimitDate != null">
+          AND `refunds_limit_date`=#{refundsLimitDate}
+        </if>
+  </sql>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.ParametersConfig">
+    INSERT INTO u_parameters_config (
+        <if test="id != null">
+            `id` 
+        </if>
+        <if test="cardFailedMax != null">
+            ,`card_failed_max` 
+        </if>
+        <if test="userCardFailedMax != null">
+            ,`user_card_failed_max` 
+        </if>
+        <if test="discountRate != null">
+            ,`discount_rate` 
+        </if>
+        <if test="serviceCharge != null">
+            ,`service_charge` 
+        </if>
+        <if test="avoidCloseAmount != null">
+            ,`avoid_close_amount` 
+        </if>
+        <if test="merchantDiscountRatePlatformProportion != null">
+            ,`merchant_discount_rate_platform_proportion` 
+        </if>
+        <if test="createdBy != null">
+            ,`created_by` 
+        </if>
+        <if test="createdDate != null">
+            ,`created_date` 
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by` 
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date` 
+        </if>
+        <if test="status != null">
+            ,`status` 
+        </if>
+        <if test="ip != null">
+            ,`ip` 
+        </if>
+        <if test="extraDiscountPayPlatform != null">
+            ,`extra_discount_pay_platform` 
+        </if>
+        <if test="extraDiscountCreditPlatform != null">
+            ,`extra_discount_credit_platform` 
+        </if>
+        <if test="walletFavorable != null">
+            ,`wallet_favorable` 
+        </if>
+        <if test="wholeSaleAmount != null">
+            ,`whole_sale_amount` 
+        </if>
+        <if test="validTime != null">
+            ,`valid_time` 
+        </if>
+        <if test="refundsLimitDate != null">
+            ,`refunds_limit_date`
+        </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="cardFailedMax != null">
+              ,#{cardFailedMax}
+        </if>
+        <if test="userCardFailedMax != null">
+              ,#{userCardFailedMax}
+        </if>
+        <if test="discountRate != null">
+              ,#{discountRate}
+        </if>
+        <if test="serviceCharge != null">
+              ,#{serviceCharge}
+        </if>
+        <if test="avoidCloseAmount != null">
+              ,#{avoidCloseAmount}
+        </if>
+        <if test="merchantDiscountRatePlatformProportion != null">
+              ,#{merchantDiscountRatePlatformProportion}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+              ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+              ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+        <if test="extraDiscountPayPlatform != null">
+              ,#{extraDiscountPayPlatform}
+        </if>
+        <if test="extraDiscountCreditPlatform != null">
+              ,#{extraDiscountCreditPlatform}
+        </if>
+        <if test="walletFavorable != null">
+              ,#{walletFavorable}
+        </if>
+        <if test="wholeSaleAmount != null">
+              ,#{wholeSaleAmount}
+        </if>
+        <if test="validTime != null">
+              ,#{validTime}
+        </if>
+        <if test="refundsLimitDate != null">
+              ,#{refundsLimitDate}
+        </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_parameters_config (
+        `id`,
+        `card_failed_max`,
+        `user_card_failed_max`,
+        `discount_rate`,
+        `service_charge`,
+        `avoid_close_amount`,
+        `merchant_discount_rate_platform_proportion`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`,
+        `extra_discount_pay_platform`,
+        `extra_discount_credit_platform`,
+        `wallet_favorable`,
+        `whole_sale_amount`,
+        `valid_time`,
+        `refunds_limit_date`
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.cardFailedMax},
+        #{data.userCardFailedMax},
+        #{data.discountRate},
+        #{data.serviceCharge},
+        #{data.avoidCloseAmount},
+        #{data.merchantDiscountRatePlatformProportion},
+        #{data.createdBy},
+        #{data.createdDate},
+        #{data.modifiedBy},
+        #{data.modifiedDate},
+        #{data.status},
+        #{data.ip},
+        #{data.extraDiscountPayPlatform},
+        #{data.extraDiscountCreditPlatform},
+        #{data.walletFavorable},
+        #{data.wholeSaleAmount},
+        #{data.validTime},
+        #{data.refundsLimitDate}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.ParametersConfig">
+    UPDATE u_parameters_config
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="cardFailedMax != null">
+          `card_failed_max`=#{cardFailedMax},
+        </if>
+        <if test="userCardFailedMax != null">
+          `user_card_failed_max`=#{userCardFailedMax},
+        </if>
+        <if test="discountRate != null">
+          `discount_rate`=#{discountRate},
+        </if>
+        <if test="serviceCharge != null">
+          `service_charge`=#{serviceCharge},
+        </if>
+        <if test="avoidCloseAmount != null">
+          `avoid_close_amount`=#{avoidCloseAmount},
+        </if>
+        <if test="merchantDiscountRatePlatformProportion != null">
+          `merchant_discount_rate_platform_proportion`=#{merchantDiscountRatePlatformProportion},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="modifiedBy != null">
+          `modified_by`=#{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+          `modified_date`=#{modifiedDate},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+        <if test="extraDiscountPayPlatform != null">
+          `extra_discount_pay_platform`=#{extraDiscountPayPlatform},
+        </if>
+        <if test="extraDiscountCreditPlatform != null">
+          `extra_discount_credit_platform`=#{extraDiscountCreditPlatform},
+        </if>
+        <if test="walletFavorable != null">
+          `wallet_favorable`=#{walletFavorable},
+        </if>
+        <if test="wholeSaleAmount != null">
+          `whole_sale_amount`=#{wholeSaleAmount},
+        </if>
+        <if test="validTime != null">
+          `valid_time`=#{validTime},
+        </if>
+        <if test="refundsLimitDate != null">
+          `refunds_limit_date`=#{refundsLimitDate},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_parameters_config
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+
+  <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_parameters_config
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_parameters_config
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="parametersConfigMap">
+    <![CDATA[
+            SELECT * FROM u_parameters_config
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="parametersConfigDTOMap">
+    <![CDATA[
+            SELECT * FROM u_parameters_config
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="parametersConfigMap">
+    <![CDATA[
+            SELECT * FROM u_parameters_config
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="parametersConfigDTOMap">
+    <![CDATA[
+            SELECT * FROM u_parameters_config
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_parameters_config
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_parameters_config
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_parameters_config
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_parameters_config
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+</mapper>

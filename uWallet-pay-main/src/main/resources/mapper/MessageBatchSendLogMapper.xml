@@ -1,0 +1,1032 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uwallet.pay.main.dao.MessageBatchSendLogDAO">
+
+  <resultMap id="messageBatchSendLogMap" type="com.uwallet.pay.main.model.entity.MessageBatchSendLog">
+    <id property="id" jdbcType="BIGINT" column="id"/>
+    <result property="sendType" jdbcType="TINYINT" column="send_type"/>
+    <result property="state" jdbcType="TINYINT" column="state"/>
+    <result property="sendTime" jdbcType="BIGINT" column="send_time"/>
+    <result property="content" jdbcType="VARCHAR" column="content"/>
+    <result property="title" jdbcType="VARCHAR" column="title"/>
+    <result property="sendNumber" jdbcType="INTEGER" column="send_number"/>
+    <result property="sendSuccessNumber" jdbcType="INTEGER" column="send_success_number"/>
+    <result property="findNumber" jdbcType="INTEGER" column="find_number"/>
+    <result property="territory" jdbcType="TINYINT" column="territory"/>
+    <result property="city" jdbcType="TINYINT" column="city"/>
+    <result property="userStatus" jdbcType="TINYINT" column="user_status"/>
+    <result property="money" jdbcType="DECIMAL" column="money"/>
+    <result property="pushRedirect" jdbcType="TINYINT" column="push_redirect"/>
+    <result property="createdBy" jdbcType="BIGINT" column="created_by"/>
+    <result property="createdDate" jdbcType="BIGINT" column="created_date"/>
+    <result property="modifiedBy" jdbcType="BIGINT" column="modified_by"/>
+    <result property="modifiedDate" jdbcType="BIGINT" column="modified_date"/>
+    <result property="status" jdbcType="TINYINT" column="status"/>
+    <result property="ip" jdbcType="VARCHAR" column="ip"/>
+  </resultMap>
+
+  <resultMap id="messageBatchSendLogDTOMap" type="com.uwallet.pay.main.model.dto.MessageBatchSendLogDTO" extends="messageBatchSendLogMap"></resultMap>
+
+  <!--通用查询条件-->
+  <sql id="basicParams">
+        <if test="id != null">
+          AND `id`=#{id}
+        </if>
+        <if test="sendType != null">
+          AND `send_type`=#{sendType}
+        </if>
+        <if test="state != null">
+          AND `state`=#{state}
+        </if>
+        <if test="sendTime != null">
+          AND `send_time`=#{sendTime}
+        </if>
+        <if test="content != null">
+          AND `content`=#{content}
+        </if>
+        <if test="title != null">
+          AND `title`=#{title}
+        </if>
+        <if test="sendNumber != null">
+          AND `send_number`=#{sendNumber}
+        </if>
+        <if test="sendSuccessNumber != null">
+          AND `send_success_number`=#{sendSuccessNumber}
+        </if>
+        <if test="findNumber != null">
+          AND `find_number`=#{findNumber}
+        </if>
+        <if test="territory != null">
+          AND `territory`=#{territory}
+        </if>
+        <if test="city != null">
+          AND `city`=#{city}
+        </if>
+        <if test="userStatus != null">
+          AND `user_status`=#{userStatus}
+        </if>
+        <if test="money != null">
+          AND `money`=#{money}
+        </if>
+        <if test="pushRedirect != null">
+          AND `push_redirect`=#{pushRedirect}
+        </if>
+        <if test="createdBy != null">
+          AND `created_by`=#{createdBy}
+        </if>
+        <if test="start != null and end != null">
+          AND `created_date` BETWEEN #{start} AND #{ end}
+        </if>
+        <if test="modifiedBy != null">
+          AND `modified_by`=#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+          AND `modified_date`=#{modifiedDate}
+        </if>
+        <choose>
+          <when test="status != null">AND status = #{status}</when>
+          <otherwise><![CDATA[AND status > 0]]></otherwise>
+        </choose>
+        <if test="ip != null">
+          AND `ip`=#{ip}
+        </if>
+  </sql>
+
+  <insert id="insert" parameterType="com.uwallet.pay.main.model.entity.MessageBatchSendLog">
+    INSERT INTO u_message_batch_send_log (
+        <if test="id != null">
+            `id`
+        </if>
+        <if test="sendType != null">
+            ,`send_type`
+        </if>
+        <if test="state != null">
+            ,`state`
+        </if>
+        <if test="sendTime != null">
+            ,`send_time`
+        </if>
+        <if test="content != null">
+            ,`content`
+        </if>
+        <if test="title != null">
+            ,`title`
+        </if>
+        <if test="sendNumber != null">
+            ,`send_number`
+        </if>
+        <if test="sendSuccessNumber != null">
+            ,`send_success_number`
+        </if>
+        <if test="findNumber != null">
+            ,`find_number`
+        </if>
+        <if test="territory != null">
+            ,`territory`
+        </if>
+        <if test="city != null">
+            ,`city`
+        </if>
+        <if test="userStatus != null">
+            ,`user_status`
+        </if>
+        <if test="money != null">
+            ,`money`
+        </if>
+        <if test="pushRedirect != null">
+            ,`push_redirect`
+        </if>
+        <if test="createdBy != null">
+            ,`created_by`
+        </if>
+        <if test="createdDate != null">
+            ,`created_date`
+        </if>
+        <if test="modifiedBy != null">
+            ,`modified_by`
+        </if>
+        <if test="modifiedDate != null">
+            ,`modified_date`
+        </if>
+        <if test="status != null">
+            ,`status`
+        </if>
+        <if test="ip != null">
+            ,`ip`
+        </if>
+    ) VALUES (
+        <if test="id != null">
+              #{id}
+        </if>
+        <if test="sendType != null">
+              ,#{sendType}
+        </if>
+        <if test="state != null">
+              ,#{state}
+        </if>
+        <if test="sendTime != null">
+              ,#{sendTime}
+        </if>
+        <if test="content != null">
+              ,#{content}
+        </if>
+        <if test="title != null">
+              ,#{title}
+        </if>
+        <if test="sendNumber != null">
+              ,#{sendNumber}
+        </if>
+        <if test="sendSuccessNumber != null">
+              ,#{sendSuccessNumber}
+        </if>
+        <if test="findNumber != null">
+              ,#{findNumber}
+        </if>
+        <if test="territory != null">
+              ,#{territory}
+        </if>
+        <if test="city != null">
+              ,#{city}
+        </if>
+        <if test="userStatus != null">
+              ,#{userStatus}
+        </if>
+        <if test="money != null">
+              ,#{money}
+        </if>
+        <if test="pushRedirect != null">
+              ,#{pushRedirect}
+        </if>
+        <if test="createdBy != null">
+              ,#{createdBy}
+        </if>
+        <if test="createdDate != null">
+              ,#{createdDate}
+        </if>
+        <if test="modifiedBy != null">
+              ,#{modifiedBy}
+        </if>
+        <if test="modifiedDate != null">
+              ,#{modifiedDate}
+        </if>
+        <if test="status != null">
+              ,#{status}
+        </if>
+        <if test="ip != null">
+              ,#{ip}
+        </if>
+    )
+  </insert>
+
+  <insert id="insertList" parameterType="List">
+    INSERT INTO u_message_batch_send_log (
+        `id`,
+        `send_type`,
+        `state`,
+        `send_time`,
+        `content`,
+        `title`,
+        `send_number`,
+        `send_success_number`,
+        `find_number`,
+        `territory`,
+        `city`,
+        `user_status`,
+        `money`,
+        `push_redirect`,
+        `created_by`,
+        `created_date`,
+        `modified_by`,
+        `modified_date`,
+        `status`,
+        `ip`
+    ) VALUES
+    <foreach collection="list" item="data" separator=",">
+      (
+        #{data.id},
+        #{data.sendType},
+        #{data.state},
+        #{data.sendTime},
+        #{data.content},
+        #{data.title},
+        #{data.sendNumber},
+        #{data.sendSuccessNumber},
+        #{data.findNumber},
+        #{data.territory},
+        #{data.city},
+        #{data.userStatus},
+        #{data.money},
+        #{data.pushRedirect},
+        #{data.createdBy},
+        #{data.createdDate},
+        #{data.modifiedBy},
+        #{data.modifiedDate},
+        #{data.status},
+        #{data.ip}
+      )
+    </foreach>
+  </insert>
+
+  <update id="update" parameterType="com.uwallet.pay.main.model.entity.MessageBatchSendLog">
+    UPDATE u_message_batch_send_log
+    <set>
+        <if test="id != null">
+          `id`=#{id},
+        </if>
+        <if test="sendType != null">
+          `send_type`=#{sendType},
+        </if>
+        <if test="state != null">
+          `state`=#{state},
+        </if>
+        <if test="sendTime != null">
+          `send_time`=#{sendTime},
+        </if>
+        <if test="content != null">
+          `content`=#{content},
+        </if>
+        <if test="title != null">
+          `title`=#{title},
+        </if>
+        <if test="sendNumber != null">
+          `send_number`=#{sendNumber},
+        </if>
+        <if test="sendSuccessNumber != null">
+          `send_success_number`=#{sendSuccessNumber},
+        </if>
+        <if test="findNumber != null">
+          `find_number`=#{findNumber},
+        </if>
+        <if test="territory != null">
+          `territory`=#{territory},
+        </if>
+        <if test="city != null">
+          `city`=#{city},
+        </if>
+        <if test="userStatus != null">
+          `user_status`=#{userStatus},
+        </if>
+        <if test="money != null">
+          `money`=#{money},
+        </if>
+        <if test="pushRedirect != null">
+          `push_redirect`=#{pushRedirect},
+        </if>
+        <if test="createdBy != null">
+          `created_by`=#{createdBy},
+        </if>
+        <if test="createdDate != null">
+          `created_date`=#{createdDate},
+        </if>
+        <if test="modifiedBy != null">
+          `modified_by`=#{modifiedBy},
+        </if>
+        <if test="modifiedDate != null">
+          `modified_date`=#{modifiedDate},
+        </if>
+        <if test="status != null">
+          `status`=#{status},
+        </if>
+        <if test="ip != null">
+          `ip`=#{ip},
+        </if>
+    </set>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <choose>
+        <when test="status != null ">AND status = #{status.value}</when>
+        <otherwise><![CDATA[AND status > 0]]></otherwise>
+      </choose>
+        AND id = #{id}
+    </trim>
+  </update>
+
+  <update id="delete" parameterType="Map">
+      UPDATE u_message_batch_send_log
+      SET `status`=0,`modified_by`=#{modifiedBy},`modified_date`=#{modifiedDate}
+      WHERE id = #{id}
+  </update>
+    <update id="updateBatchNumber">
+        update u_message_batch_send_log
+        set send_success_number=IFNULL(send_success_number,0)+#{sendSuccessNumber},
+        state=2 where id=#{id}
+    </update>
+
+    <delete id="pdelete" parameterType="Map">
+      DELETE FROM u_message_batch_send_log
+      WHERE id = #{id}
+  </delete>
+
+  <select id="count" parameterType="Map" resultType="Integer">
+    <![CDATA[
+            SELECT COUNT(DISTINCT id) FROM u_message_batch_send_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="selectOne" parameterType="Map" resultMap="messageBatchSendLogMap">
+    <![CDATA[
+            SELECT * FROM u_message_batch_send_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="selectOneDTO" parameterType="Map" resultMap="messageBatchSendLogDTOMap">
+    <![CDATA[
+            SELECT * FROM u_message_batch_send_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    LIMIT 1
+  </select>
+
+  <select id="select" parameterType="Map" resultMap="messageBatchSendLogMap">
+    <![CDATA[
+            SELECT * FROM u_message_batch_send_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectDTO" parameterType="Map" resultMap="messageBatchSendLogDTOMap">
+    <![CDATA[
+            SELECT * FROM u_message_batch_send_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <select id="selectMap" parameterType="Map" resultType="Map">
+    SELECT
+    <foreach collection="columns" item="cname" separator="," open="`" close="`">
+        ${cname}
+    </foreach>
+    FROM u_message_batch_send_log
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    <if test="scs != null and scs.size() > 0">
+      ORDER BY
+      <foreach collection="scs" item="sc" separator=",">
+          ${sc.field} ${sc.order}
+      </foreach>
+    </if>
+    <if test="pc != null">
+      LIMIT ${pc.startIndex}, ${pc.pageSize}
+    </if>
+  </select>
+
+  <!--统计相关查询-->
+  <select id="groupCount" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, COUNT(DISTINCT id) AS `count` FROM u_message_batch_send_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+
+  <select id="sum" parameterType="Map" resultType="Double">
+    <![CDATA[
+            SELECT IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_message_batch_send_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+  </select>
+
+  <select id="groupSum" parameterType="Map" resultType="Map">
+    <![CDATA[
+            SELECT ${group} AS `group`, IFNULL(SUM(${sumfield}),0) AS `sum` FROM u_message_batch_send_log
+        ]]>
+    <trim prefix="WHERE" prefixOverrides="AND|OR">
+      <!-- 通用条件引入 -->
+      <include refid="basicParams"/>
+    </trim>
+    GROUP BY `group`
+    ORDER BY `group` ASC
+  </select>
+    <select id="selectDTONew" resultType="com.uwallet.pay.main.model.dto.MessageBatchSendLogDTO">
+
+        SELECT u1.*,u2.real_name operator,u1.id ids  FROM u_message_batch_send_log u1
+        left join u_admin u2 on u1.created_by=u2.id where u1.status>0
+        <if test="scs != null and scs.size() > 0">
+            ORDER BY
+            <foreach collection="scs" item="sc" separator=",">
+                ${sc.field} ${sc.order}
+            </foreach>
+        </if>
+        <if test="pc != null">
+            LIMIT ${pc.startIndex}, ${pc.pageSize}
+        </if>
+    </select>
+
+    <select id="getNoCardNoCreditUserCount" parameterType="Map" resultType="Integer">
+        SELECT
+            COUNT(pu.id)
+        FROM
+            u_user pu
+        LEFT JOIN uwallet_credit.u_user cu ON pu.id = cu.id
+        AND cu.`status` = 1
+        WHERE
+            pu.card_state = 0
+        AND pu.user_type = 10
+        AND cu.id IS NULL
+        AND pu.`status` = 1
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+    <select id="getNoCardNoCreditUserList" parameterType="Map" resultType="com.uwallet.pay.main.model.dto.UserDTO">
+        SELECT
+        pu.*
+        FROM
+        u_user pu
+        LEFT JOIN uwallet_credit.u_user cu ON pu.id = cu.id
+        AND cu.`status` = 1
+        WHERE
+        pu.card_state = 0
+        AND pu.user_type = 10
+        AND cu.id IS NULL
+        AND pu.`status` = 1
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+    <select id="getNoCreditUserCount" parameterType="Map" resultType="Integer">
+        SELECT
+        COUNT(pu.id)
+        FROM
+        u_user pu
+        LEFT JOIN uwallet_credit.u_user cu ON pu.id = cu.id
+        AND cu.`status` = 1
+        WHERE
+            cu.id IS NULL
+        AND pu.user_type = 10
+        AND pu.`status` = 1
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+    <select id="getNoCreditUserList" parameterType="Map" resultType="com.uwallet.pay.main.model.dto.UserDTO">
+        SELECT
+        pu.*
+        FROM
+        u_user pu
+        LEFT JOIN uwallet_credit.u_user cu ON pu.id = cu.id
+        AND cu.`status` = 1
+        WHERE
+        cu.id IS NULL
+        AND pu.user_type = 10
+        AND pu.`status` = 1
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+    <select id="getNoCardUserCount" parameterType="Map"  resultType="java.lang.Integer">
+        SELECT
+        COUNT(pu.id)
+        FROM
+        u_user pu
+        WHERE
+         pu.user_type = 10
+        AND pu.`status` = 1
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="cardState != null">
+            and pu.card_state = #{cardState}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+
+    <select id="getNoCardUserList" parameterType="Map"  resultType="com.uwallet.pay.main.model.dto.UserDTO">
+        SELECT
+        pu.*
+        FROM
+        u_user pu
+        WHERE
+        pu.user_type = 10
+        AND pu.`status` = 1
+        <if test="cardState != null">
+            and pu.card_state = #{cardState}
+        </if>
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+    <select id="getCreditRefuseUserCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(pu.id)
+        FROM
+        u_user pu
+        LEFT JOIN uwallet_credit.u_user cu ON pu.id = cu.id
+        AND cu.`status` = 1
+        WHERE
+        cu.state in (21,32)
+        AND pu.user_type = 10
+        AND pu.`status` = 1
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+    <select id="getCreditRefuseUserList" parameterType="Map"  resultType="com.uwallet.pay.main.model.dto.UserDTO">
+        SELECT
+        pu.*
+        FROM
+        u_user pu
+        LEFT JOIN uwallet_credit.u_user cu ON pu.id = cu.id
+        AND cu.`status` = 1
+        WHERE
+        cu.state in (21,32)
+        AND pu.user_type = 10
+        AND pu.`status` = 1
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+
+
+    <select id="getNoIllionUserCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(pu.id)
+        FROM
+        u_user pu
+        LEFT JOIN uwallet_credit.u_user cu ON pu.id = cu.id
+        AND cu.`status` = 1
+        WHERE
+        cu.id IS NULL
+        AND pu.`status` = 1
+        AND pu.user_type = 10
+        AND pu.installment_state = 1
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+
+    <select id="getNoIllionUserList"  parameterType="Map"  resultType="com.uwallet.pay.main.model.dto.UserDTO">
+        SELECT
+        pu.*
+        FROM
+        u_user pu
+        LEFT JOIN uwallet_credit.u_user cu ON pu.id = cu.id
+        AND cu.`status` = 1
+        WHERE
+        cu.id IS NULL
+        AND pu.`status` = 1
+        AND pu.user_type = 10
+        AND pu.installment_state = 1
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+    <select id="getHaveRedEnvelopeUserCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(pu.id)
+        FROM
+        u_user pu
+        LEFT JOIN uwallet_account.u_account a ON pu.id = a.user_id
+        LEFT JOIN uwallet_account.u_sub_account s ON a.id = s.account_id
+        AND s.type = 0
+        WHERE
+        pu.user_type = 10
+        AND pu.`status` = 1
+        AND s.balance > 0
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+
+    <select id="getHaveRedEnvelopeUserList"  parameterType="Map"  resultType="com.uwallet.pay.main.model.dto.UserDTO">
+        SELECT
+        pu.*
+        FROM
+        u_user pu
+        LEFT JOIN uwallet_account.u_account a ON pu.id = a.user_id
+        LEFT JOIN uwallet_account.u_sub_account s ON a.id = s.account_id
+        AND s.type = 0
+        WHERE
+        pu.user_type = 10
+        AND pu.`status` = 1
+        AND s.balance > 0
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+    <select id="getNoTradeUserCount" resultType="java.lang.Integer">
+        SELECT
+        COUNT(pu.id)
+        FROM
+        u_user pu
+        LEFT JOIN u_qr_pay_flow q ON q.pay_user_id = pu.id
+        AND q.state IN (1, 31)
+        AND q.`status` = 1
+        WHERE
+        pu.user_type = 10
+        AND pu.`status` = 1
+        AND q.id IS NULL
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+    <select id="getNoTradeUserList" parameterType="Map"  resultType="com.uwallet.pay.main.model.dto.UserDTO">
+        SELECT
+        pu.*
+        FROM
+        u_user pu
+        LEFT JOIN u_qr_pay_flow q ON q.pay_user_id = pu.id
+        AND q.state IN (1, 31)
+        AND q.`status` = 1
+        WHERE
+        pu.user_type = 10
+        AND pu.`status` = 1
+        AND q.id IS NULL
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+    <select id="getNoTradeLongTimeUserCount" resultType="java.lang.Integer">
+        SELECT
+        count(u.uid)
+        FROM
+        (
+        SELECT DISTINCT
+        (pu.id) AS uid
+        FROM
+        u_user pu
+        LEFT JOIN u_qr_pay_flow q ON q.pay_user_id = pu.id
+        WHERE
+        pu.user_type = 10
+        AND pu.`status` = 1
+        AND q.state IN (1, 31)
+        AND q.`status` = 1
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+        ) u
+        LEFT JOIN u_qr_pay_flow q ON q.pay_user_id = u.uid
+        AND q.`status` = 1
+        AND q.state IN (1, 31)
+        AND q.created_date BETWEEN #{start} AND #{end}
+        WHERE
+        q.id IS NULL
+
+    </select>
+    <select id="getNoTradeLongTimeUserList" resultType="com.uwallet.pay.main.model.dto.UserDTO">
+        SELECT
+        u.uid as id ,u.phone,u.push_token
+        FROM
+        (
+        SELECT pu.id AS uid,pu.phone as phone ,pu.push_token as push_token
+        FROM
+        u_user pu
+        LEFT JOIN u_qr_pay_flow q ON q.pay_user_id = pu.id
+        WHERE
+        pu.user_type = 10
+        AND pu.`status` = 1
+        AND q.state IN (1, 31)
+        AND q.`status` = 1 group by pu.id
+        ) u
+        LEFT JOIN u_qr_pay_flow q ON q.pay_user_id = u.uid
+        AND q.`status` = 1
+        AND q.state IN (1, 31)
+        AND q.created_date BETWEEN #{start} AND #{end}
+        WHERE
+        q.id IS NULL
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+    </select>
+    <select id="getKYCRefuseUserCount" resultType="java.lang.Integer">
+        SELECT
+        count(u.uid)
+        FROM
+        (
+        SELECT DISTINCT
+        pu.id AS uid
+        FROM
+        u_user pu
+        LEFT JOIN uwallet_risk.rl_riskcontrol_customer c ON c.customer_id = pu.id
+        AND c.`status` = 1
+        LEFT JOIN uwallet_risk.rl_riskcontrol_matched m ON m.customer_id = c.id
+        AND m.event_id = 16
+        AND m.`status` = 1
+        WHERE
+        pu.user_type = 10
+        AND pu.`status` = 1
+        AND m.final_decision = 'REJECT'
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+        ) u
+
+    </select>
+    <select id="getKYCRefuseUserList" resultType="com.uwallet.pay.main.model.dto.UserDTO">
+        SELECT
+        pu.*
+        FROM
+        u_user pu
+        LEFT JOIN uwallet_risk.rl_riskcontrol_customer c ON c.customer_id = pu.id
+        AND c.`status` = 1
+        LEFT JOIN uwallet_risk.rl_riskcontrol_matched m ON m.customer_id = c.id
+        AND m.event_id = 16
+        AND m.`status` = 1
+        WHERE
+        pu.user_type = 10
+        AND pu.`status` = 1
+        AND m.final_decision = 'REJECT'
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+        GROUP BY
+        pu.id
+    </select>
+    <select id="getOverdueLongTimeUserCount" resultType="java.lang.Integer">
+        SELECT
+        count(u.uid)
+        FROM
+        (
+            SELECT DISTINCT
+            b.user_id AS uid
+            FROM
+            uwallet_credit.u_repay r
+            LEFT JOIN uwallet_credit.u_borrow b ON b.id = r.borrow_id
+            LEFT JOIN u_user pu ON pu.id = b.user_id
+            WHERE
+            r.`status` = 1
+            AND r.state = 0
+            and pu.`status` = 1
+            <![CDATA[AND r.expect_repay_time < ]]> #{endTime}
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+        ) u
+    </select>
+    <select id="getOverdueLongTimeUserList" resultType="com.uwallet.pay.main.model.dto.UserDTO">
+
+        SELECT
+        pu.*
+        FROM
+        uwallet_credit.u_repay r
+        LEFT JOIN uwallet_credit.u_borrow b ON b.id = r.borrow_id
+        LEFT JOIN u_user pu ON pu.id = b.user_id
+        WHERE
+        r.`status` = 1
+        AND r.state = 0
+        AND b.`status` = 1
+        AND pu.`status` = 1
+       <![CDATA[AND r.expect_repay_time < ]]> #{endTime}
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+        GROUP BY
+        pu.id
+
+
+    </select>
+    <select id="getHaveDemurrageUserCount" resultType="java.lang.Integer">
+        SELECT
+            count(u.uid)
+        FROM
+            (
+                SELECT DISTINCT
+                    b.user_id AS uid
+                FROM
+                    uwallet_credit.u_repay r
+                LEFT JOIN uwallet_credit.u_borrow b ON b.id = r.borrow_id
+                LEFT JOIN u_user pu ON pu.id = b.user_id
+                WHERE
+                    r.`status` = 1
+                AND r.violate_amount > 0
+                AND r.state = 0
+                and pu.`status` = 1
+            <if test="userCity != null">
+                AND pu.`user_city`=#{userCity}
+            </if>
+            <if test="notInUserCity != null">
+                AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+            </if>
+            <if test="userState != null">
+                AND pu.`user_state`=#{userState}
+            </if>
+            ) u
+    </select>
+    <select id="getHaveDemurrageUserList" resultType="com.uwallet.pay.main.model.dto.UserDTO">
+        SELECT
+            pu.*
+        FROM
+            uwallet_credit.u_repay r
+        LEFT JOIN uwallet_credit.u_borrow b ON b.id = r.borrow_id
+        LEFT JOIN u_user pu ON pu.id = b.user_id
+        WHERE
+            r.`status` = 1
+        AND r.violate_amount > 0
+        AND r.state = 0
+        AND pu.`status` = 1
+        <if test="userCity != null">
+            AND pu.`user_city`=#{userCity}
+        </if>
+        <if test="notInUserCity != null">
+            AND pu.`user_city`<![CDATA[ <> ]]> #{notInUserCity}
+        </if>
+        <if test="userState != null">
+            AND pu.`user_state`=#{userState}
+        </if>
+        GROUP BY
+            pu.id
+    </select>
+</mapper>
